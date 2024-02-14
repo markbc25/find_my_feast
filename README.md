@@ -9,6 +9,7 @@ CSCE 482 Capstone Repo
 # set up the development environment: https://reactnative.dev/docs/environment-setup?guide=native&package-manager=yarn
     install chocolatey
     install Node and JDK by opening cmd prompt as admin and running "choco install -y nodejs-lts microsoft-openjdk17"
+    set .env variables on windows (covered in the tutorial linked above)
 
 # pull code from repo, open terminal, go to root directory of project
     install all dependencies 
