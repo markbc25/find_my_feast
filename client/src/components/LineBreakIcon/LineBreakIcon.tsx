@@ -11,7 +11,7 @@ const LineBreakIcon: FC<LineBreakIconProps> = () => (
         source={require('../../resources/linebreakicon.png')}
         style = {{
             justifyContent: 'center',
-            width: 100,
+            width: 50,
             height: 20,
             padding: 30,
         }}

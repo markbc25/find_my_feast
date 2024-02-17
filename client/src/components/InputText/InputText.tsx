@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import {Text, View, Button} from 'react-native';
+import {Text, View, TextInput} from 'react-native';
 
-interface TextInputProps {}
+interface InputTextProps {}
 
-const TextInput: FC<TextInputProps> = (props: fieldName, textValue) => (
+const InputText: FC<InputTextProps> = (props: fieldName, textValue) => (
 <View style = {{padding: 10,}}>
  <View style = {{
     alignItems: 'flex-start',
@@ -11,25 +11,25 @@ const TextInput: FC<TextInputProps> = (props: fieldName, textValue) => (
     borderStyle: 'solid',
     borderWidth: 0.5,
     borderRadius: 2,
-    padding: 15,
+    padding: 5,
     paddingLeft: 30,
  }}>
-    <Text
+    <TextInput
         style  = {{
             color: '#402b1f',
             flex: 1,
-            fontSize: 24,
+            fontSize: 22,
             justifyContent: 'flex-start',
         }}>
         {props.textValue}
-    </Text>
+    </TextInput>
 
     <Text
         style  = {{
             position: 'absolute',
             top: -15,
             left: 10,
-            fontSize: 18,
+            fontSize: 16,
             backgroundColor: 'white',
             color: '#5bc009',
             paddingLeft: 10,
@@ -43,4 +43,4 @@ const TextInput: FC<TextInputProps> = (props: fieldName, textValue) => (
 
 );
 
-export default TextInput;
+export default InputText;
