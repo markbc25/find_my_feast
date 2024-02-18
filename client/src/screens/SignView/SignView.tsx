@@ -14,24 +14,28 @@ const SignView: FC<SignViewProps> = () => (
     <View
       style={{
         flex: 1,
-        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
       }}>
 
+    <View style = {{flex: 0.5, alignSelf: 'stretch'}}>
         <ScreenTitle textValue = 'Welcome'></ScreenTitle>
+     </View>
 
-        <SectionTitle textValue = 'Sign In'></SectionTitle>
+    <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch'}}>
+    <SectionTitle textValue = 'Sign In'></SectionTitle>
 
-        <View style = {{
-            justifyContent: 'center',
-            alignSelf: 'stretch',
-            padding: 15,
-            }}>
-            <InputText fieldName = 'EMAIL' textValue = "John Smith"></InputText>
-            <InputText fieldName = 'PASSWORD' textValue = "John Smith"></InputText>
-            <ActionButton textValue = "Sign In"></ActionButton>
-        </View>
+            <View style = {{
+                justifyContent: 'center',
+                alignSelf: 'stretch',
+                padding: 15,
+                }}>
+                <InputText fieldName = 'EMAIL' textValue = "John Smith"></InputText>
+                <InputText fieldName = 'PASSWORD' textValue = '******'></InputText>
+                <ActionButton textValue = "Sign In"></ActionButton>
+            </View>
+    </View>
+
 
         {/* add oath? etc */}
 
@@ -46,11 +50,11 @@ const SignView: FC<SignViewProps> = () => (
 
         <View style = {{
             flexGrow: 1,
-            flex: 1,
+            flex: 0.5,
             justifyContent: 'center',
             alignSelf: 'stretch',
             padding: 15,
-            alignItems: 'center'
+            alignItems: 'center',
             }}>
                 <Text style = {{
                                 fontSize: 20,
