@@ -4,7 +4,7 @@ import {Text, View, TextInput} from 'react-native';
 interface InputTextProps {}
 
 const InputText: FC<InputTextProps> = (props: fieldName, textValue) => (
-<View style = {{padding: 10,}}>
+<View style = {{padding: 10}}>
  <View style = {{
     alignItems: 'flex-start',
     borderColor: '#c1c1c1',
@@ -17,9 +17,9 @@ const InputText: FC<InputTextProps> = (props: fieldName, textValue) => (
     <TextInput
         style  = {{
             color: '#402b1f',
-            flex: 1,
             fontSize: 22,
             justifyContent: 'flex-start',
+//             paddingVertical: 40,
         }}>
         {props.textValue}
     </TextInput>

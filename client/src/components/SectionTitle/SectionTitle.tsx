@@ -1,16 +1,21 @@
 import React, { FC } from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, PixelRatio} from 'react-native';
+
+const fontScale = PixelRatio.getFontScale();
+const getFontSize = size => size / fontScale;
+
 
 interface SectionTitleProps {}
 
 const SectionTitle: FC<SectionTitleProps> = (props: textValue) => (
  <View style = {{
-            alignSelf: 'flex-start', paddingLeft: 30,}}>
+            alignSelf: 'flex-start', paddingLeft: 30}}>
               <Text
                   style = {{
                       color: '#402b1f',
-                      fontSize: 22,
+                      fontSize: getFontSize(22),
                       fontWeight: 'bold',
+                    //  backgroundColor: 'red',
                   }}>
                       {props.textValue}
                 </Text>

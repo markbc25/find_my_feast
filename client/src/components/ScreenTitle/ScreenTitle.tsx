@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, PixelRatio} from 'react-native';
 
 interface ScreenTitleProps {}
+const fontScale = PixelRatio.getFontScale();
+const getFontSize = size => size / fontScale;
 
 const ScreenTitle: FC<ScreenTitleProps> = (props: textValue) => (
+
            <View style={{
                 flex: 1,
-                justifyContent: 'flex-start',
+                justifyContent: 'center',
                 alignSelf: 'stretch',
-                paddingTop: 30,
-                paddingBottom: 30,
+                paddingVertical: 30,
             }}>
               <Text
                 style = {{
