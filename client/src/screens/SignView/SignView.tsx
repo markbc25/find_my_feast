@@ -23,12 +23,11 @@ const SignView: FC<SignViewProps> = () => (
      </View>
 
     <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch'}}>
-    <SectionTitle textValue = 'Sign In'></SectionTitle>
-
+        <SectionTitle textValue = 'Sign In'></SectionTitle>
             <View style = {{
-                justifyContent: 'center',
-                alignSelf: 'stretch',
-                padding: 15,
+                    justifyContent: 'center',
+                    alignSelf: 'stretch',
+                    padding: 15,
                 }}>
                 <InputText fieldName = 'EMAIL' textValue = "John Smith"></InputText>
                 <InputText fieldName = 'PASSWORD' textValue = '******'></InputText>
