@@ -7,6 +7,7 @@
 
 import React from 'react';
 import type {PropsWithChildren} from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -24,6 +25,12 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import ProfileView from './src/screens/ProfileView/ProfileView';
+import SignView from './src/screens/SignView/SignView';
+import PreferencesView from './src/screens/PreferencesView/PreferencesView';
+
+
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -59,7 +66,10 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+        flex: 1,
+//          backgroundColor: 'orange',
+
   };
 
   return (
@@ -70,26 +80,22 @@ function App(): React.JSX.Element {
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
+        style={{
+                minSize: 600,
+                }} contentContainerStyle = {{flex: 1,}}>
+
         <View
           style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+//             backgroundColor: isDarkMode ? Colors.black : Colors.white,
+               flex: 1,
+               flexGrow: 1,
+//                backgroundColor: 'green',
+               alignSelf: 'stretch',
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+
+     <PreferencesView></PreferencesView>
+
+
         </View>
       </ScrollView>
     </SafeAreaView>
