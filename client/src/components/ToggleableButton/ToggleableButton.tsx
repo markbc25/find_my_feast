@@ -5,11 +5,6 @@ import {Text, View, Button, Pressable} from 'react-native';
 interface ToggleableButtonProps {}
 
 
-
-const ToggleableButton = (props: textValue, image) => {
-
-  const [isEnabled, setIsEnabled] = useState(true);
-
 const ToggleableButton = (props: textValue, image) => {
   const [isEnabled, setIsEnabled] = useState(false);
 
@@ -38,7 +33,8 @@ const ToggleableButton = (props: textValue, image) => {
                              borderRadius: 5,
                              fontSize: 15,
                              fontWeight: 'bold',
-                            }}>
+                            }}
+            >
                            {props.textValue}
            </Text>
 
