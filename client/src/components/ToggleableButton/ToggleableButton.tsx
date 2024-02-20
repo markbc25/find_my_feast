@@ -5,8 +5,13 @@ import {Text, View, Button, Pressable} from 'react-native';
 interface ToggleableButtonProps {}
 
 
+<<<<<<< Updated upstream
 const ToggleableButton = (props: textValue) => {
   const [isEnabled, setIsEnabled] = useState(true);
+=======
+const ToggleableButton = (props: textValue, image) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+>>>>>>> Stashed changes
   let buttonColor = '#000000';
 
 
@@ -23,8 +28,8 @@ const ToggleableButton = (props: textValue) => {
                         padding: 20}}
         >
             <Text style = {{
-                            backgroundColor: isEnabled ? 'white' : '#5bc009',
-                            color: isEnabled ? '#5bc009' : 'white',
+                            backgroundColor: isEnabled ? '#5bc009' : 'white' ,
+                            color: isEnabled ?  'white' : '#5bc009',
                             paddingHorizontal: 20,
                             paddingVertical: 5,
                              borderRadius: 5,
