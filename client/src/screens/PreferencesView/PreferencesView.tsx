@@ -8,15 +8,13 @@ import ScreenTitle from '../../../src/components/ScreenTitle/ScreenTitle';
 import SectionTitle from '../../../src/components/SectionTitle/SectionTitle';
 import ActionButton from '../../../src/components/ActionButton/ActionButton';
 import ToggleableButton from '../../../src/components/ToggleableButton/ToggleableButton';
-import TwoSidedSlider from '../../../src/components/TwoSidedSlider/TwoSidedSlider';
+import Slider from '../../../src/components/Slider/Slider';
 
 
 
 interface PreferencesViewProps {}
 
 const PreferencesView: FC<PreferencesViewProps> = () => {
-
-
 
     return (
     <View style={{
@@ -42,10 +40,10 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
         </View>
 
          <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', }}>
-                    <SectionTitle textValue = 'Distance'></SectionTitle>
+                    <SectionTitle textValue = 'Maximum Distance'></SectionTitle>
 
                     <View style = {{justifyContent: 'center', flexDirection: 'row',}}>
-                        <TwoSidedSlider></TwoSidedSlider>
+                        <Slider></Slider>
                     </View>
          </View>
     </View>
