@@ -6,7 +6,9 @@ interface ToggleableButtonImageProps {}
 
 
 const ToggleableButtonImage = (props: textValue) => {
+
   const [isEnabled, setIsEnabled] = useState(false);
+
   let buttonColor = '#000000';
 
 
@@ -29,7 +31,6 @@ const ToggleableButtonImage = (props: textValue) => {
                     }}
         >
             <Text style = {{
-//                             backgroundColor: isEnabled ? 'white' : '#5bc009',
                             color: isEnabled ? 'white' : '#5bc009',
                             paddingHorizontal: 3,
                             paddingVertical: 3,
@@ -45,6 +46,7 @@ const ToggleableButtonImage = (props: textValue) => {
                             maxWidth: 35,
                             height: 35,
                            }} source={require('../../resources/burger.jpg')}/>
+
         </Pressable>
     </View>
 
