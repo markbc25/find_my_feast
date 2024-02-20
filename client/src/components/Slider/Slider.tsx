@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import {Text, View, Button, Image} from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import CustomSliderLabel from '../CustomSliderLabel/CustomSliderLabel';
 
 
 interface TwoSidedSliderProps {}
@@ -28,7 +29,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
     return (
         <View>
             <MultiSlider
-                values={[multiSliderValue[0], multiSliderValue[1]]}
+                values={[multiSliderValue[0]]}
                 sliderLength={250}
                 onValuesChange={multiSliderValuesChange}
                 min={1}
@@ -58,6 +59,9 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
                         />
                     );
                 }}
+
+
+                customLabel={CustomSliderLabel}
             />
         </View>
     );
