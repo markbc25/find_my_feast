@@ -66,7 +66,7 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
         flex: 1,
 //          backgroundColor: 'orange',
 
