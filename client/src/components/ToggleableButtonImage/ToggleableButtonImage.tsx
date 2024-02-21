@@ -28,14 +28,14 @@ const ToggleableButtonImage = (props: textValue) => {
                         minWidth: 90,
                         minHeight: 90,
                          borderWidth: 0.75,
-                         borderColor: '#55bc009',
+                         borderColor: isEnabled ? '0a6200' : '#402b1f',
                          borderStyle: 'solid',
-                        backgroundColor: isEnabled ? '#5bc009' : '#f6f3f3',
+                        backgroundColor: isEnabled ? '#9cc878' : '#f6f3f3',
                         borderRadius: 7,
                     }}
         >
             <Text style = {{
-                            color: '#402b1f',
+                            color: isEnabled ? '#0a6200' : '#402b1f',
 //                             paddingHorizontal: 3,
                             paddingVertical: 3,
 
