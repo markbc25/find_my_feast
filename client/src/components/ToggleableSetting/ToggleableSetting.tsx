@@ -21,7 +21,8 @@ const ToggleableSetting = (props: textValue) => {
       <Text
           style = {{
           flex: 1,
-            fontSize: 24,
+            fontSize: 20,
+            paddingTop: 10,
             color: '#412c1f',
             justifyContent: 'flex-start',
           }}>

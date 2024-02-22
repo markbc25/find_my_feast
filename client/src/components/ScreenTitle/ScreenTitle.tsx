@@ -18,7 +18,8 @@ const ScreenTitle: FC<ScreenTitleProps> = (props: textValue) => (
                     color: '#402b1f',
                     fontSize: 35,
                     paddingLeft: 30,
-                    fontWeight: 'bold',
+                    fontWeight: '500',
+                    fontStyle: 'italic'
                 }}>
                     {props.textValue}
               </Text>

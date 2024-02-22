@@ -19,23 +19,24 @@ const ToggleableButton = (props: textValue, image) => {
     <View >
         <Pressable
             onPress = {onButtonPress}
-            style = {{ justifyContent: 'center',
+            style = {{
+                        justifyContent: 'center',
                         alignItems: 'spaceBetween',
                         padding: 20,
-                    }}
+                        borderColor: isEnabled ? '0a6200' : '#402b1f',
 
+                    }}
         >
             <Text style = {{
-                                backgroundColor: isEnabled ? '#9cc878' : '#f6f3f3',
-                                color: isEnabled ? '#0a6200' : '#402b1f',
-                                paddingHorizontal: 20,
-                                paddingVertical: 5,
-                                borderWidth: 0.75,
-                                borderColor: isEnabled ? '0a6200' : '#402b1f',
-                                borderStyle: 'solid',
-                                fontSize: 15,
-                                fontWeight: 'bold',
-                                 borderRadius: 7,
+                            backgroundColor : '#f6f3f3',
+                            color: '#402b1f',
+                            paddingHorizontal: 15,
+                            paddingVertical: 5,
+                            borderWidth: isEnabled ? 2 : 0.75,
+                            borderStyle: 'solid',
+                            fontSize: 15,
+                            fontWeight: isEnabled ? '600' : '400',
+                            borderRadius: 5,
                             }}
             >
                            {props.textValue}

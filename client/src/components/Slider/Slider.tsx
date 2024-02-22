@@ -30,7 +30,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
         <View>
             <MultiSlider
                 values={[multiSliderValue[0]]}
-                sliderLength={250}
+                sliderLength={300}
                 onValuesChange={multiSliderValuesChange}
                 min={1}
                 max={50}
@@ -46,7 +46,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
                   backgroundColor: '#402b1f',
                 }}
                 unselectedStyle={{
-                  backgroundColor: '#402b1f',
+                  backgroundColor: '#917b6e',
                 }}
                 customMarker={() => {
                     return(
@@ -54,7 +54,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
                              source={
                                 require('./ruby.png')
                              }
-                             style = {{width: 20, height: 20, paddingTop: 30,}}
+                             style = {{width: 20, height: 20, marginTop: 5,}}
                              resizeMode="contain"
                         />
                     );
