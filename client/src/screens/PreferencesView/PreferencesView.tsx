@@ -24,15 +24,15 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
                  alignItems: 'center',
                }}>
 
-       <View style = {{flex: 0.25, alignSelf: 'stretch', }}>
+       <View style = {{flex: 0.3, alignSelf: 'stretch', }}>
                <ScreenTitle textValue = 'Preferences'></ScreenTitle>
        </View>
 
 
-        <View style = {{flex: 0.25, justifyContent: 'center', alignSelf: 'stretch', }}>
+        <View style = {{flex: 0.15, justifyContent: 'center', alignSelf: 'stretch',}}>
             <SectionTitle textValue = 'Price'></SectionTitle>
 
-            <View style = {{justifyContent: 'spaceBetween', flexDirection: 'row', }}>
+            <View style = {{justifyContent: 'center', flexDirection: 'row', alignSelf: 'center', width: '80%' }}>
               <ToggleableButton textValue = '$'></ToggleableButton>
               <ToggleableButton textValue = '$$'></ToggleableButton>
               <ToggleableButton textValue = '$$$'></ToggleableButton>
@@ -40,7 +40,7 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
             </View>
         </View>
 
-         <View style = {{flex: 0.3, justifyContent: 'center', alignSelf: 'stretch',}}>
+         <View style = {{flex: 0.4, justifyContent: 'center', alignSelf: 'stretch',}}>
                     <SectionTitle textValue = 'Maximum Distance'></SectionTitle>
 
                     <View style = {{justifyContent: 'center', flexDirection: 'row',}}>

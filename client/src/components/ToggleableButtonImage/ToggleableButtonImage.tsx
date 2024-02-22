@@ -27,22 +27,18 @@ const ToggleableButtonImage = (props: textValue) => {
                         maxWidth: 90,
                         minWidth: 90,
                         minHeight: 90,
-                         borderWidth: 0.75,
-                         borderColor: isEnabled ? '0a6200' : '#402b1f',
-                         borderStyle: 'solid',
-                        backgroundColor: isEnabled ? '#9cc878' : '#f6f3f3',
-                        borderRadius: 7,
+                        borderWidth: isEnabled ? 2 : 0.75,
+                        borderStyle: 'solid',
+                        backgroundColor: '#f6f3f3',
+                        borderRadius: 5,
                     }}
         >
             <Text style = {{
-                            color: isEnabled ? '#0a6200' : '#402b1f',
-//                             paddingHorizontal: 3,
                             paddingVertical: 3,
-
                             fontSize: 16,
                             alignSelf: 'center',
-
-                            }}>
+                            fontWeight: isEnabled ? '600' : '400',
+                           }}>
                            {props.textValue}
            </Text>
 
@@ -50,7 +46,8 @@ const ToggleableButtonImage = (props: textValue) => {
                             alignSelf: 'center',
                             maxWidth: 35,
                             height: 35,
-                           }} source={require('../../resources/burger.png')}/>
+                           }}
+                   source={require('../../resources/burger.png')}/>
 
         </Pressable>
     </View>
