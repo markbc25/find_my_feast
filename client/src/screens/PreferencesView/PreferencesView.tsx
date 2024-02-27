@@ -32,7 +32,7 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
         <View style = {{flex: 0.15, justifyContent: 'center', alignSelf: 'stretch',}}>
             <SectionTitle textValue = 'Price'></SectionTitle>
 
-            <View style = {{justifyContent: 'center', flexDirection: 'row', alignSelf: 'center', width: '80%' }}>
+            <View style = {{justifyContent: 'center', flexDirection: 'row', alignSelf: 'center', width: '80%', alignItems: 'flexStart', gap: -20}}>
               <ToggleableButton textValue = '$'></ToggleableButton>
               <ToggleableButton textValue = '$$'></ToggleableButton>
               <ToggleableButton textValue = '$$$'></ToggleableButton>
@@ -51,21 +51,29 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
           <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center'}}>
                      <SectionTitle textValue = 'Cuisine'></SectionTitle>
 
-                     <View style = {{flex: 1, justifyContent: 'spaceBetween', flexDirection: 'row', flexWrap: 'wrap', gap: 10, alignItems: 'center', paddingTop: 20, paddingHorizontal: 10}}>
-                        <ToggleableButtonImage textValue = 'American' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Barbecue' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Chinese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'French' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Hamburger' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Indian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Italian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Japanese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Mexican' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Pizza' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Seafood' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Steak' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Sushi' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                        <ToggleableButtonImage textValue = 'Thai' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                     <View style = {{flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'wrap', gap: 10, alignItems: 'center', paddingTop: 20, paddingHorizontal: 10}}>
+                         <View style = {{flex: 1, flexDirection: 'row', gap: 10}}>
+                            <ToggleableButtonImage textValue = 'American' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Barbecue' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Chinese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'French' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                         </View>
+                         <View style = {{flex: 1, flexDirection: 'row', gap: 10}}>
+                            <ToggleableButtonImage textValue = 'Hamburger' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Indian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Italian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Japanese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                         </View>
+                         <View style = {{flex: 1, flexDirection: 'row', gap: 10}}>
+                            <ToggleableButtonImage textValue = 'Mexican' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Pizza' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Seafood' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Steak' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                        </View>
+                        <View style = {{flex: 1, flexDirection: 'row', gap: 10, alignSelf: 'flex-start'}}>
+                            <ToggleableButtonImage textValue = 'Sushi' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                            <ToggleableButtonImage textValue = 'Thai' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                        </View>
 
                      </View>
           </View>

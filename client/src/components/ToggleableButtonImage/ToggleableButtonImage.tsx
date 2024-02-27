@@ -27,7 +27,7 @@ const ToggleableButtonImage = (props: textValue) => {
                         maxWidth: 90,
                         minWidth: 90,
                         minHeight: 90,
-                        borderWidth: isEnabled ? 2 : 0.75,
+                        borderWidth: isEnabled ? 2.5 : 0.75,
                         borderStyle: 'solid',
                         backgroundColor: '#f6f3f3',
                         borderRadius: 5,
@@ -37,7 +37,8 @@ const ToggleableButtonImage = (props: textValue) => {
                             paddingVertical: 3,
                             fontSize: 16,
                             alignSelf: 'center',
-                            fontWeight: isEnabled ? '600' : '400',
+                            fontWeight: isEnabled ? '700' : '400',
+                            color: '#402b1f',
                            }}>
                            {props.textValue}
            </Text>
