@@ -17,7 +17,7 @@ const ProfileScreen = () => {
 //         alignItems: 'center',
       }}>
 
-        <View style = {{flex: 0.3}}>
+        <View style = {{flex: 0.3, paddingBottom: 40}}>
             <ScreenTitle textValue = 'Profile'></ScreenTitle>
         </View>
 
@@ -35,7 +35,7 @@ const ProfileScreen = () => {
         </View>
 
 
-    <View style = {{flex: 0.25,}}>
+    <View style = {{flex: 0.35,}}>
         <View style = {{
                 padding: 20,
                 alignSelf: 'stretch',
