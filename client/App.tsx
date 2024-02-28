@@ -49,14 +49,20 @@ function App(): React.JSX.Element {
 
   const backgroundStyle = {
      backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
-        flex: 1,
 //          backgroundColor: 'orange',
 
   };
 
   return (
+
+
+
     <Routes/>
+
+
   );
 }
+
+
 
 export default App;

@@ -14,7 +14,7 @@ const SectionTitle: FC<SectionTitleProps> = (props: textValue) => (
                   style = {{
                       color: '#402b1f',
                       fontSize: 20,
-                      fontWeight: '400',
+                      fontWeight: '500',
                   }}>
                       {props.textValue}
                 </Text>

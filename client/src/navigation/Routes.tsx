@@ -35,7 +35,8 @@ const Routes = () => {
           tabBarStyle: [
               {
               'backgroundColor': '#f6f3f3',
-                "display": "flex"
+                'display': 'flex',
+                'borderColor' : '#f6f3f3',
               },
               null
           ]

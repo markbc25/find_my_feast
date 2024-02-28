@@ -23,10 +23,10 @@ const ToggleableButtonImage = (props: textValue) => {
             style = {{ justifyContent: 'center',
                         alignItems: 'flex-start',
                         backgroundColor: 'white',
-                        maxHeight: 80,
-                        maxWidth: 90,
-                        minWidth: 90,
-                        minHeight: 80,
+                         maxHeight: 100,
+                         maxWidth: 115,
+                         minWidth: 115,
+                         minHeight: 100,
                         borderWidth: isEnabled ? 2.5 : 0.75,
                         borderStyle: 'solid',
                         backgroundColor: '#f6f3f3',
@@ -35,7 +35,7 @@ const ToggleableButtonImage = (props: textValue) => {
         >
             <Text style = {{
                             paddingVertical: 3,
-                            fontSize: 15.5,
+                            fontSize: 17,
                             alignSelf: 'center',
                             fontWeight: isEnabled ? '700' : '400',
                             color: '#402b1f',
@@ -45,8 +45,8 @@ const ToggleableButtonImage = (props: textValue) => {
 
            <Image style = {{
                             alignSelf: 'center',
-                            maxWidth: 35,
-                            height: 35,
+                            maxWidth: 50,
+                            maxHeight: 50,
                            }}
                    source={require('../../resources/burger.png')}/>
 

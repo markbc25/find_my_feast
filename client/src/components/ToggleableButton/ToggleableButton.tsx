@@ -32,15 +32,13 @@ const ToggleableButton = (props: textValue, image) => {
                             paddingVertical: 5,
                             borderWidth: isEnabled ? 2 : 0.75,
                             borderStyle: 'solid',
-                            fontSize: 15,
+                            fontSize: 17,
                             fontWeight: isEnabled ? '600' : '400',
                             borderRadius: 5,
                             }}
             >
                            {props.textValue}
            </Text>
-
-
         </Pressable>
     </View>
 

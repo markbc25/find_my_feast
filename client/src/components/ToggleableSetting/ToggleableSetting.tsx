@@ -10,7 +10,7 @@ const ToggleableSetting = (props: textValue) => {
     <View style = {{
         paddingTop: 20,
         paddingBottom: 5,
-        paddingHorizontal: 25,
+        paddingHorizontal: 10,
         alignItems: 'stretch',
         flexDirection: 'row',
         justifyContent: 'spaceBetween',

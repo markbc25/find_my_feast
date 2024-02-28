@@ -3,6 +3,7 @@ import { Button, Image, ImageBackground, Pressable, StyleSheet, Text, View } fro
 import TinderCard from 'react-tinder-card';
 import Heart from '../../../assets/heart.png';
 import Cancel from '../../../assets/cancel.png';
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   container: {
@@ -138,6 +139,13 @@ const PlaceCard: React.FC = () => {
           <TinderCard key={restaurant.name} onSwipe={(dir) => swiped(dir, restaurant.name)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
             <View style={styles.card}>
               <ImageBackground style = {styles.cardImage} source={restaurant.img}>
+               <LinearGradient
+                                colors={['black', 'transparent']}
+                                start={{x: 0, y: 0}}
+                                end={{x: 0, y: 0.4}}
+                                style={{flex: 1}}
+               >
+
                 <View style={styles.overlay}>
                   <View>
                     <Text style={styles.cardTitle}>{restaurant.name}</Text>
@@ -170,16 +178,18 @@ const PlaceCard: React.FC = () => {
                         }
                       ]}
                     >
+
                       <Image style={styles.img} source={Cancel}/>
                     </Pressable>
                   </View>
                 </View>
-              </ImageBackground>
-            </View>
-          </TinderCard>
-        )}
-      </View>
-    </View>
+            </LinearGradient>
+          </ImageBackground>
+        </View>
+      </TinderCard>
+     )}
+   </View>
+  </View>
   )
 }
 

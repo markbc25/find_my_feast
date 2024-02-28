@@ -8,8 +8,8 @@ interface TwoSidedSliderProps {}
 
 const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
     const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
-    const [sliderOneValue, setSliderOneValue] = React.useState([5]);
-    const [multiSliderValue, setMultiSliderValue] = React.useState([0, 30]);
+    const [sliderOneValue, setSliderOneValue] = React.useState([0]);
+    const [multiSliderValue, setMultiSliderValue] = React.useState([10, 30]);
     const [
             nonCollidingMultiSliderValue,
             setNonCollidingMultiSliderValue,
@@ -39,7 +39,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
                 snapped
                 enableLabel
                 trackStyle={{
-                      height: 4,
+                      height: 2.5,
                       backgroundColor: '#402b1f',
                 }}
                 selectedStyle={{
@@ -54,7 +54,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
                              source={
                                 require('./ruby.png')
                              }
-                             style = {{width: 20, height: 20, marginTop: 5,}}
+                             style = {{width: 15, height: 15, marginTop: 3,}}
                              resizeMode="contain"
                         />
                     );

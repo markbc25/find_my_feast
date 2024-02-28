@@ -17,7 +17,7 @@ const ProfileScreen = () => {
 //         alignItems: 'center',
       }}>
 
-        <View style = {{flex: 0.3, paddingBottom: 40}}>
+        <View style = {{flex: 0.3, paddingVertical: 30, paddingHorizontal: 30}}>
             <ScreenTitle textValue = 'Profile'></ScreenTitle>
         </View>
 
@@ -51,9 +51,9 @@ const ProfileScreen = () => {
         <SectionTitle textValue = "Dietary Preferences"></SectionTitle>
 
         <View style = {{
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignSelf: 'stretch',
-            padding: 15,
+//             padding: 15,
             paddingBottom: 60,
             flex: 1,
             }}>
