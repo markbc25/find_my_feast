@@ -9,12 +9,12 @@ interface SectionTitleProps {}
 
 const SectionTitle: FC<SectionTitleProps> = (props: textValue) => (
  <View style = {{
-            alignSelf: 'flex-start', paddingLeft: 30}}>
+            alignSelf: 'flex-start'}}>
               <Text
                   style = {{
                       color: '#402b1f',
-                      fontSize: getFontSize(22),
-                      fontWeight: '500',
+                      fontSize: 20,
+                      fontWeight: '400',
                   }}>
                       {props.textValue}
                 </Text>

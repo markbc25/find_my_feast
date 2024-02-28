@@ -9,7 +9,7 @@ interface TwoSidedSliderProps {}
 const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
     const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
     const [sliderOneValue, setSliderOneValue] = React.useState([5]);
-    const [multiSliderValue, setMultiSliderValue] = React.useState([0, 50]);
+    const [multiSliderValue, setMultiSliderValue] = React.useState([0, 30]);
     const [
             nonCollidingMultiSliderValue,
             setNonCollidingMultiSliderValue,
@@ -33,7 +33,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
                 sliderLength={300}
                 onValuesChange={multiSliderValuesChange}
                 min={1}
-                max={50}
+                max={30}
                 step={1}
                 allowOverlap
                 snapped

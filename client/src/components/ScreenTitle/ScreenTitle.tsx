@@ -11,15 +11,16 @@ const ScreenTitle: FC<ScreenTitleProps> = (props: textValue) => (
                 flex: 1,
                 justifyContent: 'center',
                 alignSelf: 'stretch',
-                paddingVertical: 30,
+//                 paddingVertical: 20,
+// backgroundColor: 'red',
             }}>
               <Text
                 style = {{
                     color: '#402b1f',
-                    fontSize: 35,
-                    paddingLeft: 30,
-                    fontWeight: '500',
-                    fontStyle: 'italic'
+                    fontSize: 26,
+//                     paddingLeft: 30,
+                    fontWeight: '400',
+                    alignSelf: 'center'
                 }}>
                     {props.textValue}
               </Text>

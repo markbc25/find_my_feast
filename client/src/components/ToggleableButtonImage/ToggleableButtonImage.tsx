@@ -23,10 +23,10 @@ const ToggleableButtonImage = (props: textValue) => {
             style = {{ justifyContent: 'center',
                         alignItems: 'flex-start',
                         backgroundColor: 'white',
-                        maxHeight: 90,
+                        maxHeight: 80,
                         maxWidth: 90,
                         minWidth: 90,
-                        minHeight: 90,
+                        minHeight: 80,
                         borderWidth: isEnabled ? 2.5 : 0.75,
                         borderStyle: 'solid',
                         backgroundColor: '#f6f3f3',
@@ -35,7 +35,7 @@ const ToggleableButtonImage = (props: textValue) => {
         >
             <Text style = {{
                             paddingVertical: 3,
-                            fontSize: 16,
+                            fontSize: 15.5,
                             alignSelf: 'center',
                             fontWeight: isEnabled ? '700' : '400',
                             color: '#402b1f',

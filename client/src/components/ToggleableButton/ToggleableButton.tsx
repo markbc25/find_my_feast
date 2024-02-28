@@ -22,9 +22,7 @@ const ToggleableButton = (props: textValue, image) => {
             style = {{
                         justifyContent: 'center',
                         alignItems: 'spaceBetween',
-                        padding: 20,
                         borderColor: isEnabled ? '0a6200' : '#402b1f',
-
                     }}
         >
             <Text style = {{
