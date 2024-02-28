@@ -18,19 +18,23 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   cardContainer: {
-    width: '100%',
+    width: '95%',
     maxWidth: 760,
-    height: 800,
+    height: '95%',
+    maxHeight: 800,
   },
   card: {
     position: 'absolute',
     backgroundColor: '#fff',
     width: '100%',
-    height: 800,
+    minHeight: '100%',
+    height: 750,
     shadowColor: 'black',
     shadowOpacity: 0.2,
     shadowRadius: 20,
     borderRadius: 20,
+
+
   },
   cardImage: {
     width: '100%',
@@ -135,7 +139,7 @@ const PlaceCard: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-        {restaurants.map((restaurant) =>
+         {restaurants.map((restaurant) =>
           <TinderCard key={restaurant.name} onSwipe={(dir) => swiped(dir, restaurant.name)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
             <View style={styles.card}>
               <ImageBackground style = {styles.cardImage} source={restaurant.img}>
@@ -153,28 +157,31 @@ const PlaceCard: React.FC = () => {
                       <Image source={require('../../../assets/car.png')} />
                       <Text style={styles.infoText}>{restaurant.distance} mi</Text>
                     </View>
-                    <Text style={styles.infoText}>{getDollarSigns(restaurant.price)}</Text>
+                        {restaurant.price === 1 && <Text style={styles.infoText}>$<Text style = {{color: '#b8b8b8'}}>$$$</Text></Text>}
+                        {restaurant.price === 2 && <Text style={styles.infoText}>$$<Text style = {{color: '#b8b8b8'}}>$$</Text></Text>}
+                        {restaurant.price === 3 && <Text style={styles.infoText}>$$$<Text style = {{color: '#b8b8b8'}}>$</Text></Text>}
+                        {restaurant.price === 4 && <Text style={styles.infoText}>$$$$</Text>}
                   </View>
                   <View style={styles.buttonRow}>
                     <Pressable
-                      onPressIn={() => {}} 
-                      onPressOut={() => {}} 
+                      onPressIn={() => {}}
+                      onPressOut={() => {}}
                       style={({ pressed }) => [
                         styles.button,
                         {
-                          backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)', 
+                          backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)',
                         }
                       ]}
                     >
                       <Image style={styles.img} source={Heart}/>
                     </Pressable>
                     <Pressable
-                      onPressIn={() => {}} 
-                      onPressOut={() => {}} 
+                      onPressIn={() => {}}
+                      onPressOut={() => {}}
                       style={({ pressed }) => [
                         styles.button,
                         {
-                          backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)', 
+                          backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)',
                         }
                       ]}
                     >
@@ -188,6 +195,7 @@ const PlaceCard: React.FC = () => {
         </View>
       </TinderCard>
      )}
+
    </View>
   </View>
   )

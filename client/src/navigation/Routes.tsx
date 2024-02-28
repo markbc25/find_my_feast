@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 
 const Routes = () => {
   return (
-    <NavigationContainer >
+    <NavigationContainer style = {{backgroundColor: 'red'}}>
 
       <Tab.Navigator
 
@@ -34,9 +34,10 @@ const Routes = () => {
           tabBarInactiveTintColor: "gray",
           tabBarStyle: [
               {
-              'backgroundColor': '#f6f3f3',
-                'display': 'flex',
-                'borderColor' : '#f6f3f3',
+                  'paddingBottom': 10,
+                  'backgroundColor': '#f6f3f3',
+                  'display': 'flex',
+                  'borderColor' : '#f6f3f3',
               },
               null
           ]
