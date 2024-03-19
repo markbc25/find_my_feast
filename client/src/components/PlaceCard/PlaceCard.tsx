@@ -161,7 +161,7 @@ const PlaceCard: React.FC = () => {
                       <Image style={styles.img} source={Heart}/>
                     </Pressable>
                     <Pressable
-                      onPressIn={() => {}} 
+                      onPressIn={() => {console.log("mornin");}} 
                       onPressOut={() => {}} 
                       style={({ pressed }) => [
                         styles.button,

@@ -8,6 +8,20 @@ import ScreenTitle from '../../../src/components/ScreenTitle/ScreenTitle';
 import SectionTitle from '../../../src/components/SectionTitle/SectionTitle';
 import ActionButton from '../../../src/components/ActionButton/ActionButton';
 
+import Share from 'react-native-share';
+//temporary for testing, this function will go to other screen
+const openSMSMenu = async() => {
+    const shareOptions = {
+        message: "hey hey hey",
+    }
+
+    try {
+        const shareResponse = await Share.open(shareOptions);
+    }
+    catch(error) {console.log('error: ', error)};
+ };
+
+
 const ProfileScreen = () => {
   return (
     <View
@@ -65,7 +79,7 @@ const ProfileScreen = () => {
     </View>
 
     <View style = {{flex: 0.5}}>
-            <ActionButton textValue = 'Confirm'></ActionButton>
+            <ActionButton textValue = 'Confirm' onPress = {openSMSMenu}></ActionButton>
     </View>
   </View>
   );
