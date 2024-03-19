@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
-import {Text, View, PixelRatio} from 'react-native';
+import {Text, View, PixelRatio, Dimensions} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const fontScale = PixelRatio.getFontScale();
-const getFontSize = size => size / fontScale;
+const window_width = Dimensions.get('window').width;
+const window_height = Dimensions.get('window').height;
+EStyleSheet.build({$rem: window_width / 380});
 
 
 interface SectionTitleProps {}
@@ -13,7 +15,7 @@ const SectionTitle: FC<SectionTitleProps> = (props: textValue) => (
               <Text
                   style = {{
                       color: '#402b1f',
-                      fontSize: 20,
+                      fontSize: 0.055 * window_width,
                       fontWeight: '500',
                   }}>
                       {props.textValue}
