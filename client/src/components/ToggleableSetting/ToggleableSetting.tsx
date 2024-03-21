@@ -10,7 +10,7 @@ const ToggleableSetting = (props: textValue) => {
     <View style = {{
         paddingTop: 20,
         paddingBottom: 5,
-        paddingHorizontal: 25,
+        paddingHorizontal: 10,
         alignItems: 'stretch',
         flexDirection: 'row',
         justifyContent: 'spaceBetween',
@@ -21,7 +21,8 @@ const ToggleableSetting = (props: textValue) => {
       <Text
           style = {{
           flex: 1,
-            fontSize: 24,
+            fontSize: 18,
+            paddingTop: 10,
             color: '#412c1f',
             justifyContent: 'flex-start',
           }}>

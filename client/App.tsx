@@ -47,9 +47,22 @@ const userActiveIcon = require('./assets/user_active.png');
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const backgroundStyle = {
+     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
+//          backgroundColor: 'orange',
+
+  };
+
   return (
+
+
+
     <Routes/>
+
+
   );
 }
+
+
 
 export default App;
