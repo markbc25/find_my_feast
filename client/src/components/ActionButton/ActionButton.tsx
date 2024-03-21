@@ -14,7 +14,6 @@ const ActionButton: FC<ActionButtonProps> = (props: textValue, onPress) => (
                                 borderRadius: 4,
                                 elevation: 3,
                                 backgroundColor: pressed ?  '#0f9100' : '#509e11',
-
                              }
                            ]}
 

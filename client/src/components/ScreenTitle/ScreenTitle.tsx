@@ -1,5 +1,10 @@
 import React, { FC } from 'react';
-import {Text, View, PixelRatio} from 'react-native';
+import {Text, View, PixelRatio, Dimensions} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+const window_width = Dimensions.get('window').width;
+const window_height = Dimensions.get('window').height;
+EStyleSheet.build({$rem: window_width / 380});
 
 interface ScreenTitleProps {}
 const fontScale = PixelRatio.getFontScale();
@@ -11,15 +16,13 @@ const ScreenTitle: FC<ScreenTitleProps> = (props: textValue) => (
                 flex: 1,
                 justifyContent: 'center',
                 alignSelf: 'stretch',
-                paddingVertical: 30,
             }}>
               <Text
                 style = {{
                     color: '#402b1f',
-                    fontSize: 35,
-                    paddingLeft: 30,
-                    fontWeight: '500',
-                    fontStyle: 'italic'
+                    fontSize: 0.08 * window_width,
+                    fontWeight: '600',
+                    alignSelf: 'flex-start'
                 }}>
                     {props.textValue}
               </Text>

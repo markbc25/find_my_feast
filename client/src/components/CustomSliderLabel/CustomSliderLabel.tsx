@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     fontStyle: 'normal',
-    fontSize: 20,
+    fontSize: 17,
   },
   markerPressed: {
     borderWidth: 0,

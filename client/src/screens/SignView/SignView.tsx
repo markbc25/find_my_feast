@@ -18,21 +18,31 @@ const SignView: FC<SignViewProps> = () => (
         alignItems: 'center',
       }}>
 
-    <View style = {{flex: 0.5, alignSelf: 'stretch'}}>
+    <View style = {{flex: 0.5, alignSelf: 'stretch', paddingHorizontal: 30,}}>
         <ScreenTitle textValue = 'Welcome'></ScreenTitle>
      </View>
 
-    <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch'}}>
-        <SectionTitle textValue = 'Sign In'></SectionTitle>
-            <View style = {{
-                    justifyContent: 'center',
-                    alignSelf: 'stretch',
-                    padding: 15,
-                }}>
+    <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10,}}>
+        <View style = {{paddingBottom: 40}}>
+            <SectionTitle textValue = 'Sign In'></SectionTitle>
+        </View>
+
+        <View style = {{
+                justifyContent: 'center',
+                alignSelf: 'stretch',
+                padding: 10,
+                flex: 1,
+                flexDirection: 'column',
+                 gap: 30,
+            }}>
                 <InputText fieldName = 'EMAIL' textValue = "John Smith"></InputText>
                 <InputText fieldName = 'PASSWORD' textValue = '******'></InputText>
-                <ActionButton textValue = "Sign In"></ActionButton>
-            </View>
+        </View>
+
+        <View style = {{paddingTop: 30, width: '100%'}}>
+            <ActionButton textValue = "Sign In"></ActionButton>
+        </View>
+
     </View>
 
 

@@ -17,25 +17,25 @@ const ProfileScreen = () => {
 //         alignItems: 'center',
       }}>
 
-        <View style = {{flex: 0.5}}>
+        <View style = {{flex: 0.3, paddingVertical: 30, paddingHorizontal: 30}}>
             <ScreenTitle textValue = 'Profile'></ScreenTitle>
         </View>
 
 
-        <View style = {{flex: 0.5, justifyContent: 'center'}}>
+        <View style = {{flex: 0.5, justifyContent: 'center', paddingHorizontal: 30}}>
             <SectionTitle textValue = 'Change Name'></SectionTitle>
 
             <View style = {{
-                justifyContent: 'flex-start',
-                alignSelf: 'stretch',
-                padding: 20,
+                justifyContent: 'flexStart',
+                alignSelf: 'flexStart',
+                paddingVertical: 30,
                 }}>
                 <InputText fieldName = 'DISPLAY NAME' textValue = "John Smith"></InputText>
             </View>
         </View>
 
 
-    <View style = {{flex: 0.25}}>
+    <View style = {{flex: 0.35,}}>
         <View style = {{
                 padding: 20,
                 alignSelf: 'stretch',
@@ -47,13 +47,13 @@ const ProfileScreen = () => {
     </View>
 
 
-    <View style = {{flex: 1.5}}>
+    <View style = {{flex: 1.5, paddingHorizontal: 30}}>
         <SectionTitle textValue = "Dietary Preferences"></SectionTitle>
 
         <View style = {{
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignSelf: 'stretch',
-            padding: 15,
+//             padding: 15,
             paddingBottom: 60,
             flex: 1,
             }}>
