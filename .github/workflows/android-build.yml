@@ -1,0 +1,44 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Sets up Node.js environment
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.11.1' # Specify your Node.js version
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Cache node_modules to speed up builds
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    # Build Android app
+    - name: Build Android Release
+      run: |
+        cd android
+        ./gradlew assembleRelease
+
+    # Run tests
+    - name: Run Jest Tests
+      run: npm test
+
+    # Additional steps like linting, uploading artifacts, or deploying can be added here
