@@ -180,7 +180,8 @@ const PlaceCard: React.FC = () => {
                       <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.cardTitle}>{restaurant.name}</Text>
 
-                        <Pressable style={styles.shareIcon}>
+                        <Pressable onTouchStart={() => console.log('hello!')}
+                          style={styles.shareIcon}>
                           <Text style={styles.shareIcon}>
                             <FontAwesomeIcon icon={faArrowUpFromBracket} size={24} color={'white'} />
                           </Text>
@@ -212,7 +213,7 @@ const PlaceCard: React.FC = () => {
                     </View>
                     <View style={styles.buttonRow}>
                       <Pressable
-
+                        onTouchStart={() => console.log('hello!')}
                         style={({ pressed }) => [
                           styles.button,
                           {
@@ -224,7 +225,7 @@ const PlaceCard: React.FC = () => {
                       </Pressable>
 
                       <Pressable
-
+                        onTouchStart={() => console.log('hello!')}
                         onPressIn={() => { }}
                         onPressOut={() => { }}
                         style={({ pressed }) => [
