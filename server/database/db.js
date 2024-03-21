@@ -1,18 +1,18 @@
-const mysql = require('mysql');
+const { Sequelize } = require('sequelize');
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'user',
-    password: 'password',
-    database: 'database'
+// Initialize Sequelize connection
+const sequelize = new Sequelize('find_my_food', 'root', 'ilikeanime', {
+  dialect: 'mysql',
+  host: 'localhost',
 });
 
-connection.connect((err) => {
-    if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-    }
-    console.log('connected as id ' + connection.threadId);
-});
+// Test the connection
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
-module.exports = connection;
+module.exports = sequelize;
