@@ -8,7 +8,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import { faCar } from '@fortawesome/free-solid-svg-icons/faCar';
-
+import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
 
 const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
@@ -141,13 +141,21 @@ const db = [
 
 
 
-const PlaceCard: React.FC = () => {
+const PlaceCard: React.FC = (props) => {
   const restaurants = db;
   const [lastDirection, setLastDirection] = useState();
 
-  const swiped = (direction: any, nameToDelete: string) => {
-    console.log('removing: ' + nameToDelete);
+  const swiped = (direction: any, restaurantName: string) => {
+    
     setLastDirection(direction);
+    if (direction === 'right') {
+      console.log('swiped right on: ' + restaurantName);
+      CurrentSessionStorage.insertCurrentLiked(restaurantName, "i am restaurant");
+    }
+    else {
+      console.log('swiped left on: ' + restaurantName);
+    }
+    
   }
 
   const outOfFrame = (name: string) => {
