@@ -5916,6 +5916,11 @@ react-native-screens@^3.29.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-session-storage@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-session-storage/-/react-native-session-storage-1.1.1.tgz#437d920b5e1e295a14c812d705576876b3e50f07"
+  integrity sha512-dgxU7spmM1b14sKDvCjyO3eUcX7iAcMU2AwputxHf/eDhMosHCwq6S+FARz4TofZd41phB3nbysIjBnCs/LFag==
+
 react-native-svg@^15.1.0:
   version "15.1.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-15.1.0.tgz#07c75f29b1d641faba50144c7ccd21604b368420"
