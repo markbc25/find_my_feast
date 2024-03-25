@@ -1,27 +1,90 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database/db');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const Restaurant = sequelize.define('Restaurant', {
-    rest_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+const restaurantSchema = new Schema({
+    id: {
+        type: String,
+        required: true,
+        unique: true
     },
-    rest_name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+    types: {
+        type: [String],
+        required: true
     },
-    distance: {
-      type: DataTypes.FLOAT
+    location: {
+        latitude: {
+            type: Number,
+            required: true
+        },
+        longitude: {
+            type: Number,
+            required: true
+        }
     },
-    cuisine_type: {
-      type: DataTypes.STRING(255)
-    }
-  },
-  {
-    tableName: 'Restaurant',
-    timestamps: false
-  });
-  
-  module.exports = Restaurant;
+    rating: {
+        type: Number,
+        required: true
+    },
+    websiteUri: {
+        type: String,
+        required: true
+    },
+    regularOpeningHours: {
+        weekdayDescriptions: {
+            type: [String],
+            required: true
+        }
+    },
+    priceLevel: {
+        type: String,
+        required: true
+    },
+    displayName: {
+        text: {
+            type: String,
+            required: true
+        }
+    },
+    primaryTypeDisplayName: {
+        text: {
+            type: String,
+            required: true
+        }
+    },
+    photos: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            widthPx: {
+                type: Number,
+                required: true
+            },
+            heightPx: {
+                type: Number,
+                required: true
+            },
+            authorAttributions: [
+                {
+                    displayName: {
+                        type: String,
+                        required: true
+                    },
+                    uri: {
+                        type: String,
+                        required: true
+                    },
+                    photoUri: {
+                        type: String,
+                        required: true
+                    }
+                }
+            ]
+        }
+    ]
+});
+
+// Create the model
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+module.exports = { Restaurant };
