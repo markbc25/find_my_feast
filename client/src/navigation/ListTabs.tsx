@@ -7,7 +7,13 @@ const Tab = createMaterialTopTabNavigator();
 
 const ListTabs: FC = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator   screenOptions={{
+                           tabBarActiveTintColor: '#402b1f',
+                           tabBarInactiveTintColor: 'gray',
+                           tabBarStyle: {backgroundColor: '#f6f3f3'},
+                           tabBarIndicatorStyle: {backgroundColor: '#509e11'},
+                           tabBarLabelStyle: {textTransform: 'none', fontSize: 17},
+                      }}>
       <Tab.Screen name="Favorites" component={Favorites} />
       <Tab.Screen name="Do Not Show" component={DoNotShow} />
     </Tab.Navigator>

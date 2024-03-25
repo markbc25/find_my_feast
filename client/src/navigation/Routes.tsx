@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,14 +7,22 @@ import PreferencesView from "../screens/PreferencesView/PreferencesView";
 import HomeView from "../screens/HomeView/HomeView";
 import ListTabs from "./ListTabs";
 import ProfileScreen from "../screens/ProfileView/ProfileView";
+import EStyleSheet from 'react-native-extended-stylesheet';
+import SessionStorageService from '../storage/SessionStorage/SessionStorage.js';
+
+const window_width = Dimensions.get('window').width;
+const window_height = Dimensions.get('window').height;
+EStyleSheet.build({ $rem: window_width / 380 });
 
 const Tab = createBottomTabNavigator();
 
-const Routes = () => {
+const Routes = (props: any) => {
   return (
     <NavigationContainer>
+
       <Tab.Navigator
         screenOptions={({ route }) => ({
+
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Home") {
@@ -28,20 +36,26 @@ const Routes = () => {
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "blue",
+          tabBarActiveTintColor: "#509e11",
           tabBarInactiveTintColor: "gray",
           tabBarStyle: [
-              {
-                "display": "flex"
-              },
-              null
+            {
+
+              'backgroundColor': '#f6f3f3',
+              'display': 'flex',
+              'borderColor': '#f6f3f3',
+              height: 0.06 * window_height,
+            },
+            null
           ]
         })}
       >
-        <Tab.Screen name="Home" options={{headerShown: false}} component={HomeView} />
-        <Tab.Screen name="Lists" component={ListTabs} />
-        <Tab.Screen name="Preferences" component={PreferencesView} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+
+
+        <Tab.Screen name="Home" options={{ headerShown: false }} component={HomeView} />
+        <Tab.Screen name="Lists" options={{ headerShown: false }} component={ListTabs} />
+        <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} />
+        <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

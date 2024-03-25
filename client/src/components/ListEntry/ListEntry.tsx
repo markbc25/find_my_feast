@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    textAlign: 'left'
+    textAlign: 'left',
+    color:'#402b1f',
   }
 });
 

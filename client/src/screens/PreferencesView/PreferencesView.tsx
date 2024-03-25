@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Button, Image} from 'react-native';
+import {Text, View, Button, Image,  ScrollView, SafeAreaView, StyleSheet, Dimensions} from 'react-native';
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
 import ToggleButton from '../../../src/components/ToggleButton/ToggleButton';
@@ -10,6 +10,11 @@ import ActionButton from '../../../src/components/ActionButton/ActionButton';
 import ToggleableButton from '../../../src/components/ToggleableButton/ToggleableButton';
 import ToggleableButtonImage from '../../../src/components/ToggleableButtonImage/ToggleableButtonImage';
 import Slider from '../../../src/components/Slider/Slider';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+const window_width = Dimensions.get('window').width;
+const window_height = Dimensions.get('window').height;
+EStyleSheet.build({$rem: window_width / 380});
 
 
 
@@ -18,21 +23,24 @@ interface PreferencesViewProps {}
 const PreferencesView: FC<PreferencesViewProps> = () => {
 
     return (
-    <View style={{
-                 flex: 1,
-                 justifyContent: 'center',
-                 alignItems: 'center',
+
+    <ScrollView contentContainerStyle={{
+                 flexGrow: 1,
                }}>
 
-       <View style = {{flex: 0.3, alignSelf: 'stretch', }}>
-               <ScreenTitle textValue = 'Preferences'></ScreenTitle>
+
+    <View style = {{flexGrow: 1}}>
+
+
+       <View style = {{flex: 1, alignSelf: 'stretch', paddingHorizontal: 0.03 * window_width, paddingVertical: 0.015 * window_height, paddingTop: 45}}>
+               <ScreenTitle textValue = 'Filters'></ScreenTitle>
        </View>
 
 
-        <View style = {{flex: 0.15, justifyContent: 'center', alignSelf: 'stretch',}}>
+        <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 0.05 * window_width, paddingVertical: 0.015 * window_height}}>
             <SectionTitle textValue = 'Price'></SectionTitle>
 
-            <View style = {{justifyContent: 'center', flexDirection: 'row', alignSelf: 'center', width: '80%', alignItems: 'flexStart', gap: -20}}>
+            <View style = {{justifyContent: 'flexStart', flexDirection: 'row', alignSelf: 'flexStart', width: '100%', alignItems: 'flexStart', gap: 0.08 * window_width, paddingVertical: 15}}>
               <ToggleableButton textValue = '$'></ToggleableButton>
               <ToggleableButton textValue = '$$'></ToggleableButton>
               <ToggleableButton textValue = '$$$'></ToggleableButton>
@@ -40,46 +48,70 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
             </View>
         </View>
 
-         <View style = {{flex: 0.4, justifyContent: 'center', alignSelf: 'stretch',}}>
-                    <SectionTitle textValue = 'Maximum Distance'></SectionTitle>
+         <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 0.05 * window_width, paddingVertical: 0.05 * window_height}}>
+                    <SectionTitle textValue = 'Distance'></SectionTitle>
 
                     <View style = {{justifyContent: 'center', flexDirection: 'row',}}>
                         <Slider></Slider>
                     </View>
          </View>
 
-          <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center'}}>
+          <View style = {{flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center', paddingHorizontal: 0.05 * window_width, paddingVertical: 0.05 * window_height}}>
                      <SectionTitle textValue = 'Cuisine'></SectionTitle>
 
-                     <View style = {{flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'wrap', gap: 10, alignItems: 'center', paddingTop: 20, paddingHorizontal: 10}}>
-                         <View style = {{flex: 1, flexDirection: 'row', gap: 10}}>
-                            <ToggleableButtonImage textValue = 'American' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'Barbecue' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'Chinese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'French' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                     <View style = {{flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'none', gap: 10,  paddingTop: 0.03 * window_height, width: '100%'}}>
+                         <View style = {{flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart'}}>
+                            <ToggleableButtonImage textValue = 'American' image = 'require(../../resources.burger.png)' style = {{flex: 1}}/>
+                            <ToggleableButtonImage textValue = 'Barbecue' image = 'require(../../resources.burger.png)' style = {{flex: 1}}/>
+                            <ToggleableButtonImage textValue = 'Chinese' image = 'require(../../resources.burger.png)' style = {{flex: 1}}/>
                          </View>
-                         <View style = {{flex: 1, flexDirection: 'row', gap: 10}}>
-                            <ToggleableButtonImage textValue = 'Hamburger' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+
+                         <View style = {{flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart'}}>
+                            <ToggleableButtonImage textValue = 'French' image = 'require(../../resources.burger.png)' style = {{flex: 1}}/>
+                            <ToggleableButtonImage textValue = 'Hamburger' image = 'require(../../resources.burger.png)' style = {{padding: 0}}/>
                             <ToggleableButtonImage textValue = 'Indian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'Italian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'Japanese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
                          </View>
-                         <View style = {{flex: 1, flexDirection: 'row', gap: 10}}>
+
+                         <View style = {{flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart'}}>
                             <ToggleableButtonImage textValue = 'Mexican' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
                             <ToggleableButtonImage textValue = 'Pizza' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
                             <ToggleableButtonImage textValue = 'Seafood' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'Steak' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
                         </View>
-                        <View style = {{flex: 1, flexDirection: 'row', gap: 10, alignSelf: 'flex-start'}}>
-                            <ToggleableButtonImage textValue = 'Sushi' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
-                            <ToggleableButtonImage textValue = 'Thai' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+
+                        <View style = {{flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart'}}>
+                          <ToggleableButtonImage textValue = 'Steak' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                           <ToggleableButtonImage textValue = 'Italian' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                           <ToggleableButtonImage textValue = 'Japanese' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                        </View>
+
+
+                        <View style = {{flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart'}}>
+                                <ToggleableButtonImage textValue = 'Sushi' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
+                                <ToggleableButtonImage textValue = 'Thai' image = 'require(../../resources.burger.png)' style = {{padding: 100}}/>
                         </View>
 
                      </View>
           </View>
+
+          <View style = {{flex: 1, width: '100%', paddingVertical: 10}}>
+            <ActionButton textValue = 'Confirm'/>
+          </View>
+
     </View>
+
+     </ScrollView>
     );
 
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+  },
+  scrollView: {
+    backgroundColor: 'pink',
+  },
+  text: {
+    fontSize: 42,
+  },
+});
 export default PreferencesView;
