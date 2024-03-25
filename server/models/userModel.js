@@ -1,25 +1,26 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database/db');
 
-// Define User model
-const User = sequelize.define('User', {
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    user_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    restrictions: {
-      type: DataTypes.ENUM('Pescatarian', 'Gluten-Free', 'Vegetarian', 'Vegan'),
-      allowNull: true 
-    }
-  }, {
-    tableName: 'User', // optional: explicitly define table name
-    timestamps: false // optional: disable timestamps (createdAt, updatedAt)
+mongoose = require("mongoose");
+const Joi = require("joi");
+
+// Define schema for user
+const userSchema = new mongoose.Schema({
+  username: { type: String, unique: true },
+  password: { type: String },
+  email: { type: String, unique: true },
+  restrictions: [{ type: String }],
+  token: { type: String },
+  favoriteRestaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
+});
+
+const validateUser = (user) => {
+  const schema = Joi.object({
+    username: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    restrictions: Joi.array().items(Joi.string()),
   });
+  return schema.validate(user);
+};
 
-module.exports = User;
+const User = mongoose.model('User', userSchema);
+module.exports = { User, validateUser };

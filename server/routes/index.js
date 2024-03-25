@@ -5,5 +5,7 @@ const authRoutes =  require('./authRoute');
 
 router.use('/users', userRoutes);
 router.use('/restaurants', restaurantRoutes);
+router.use('/auth', authRoutes);
+
 
 module.exports = router;

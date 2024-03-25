@@ -1,4 +1,6 @@
 require("dotenv").config();
+
+const db = require("./database/db.js").connect();
 const express = require("express");
 const router = require("./routes/index.js");
 const cors = require("cors");
@@ -6,7 +8,9 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 
-// TODO: setup a env file and store variables.
+const {User} = require("./models/userModel.js");
+const {Restaurant} = require("./models/restaurantModel.js");
+
 
 app.use(express.json());
 app.use(cors());
