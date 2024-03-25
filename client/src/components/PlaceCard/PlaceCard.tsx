@@ -9,6 +9,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import { faCar } from '@fortawesome/free-solid-svg-icons/faCar';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
+import Share from 'react-native-share';
+
+
+const openSMSMenu = async() => {
+    const shareOptions = {
+        dialogueTitle: 'Share restaurant',
+        message: 'hey hey hey',
+    }
+
+
+    try {
+        const shareResponse = await Share.open(shareOptions);
+    }
+    catch(error) {console.log('error: ', error)};
+ };
+
 
 const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
@@ -188,7 +204,9 @@ const PlaceCard: React.FC = (props) => {
                       <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.cardTitle}>{restaurant.name}</Text>
 
-                        <Pressable onTouchStart={() => console.log('hello!')}
+
+                        <Pressable onTouchStart={openSMSMenu}
+
                           style={styles.shareIcon}>
                           <Text style={styles.shareIcon}>
                             <FontAwesomeIcon icon={faArrowUpFromBracket} size={24} color={'white'} />

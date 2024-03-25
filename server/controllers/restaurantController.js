@@ -25,4 +25,7 @@ exports.getRestaurants = async (req, res) => {
 
 exports.getRestaurantById = async (req, res) => {
     
-};
+}
+
+
+
