@@ -1,21 +1,21 @@
 import React from 'react';
 import { Text, View, Button, Pressable, Image } from 'react-native';
-import InputText from '../../../src/components/InputText/InputText';
-import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
-import ToggleButton from '../../../src/components/ToggleButton/ToggleButton';
-import ToggleableSetting from '../../../src/components/ToggleableSetting/ToggleableSetting';
-import ScreenTitle from '../../../src/components/ScreenTitle/ScreenTitle';
-import SectionTitle from '../../../src/components/SectionTitle/SectionTitle';
-import ActionButton from '../../../src/components/ActionButton/ActionButton';
+import InputText from '../../components/InputText/InputText';
+import LineBreakIcon from '../../components/LineBreakIcon/LineBreakIcon';
+import ToggleButton from '../../components/ToggleButton/ToggleButton';
+import ToggleableSetting from '../../components/ToggleableSetting/ToggleableSetting';
+import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import ActionButton from '../../components/ActionButton/ActionButton';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
 
 
 
 
-interface SignViewProps { }
+interface SignInViewProps { }
 
-const SignView: FC<SignViewProps> = () => (
+const SignInView: FC<SignInViewProps> = () => (
     <View
         style={{
             flex: 1,
@@ -123,4 +123,4 @@ const SignView: FC<SignViewProps> = () => (
     </View>
 );
 
-export default SignView;
+export default SignInView;
