@@ -7,10 +7,16 @@ const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
-interface ToggleableButtonImageProps { }
+interface ToggleableButtonImageProps {
+    textValue: string,
+    filterValue: string,
+    onClick: Function,
+    image: string,
+}
 
 
-const ToggleableButtonImage = (props: textValue) => {
+
+const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
 
