@@ -1,9 +1,8 @@
 import React, { FC, useState } from 'react';
-import {Modal, StyleSheet, Text, View, Pressable, Alert, Image, ScrollView} from 'react-native';
+import {Modal, StyleSheet, Text, View, Pressable, Alert, Image, ScrollView, Button} from 'react-native';
 import ListEntry from '../../components/ListEntry/ListEntry';
 import PromptModal from '../../components/PromptModal/PromptModal';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -88,6 +87,9 @@ const modalStyles = StyleSheet.create({
         fontSize: 17,
         color: 'black'
       },
+      no: {
+        backgroundColor: "darkgray"
+      }
 })
 
 const db = [
@@ -130,9 +132,11 @@ const getDollarSigns = (price: number) => {
 const CurrentLiked: FC = () => {
     const restaurants = db;
     const [modalVisible, setModalVisible] = useState(false);
+    const [decision, setDecision] = useState(-1);
 
     const handlePress = (id: number) => {
-        setModalVisible(true);
+      setModalVisible(true);
+      setDecision(id);
     }
     
     const handleConfirm = (id: number) => {
@@ -150,20 +154,28 @@ const CurrentLiked: FC = () => {
             setModalVisible(!modalVisible);
         }}>
             <View style={modalStyles.centeredView}>
-            <View style={modalStyles.modalView}>
-                <Text style={modalStyles.modalText}>Choose this restaurant?</Text>
-                <Pressable
-                    style={[modalStyles.button, modalStyles.buttonClose]}
-                    onPress={handleConfirm}
-                >
-                    <Text style={modalStyles.textStyle}>Yes!</Text>
-                </Pressable>
-            </View>
+              <View style={modalStyles.modalView}>
+                  <Text style={modalStyles.modalText}>Choose this restaurant?</Text>
+                  <View style={styles.row}>
+                    <Pressable
+                        style={[modalStyles.button, modalStyles.buttonClose]}
+                        onPress={() => handleConfirm(decision)}
+                    >
+                        <Text style={modalStyles.textStyle}>Yes!</Text>
+                    </Pressable>
+                    <Pressable
+                        style={[modalStyles.button, modalStyles.buttonClose, modalStyles.no ]}
+                        onPress={() => handleConfirm(decision)}
+                    >
+                        <Text style={modalStyles.textStyle}>No</Text>
+                    </Pressable>
+                  </View>
+              </View>
             </View>
         </Modal>
 
         {restaurants.map((restaurant) => 
-        <Pressable onPress={handlePress}
+        <Pressable onPress={() => handlePress(restaurant.id)}
             style={({ pressed }) => [
                 styles.widget,
                 {
