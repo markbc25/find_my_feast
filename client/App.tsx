@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -49,8 +49,8 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
-//          backgroundColor: 'orange',
+    backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
+    //          backgroundColor: 'orange',
 
   };
 
@@ -58,7 +58,7 @@ function App(): React.JSX.Element {
 
 
     //  <SignUpView></SignUpView>
-    //  <Routes/>
+    <Routes />
 
 
   );
