@@ -7,9 +7,11 @@ const window_height = Dimensions.get('window').height;
 EStyleSheet.build({$rem: window_width / 380});
 
 
-interface SectionTitleProps {}
+interface SectionTitleProps {
+    textValue: string,
+}
 
-const SectionTitle: FC<SectionTitleProps> = (props: textValue) => (
+const SectionTitle: FC<SectionTitleProps> = (props: SectionTitleProps) => (
  <View style = {{
             alignSelf: 'flex-start'}}>
               <Text

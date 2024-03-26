@@ -30,11 +30,12 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import ProfileView from './src/screens/ProfileView/ProfileView';
-import SignView from './src/screens/SignView/SignView';
+import SignInView from './src/screens/SignInView/SignInView';
 import PreferencesView from './src/screens/PreferencesView/PreferencesView';
 import HomeView from './src/screens/HomeView/HomeView';
 import Favorites from './src/screens/ListView/Favorites';
 import Routes from './src/navigation/Routes';
+import SignUpView from './src/screens/SignUpView/SignUpView';
 const homeIcon = require('./assets/home.png');
 const homeActiveIcon = require('./assets/home_active.png');
 const preferencesIcon = require('./assets/preferences.png');
@@ -49,17 +50,13 @@ function App(): React.JSX.Element {
 
   const backgroundStyle = {
      backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
-//          backgroundColor: 'orange',
-
   };
 
   return (
 
 
-
-    <Routes/>
-
-
+    //  <SignInView/>
+     <Routes/>
   );
 }
 
