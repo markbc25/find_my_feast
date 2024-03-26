@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Button, Image, ImageBackground, Pressable, StyleSheet, Text, View, SafeAreaView, Dimensions } from 'react-native'
 import TinderCard from 'react-tinder-card';
 import Heart from '../../../assets/heart.png';
@@ -49,18 +49,16 @@ const styles = StyleSheet.create({
   card: {
     position: 'absolute',
     backgroundColor: '#fff',
-    height: 0.85 * window_height,
-    width: 0.95 * window_width,
+    height: window_height * 0.95,
+    width: window_width,
     shadowColor: 'black',
     shadowOpacity: 0.2,
     shadowRadius: 20,
-    borderRadius: 20,
   },
   cardImage: {
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    borderRadius: 20,
     zIndex: -1,
   },
   overlay: {
@@ -131,10 +129,10 @@ interface Restaurant {
   }
 }
 
-const PlaceCard = ({ restaurant }: Restaurant) => {
-
+const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
+  const [lastDirection, setLastDirection] = useState();
+  
   const swiped = (direction: any, restaurantName: string) => {
-    const [lastDirection, setLastDirection] = useState();
     setLastDirection(direction);
     if (direction === 'right') {
       console.log('swiped right on: ' + restaurantName);

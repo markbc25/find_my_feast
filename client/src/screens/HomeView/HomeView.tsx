@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import {Dimensions, SafeAreaView, View} from 'react-native';
+import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
 import TinderCard from 'react-tinder-card';
@@ -49,19 +49,12 @@ const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   cardContainer: {
-    height: 0.85 * window_height,
-    width: 0.95 * window_width,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    width: window_width,
+    height: window_height
   },
 })
 
