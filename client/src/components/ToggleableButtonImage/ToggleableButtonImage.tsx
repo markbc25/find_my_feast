@@ -7,10 +7,14 @@ const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
-interface ToggleableButtonImageProps { }
+interface ToggleableButtonImageProps {
+    onClick: Function,
+    filterValue: string,
+    textValue: string,
+ }
 
 
-const ToggleableButtonImage = (props: textValue) => {
+const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
 
@@ -18,13 +22,18 @@ const ToggleableButtonImage = (props: textValue) => {
 
 
     const onButtonPress = () => {
-        setIsEnabled((isEnabled => !isEnabled));
+        setIsEnabled((!isEnabled));
     };
+
+    useEffect(() => {
+        props.onClick(props.filterValue, isEnabled);
+      }, [isEnabled]);
+      
 
     return (
         <View>
             <Pressable
-                onPress={onButtonPress}
+                onPress={() => onButtonPress()}
                 style={{
                     justifyContent: 'center',
                     alignItems: 'flex-start',

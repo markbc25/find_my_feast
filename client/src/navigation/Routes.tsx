@@ -51,7 +51,6 @@ const Routes = (props: any) => {
         })}
       >
 
-
         <Tab.Screen name="Home" options={{ headerShown: false }} component={HomeView} />
         <Tab.Screen name="Lists" options={{ headerShown: false }} component={ListTabs} />
         <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} />

@@ -130,7 +130,7 @@ interface Restaurant {
 }
 
 const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
-  const [lastDirection, setLastDirection] = useState();
+  const [lastDirection, setLastDirection] = useState('');
   
   const swiped = (direction: any, restaurantName: string) => {
     setLastDirection(direction);
