@@ -1,10 +1,12 @@
-import React, { FC } from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
+import React, { FC, forwardRef, useImperativeHandle } from 'react';
+import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
 import TinderCard from 'react-tinder-card';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Restaurant } from '../../components/PlaceCard/PlaceCard';
+import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants.js';
+import axios from 'axios';
 
 const db = [
   {
@@ -58,32 +60,71 @@ const styles = StyleSheet.create({
   },
 })
 
-const HomeView: FC = () => {
-  ///fetch all restaurants
-  // async function handleRestaurants() {
-  //   const url = `http://10.0.2.2:3000/api/restaurants`
 
-  //   const body = {
-      
-  //   }
-  //   const response = await axios.get(url, body);
-  //   const restaurantData = response.data; 
-  //   console.log(restaurantData);
-  // }
-  //map function
+interface HomeViewProps {
+  parent: any,
+}
+
+const HomeView = forwardRef((props: HomeViewProps, ref) => {
+
+  const updateRestaurantCards = () => {
+    // Logic to be executed in response to the parent component's action
+    handleRestaurants();
+  };
+
+  useImperativeHandle(ref, () => ({
+    updateRestaurantCards
+  }));
+
+
+  async function handleRestaurants() {
+    console.log("handling restaurants");
+    const url = `https://places.googleapis.com/v1/places:searchNearby`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Goog-Api-Key': "KEY",
+      'X-Goog-FieldMask': 'places.displayName.text,places.priceLevel,places.types,places.primaryTypeDisplayName.text,places.rating,places.location,places.regularOpeningHours.weekdayDescriptions,places.photos,places.id,places.websiteUri'
+    }
+
+    const body = {
+      "includedTypes": ["korean_restaurant", "pizza_restaurant"],
+      "excludedTypes": ["italian_restaurant"],
+      "maxResultCount": 15,
+      "locationRestriction": {
+        "circle": {
+          "center": {
+            "latitude": 30.601389,
+            "longitude": -96.314445
+          },
+          "radius": 5000
+        }
+      },
+      "rankPreference": "DISTANCE"
+    };
+
+    try {
+      const response = await axios.post(url, body, { headers: headers });
+      const data = response.data;
+      // TODO: Filter out restaurant data that is in a users Do Not Show list
+      console.log(data)
+    } catch (error) {
+      console.error('Error getting restaurants:', error);
+    }
+
+  }
 
   const restaurants = db;
 
-    return (
-    <SafeAreaView style = {styles.container}>
-        <View style={styles.cardContainer}>
-          {restaurants.map((restaurant) => 
-            <PlaceCard restaurant={restaurant} key={restaurant.name}/>
-          )}
-        </View>
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.cardContainer}>
+        {restaurants.map((restaurant) =>
+          <PlaceCard restaurant={restaurant} key={restaurant.name} />
+        )}
+      </View>
     </SafeAreaView>
-    );
+  );
 
-};
+});
 
 export default HomeView;

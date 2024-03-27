@@ -20,9 +20,11 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 
 
-interface PreferencesViewProps { }
+interface PreferencesViewProps { 
+  onActionButtonClick: Function,
+}
 
-const PreferencesView: FC<PreferencesViewProps> = () => {
+const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) => {
   let [includedTypes, setIncludedTypes] = useState([]);
   let [radius, setRadius] = useState(30);
 
@@ -122,7 +124,7 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
         </View>
 
         <View style={{ flex: 1, width: '100%', paddingVertical: 10 }}>
-          <ActionButton textValue='Confirm' />
+          <ActionButton textValue='Confirm' onPress = {props.onActionButtonClick}/>
         </View>
 
       </View>

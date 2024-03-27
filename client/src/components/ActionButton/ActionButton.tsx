@@ -1,9 +1,12 @@
 import React, { FC } from 'react';
 import {Text, View, Pressable, TextInput} from 'react-native';
 
-interface ActionButtonProps {}
+interface ActionButtonProps {
+    onPress: Function,
+    textValue: string,
+}
 
-const ActionButton: FC<ActionButtonProps> = (props: textValue, onPress) => (
+const ActionButton: FC<ActionButtonProps> = (props: ActionButtonProps) => (
     <View>
         <Pressable  style={({pressed}) => [
                             {
