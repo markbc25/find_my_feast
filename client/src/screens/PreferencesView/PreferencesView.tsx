@@ -123,7 +123,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
           </View>
         </View>
 
-        <View style={{ flex: 1, width: '100%', paddingVertical: 10 }}>
+        <View style={{ flex: 1, width: '90%', paddingVertical: 10, alignSelf: 'center' }}>
           <ActionButton textValue='Confirm' onPress = {props.onActionButtonClick}/>
         </View>
 

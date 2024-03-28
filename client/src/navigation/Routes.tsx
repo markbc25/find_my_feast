@@ -67,7 +67,7 @@ const Routes = (props: any) => {
           {() => <HomeView ref={homeViewRef} />}
         </Tab.Screen>
         <Tab.Screen name="Lists" options={{ headerShown: false }} component={ListTabs} />
-        <Tab.Screen name="Preferences">
+        <Tab.Screen name="Preferences" options={{ headerShown: false }}>
           {() => <PreferencesView onActionButtonClick={preferencesUpdated} />}
         </Tab.Screen>
         {/* <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} /> */}
