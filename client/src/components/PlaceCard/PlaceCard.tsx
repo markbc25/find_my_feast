@@ -120,12 +120,17 @@ const styles = StyleSheet.create({
 
 interface Restaurant {
   restaurant: {
-    name: string,
-    img: any,
-    price: number,
+    displayName: string,
+    priceLevel: string,
     distance: number,
     rating: number,
-    type: string
+    type: string,
+    types: [],
+    location: Object,
+    regularOpeningHours: Object,
+    primaryDisplayName: string,
+    photos: [],
+    key: string,
   }
 }
 
@@ -156,9 +161,9 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
 
   return (
-    <TinderCard key={restaurant.name} onSwipe={(dir) => swiped(dir, restaurant.name)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
+    <TinderCard key={restaurant.displayName} onSwipe={(dir) => swiped(dir, restaurant.displayName)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
       <View style={styles.card}>
-        <ImageBackground style={styles.cardImage} source={restaurant.img}>
+        {/* <ImageBackground style={styles.cardImage} source={restaurant.img}> */}
           <LinearGradient
             colors={['black', 'transparent']}
             start={{ x: 0, y: 0 }}
@@ -170,7 +175,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
               <View>
 
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.cardTitle}>{restaurant.name}</Text>
+                  <Text style={styles.cardTitle}>{restaurant.displayName}</Text>
 
 
                   <Pressable onTouchStart={openSMSMenu}
@@ -185,10 +190,10 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
                 <View style={styles.row}>
                   <Text style={styles.infoText}>
-                    {restaurant.price === 1 && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
-                    {restaurant.price === 2 && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
-                    {restaurant.price === 3 && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
-                    {restaurant.price === 4 && <Text style={styles.infoText}>$$$$</Text>}
+                    {restaurant.priceLevel === 1 && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
+                    {restaurant.priceLevel === 2 && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
+                    {restaurant.priceLevel === 3 && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
+                    {restaurant.priceLevel === 4 && <Text style={styles.infoText}>$$$$</Text>}
 
                     <Text style={styles.infoText}> ꞏ </Text>
                     <Text style={styles.infoText}>{restaurant.type}</Text>
@@ -235,7 +240,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
               </View>
             </View>
           </LinearGradient>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </View>
     </TinderCard>
   )

@@ -1,12 +1,12 @@
-import React, { FC, forwardRef, useImperativeHandle } from 'react';
-import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
+import React, { FC, forwardRef, useImperativeHandle, useState } from 'react';
+import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
 import TinderCard from 'react-tinder-card';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Restaurant } from '../../components/PlaceCard/PlaceCard';
 import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants.js';
-import axios, { AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const db = [
   {
@@ -66,6 +66,15 @@ interface HomeViewProps {
 }
 
 const HomeView = forwardRef((props: HomeViewProps, ref) => {
+  const [restaurantResponse, setRestaurantsChanged] = useState([{
+    id: 0,
+    displayName: 'McDonalds',
+    img: require('../../../assets/test.jpg'),
+    priceLevel: 1,
+    distance: 2,
+    rating: 3.5,
+    type: 'Burger'
+  },]);
 
   const updateRestaurantCards = () => {
     // Logic to be executed in response to the parent component's action
@@ -77,49 +86,86 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   }));
 
 
-async function getRestaurants() {
-  try {
-    let body = {
-      includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
-      maxResultCount: 15,
-      locationRestriction: {
-        circle: {
-          center: {
-            latitude: 30.601389,
-            longitude: -96.314445
-          },
-          radius: 5000
-        }
-      },
-      rankPreference: "DISTANCE"
-    };
-    let url = "http://10.0.2.2:3000/api/restaurants";
+  async function getRestaurants() {
+    try {
+      let body = {
+        includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
+        maxResultCount: 15,
+        locationRestriction: {
+          circle: {
+            center: {
+              latitude: 30.601389,
+              longitude: -96.314445
+            },
+            radius: 5000
+          }
+        },
+        rankPreference: "DISTANCE"
+      };
+      let url = "http://10.0.2.2:3000/api/restaurants";
 
-    const response = await axios.post(url, body);
+      const response = await axios.post(url, body);
 
-    if (response.status !== 200) {
-      throw new Error("HTTP error " + response.status);
+      const extractedPlaces = response.data.places.map(place => {
+        const {
+          id,
+          types,
+          location,
+          rating,
+          websiteUri,
+          regularOpeningHours,
+          priceLevel,
+          displayName,
+          primaryTypeDisplayName,
+          photos
+        } = place;
+        return {
+          id,
+          types,
+          location,
+          rating,
+          websiteUri,
+          regularOpeningHours,
+          priceLevel,
+          displayName,
+          primaryTypeDisplayName,
+          photos
+        };
+      });
+
+      setRestaurantsChanged(extractedPlaces);
+      console.log("restaurants:", (restaurantResponse));
+      return response;
+
+      if (response.status !== 200) {
+        throw new Error("HTTP error " + response.status);
+      }
+      console.log("I'm here"); // This line will not be reached due to the return statement above
+      const data = response.data;
+      console.log(data);
+
+    } catch (error) {
+      console.error(error);
     }
-    console.log("im here ")
-    const data = response.data;
-    console.log(data);
-  } catch (error) {
-    console.error(error);
   }
-}
 
-  const restaurants = db;
+
+
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardContainer}>
-        {restaurants.map((restaurant) =>
-          <PlaceCard restaurant={restaurant} key={restaurant.name} />
-        )}
+        
+        {restaurantResponse.map((place) => (
+          // <PlaceCard key={place.id} restaurant={place} />
+          <View>
+            <Text> {place.displayName}</Text>
+         </View>
+        ))}
+      
       </View>
     </SafeAreaView>
   );
-
 });
 
 export default HomeView;

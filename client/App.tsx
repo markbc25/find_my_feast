@@ -50,17 +50,11 @@ function App(): React.JSX.Element {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
-    //          backgroundColor: 'orange',
-
   };
 
   return (
-
-
     //  <SignUpView></SignUpView>
     <Routes />
-
-
   );
 }
 
