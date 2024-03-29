@@ -55,8 +55,8 @@ function App(): React.JSX.Element {
   return (
 
 
-    //  <SignInView/>
-     <Routes/>
+      <SignUpView/>
+    //  <Routes/>
   );
 }
 
