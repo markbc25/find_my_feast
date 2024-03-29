@@ -24,8 +24,18 @@ exports.getRestaurants = async (req, res) => {
 
 
 exports.getRestaurantById = async (req, res) => {
-    
+    const url = `https://places.googleapis.com/v1/places/${req.params.id}`;
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': process.env.GOOGLE_MAPS_API_KEY,
+        'X-Goog-FieldMask': 'places.displayName.text,places.priceLevel,places.types,places.primaryTypeDisplayName.text,places.rating,places.location,places.regularOpeningHours.weekdayDescriptions,places.photos,places.id,places.websiteUri'
+    }
+    try {
+        const response = await axios.get(url, { headers: headers });
+        const data = response.data;
+        res.json(data);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
 }
-
-
-

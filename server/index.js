@@ -8,8 +8,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 
-const {User} = require("./models/userModel.js");
-const {Restaurant} = require("./models/restaurantModel.js");
+const { User } = require("./models/userModel.js");
+const { Restaurant } = require("./models/restaurantModel.js");
 
 
 app.use(express.json());
