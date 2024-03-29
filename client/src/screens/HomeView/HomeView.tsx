@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, useImperativeHandle, useState } from 'react';
+import React, { FC, forwardRef, useImperativeHandle, useState, useEffect, useContext, createContext} from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
@@ -66,15 +66,9 @@ interface HomeViewProps {
 }
 
 const HomeView = forwardRef((props: HomeViewProps, ref) => {
-  const [restaurantResponse, setRestaurantsChanged] = useState([{
-    id: 0,
-    displayName: 'McDonalds',
-    img: require('../../../assets/test.jpg'),
-    priceLevel: 1,
-    distance: 2,
-    rating: 3.5,
-    type: 'Burger'
-  },]);
+  const [restaurantResponse, setRestaurantsChanged] = useState([{}]);
+
+  const numCardsOnDeck = createContext(0);
 
   const updateRestaurantCards = () => {
     // Logic to be executed in response to the parent component's action
@@ -85,6 +79,10 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
     updateRestaurantCards
   }));
 
+  useEffect(() => {
+    console.log("morning");
+    updateRestaurantCards();
+  }, [])
 
   async function getRestaurants() {
     try {
@@ -155,15 +153,15 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardContainer}>
-        
+
         {restaurantResponse.map((place) => (
-         <PlaceCard key={place.id} restaurant={place} />
-           
-        //   <View key = {place.id}>
-        //     <Text> {place.displayName.text}</Text>
-        //  </View>
+          place && <PlaceCard key={place.id} restaurant={place} /> // outOfFrame={ }
+
+          //   <View key = {place.id}>
+          //     <Text> {place.displayName.text}</Text>
+          //  </View>
         ))}
-      
+
       </View>
     </SafeAreaView>
   );

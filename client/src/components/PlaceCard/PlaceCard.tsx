@@ -12,19 +12,6 @@ import Share from 'react-native-share';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js';
 
 
-const openSMSMenu = async () => {
-  const shareOptions = {
-    dialogueTitle: 'Share restaurant',
-    message: 'hey hey hey',
-  }
-
-
-  try {
-    const shareResponse = await Share.open(shareOptions);
-  }
-  catch (error) { console.log('error: ', error) };
-};
-
 
 const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
@@ -35,7 +22,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: 0.95 * window_width,
+    backgroundColor: 'red',
+
   },
   header: {
     color: '#000',
@@ -45,20 +34,27 @@ const styles = StyleSheet.create({
   cardContainer: {
     height: 0.85 * window_height,
     width: 0.95 * window_width,
+    backgroundColor: 'red',
+
   },
   card: {
+    alignSelf: 'center',
     position: 'absolute',
     backgroundColor: '#fff',
-    height: window_height * 0.95,
-    width: window_width,
+    height: window_height * 0.9,
+    width: window_width * 0.93,
     shadowColor: 'black',
     shadowOpacity: 0.2,
     shadowRadius: 20,
+    marginTop: window_height * 0.02,
+    borderRadius: 20,
+
   },
   cardImage: {
     width: '100%',
     height: '100%',
     overflow: 'hidden',
+    borderRadius: 20,
     zIndex: -1,
   },
   overlay: {
@@ -68,6 +64,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    borderRadius: 20,
   },
   cardTitle: {
     fontSize: 32,
@@ -124,17 +121,29 @@ interface Restaurant {
     displayName: Object,
     priceLevel: string,
     rating: number,
-    types: [],
+    types: Array<any>,
     location: Object,
     regularOpeningHours: Object,
     primaryTypeDisplayName: Object,
-    photos: [],
+    photos: Array<any>,
     key: string,
+    googleMapsUri: string,
   }
 }
 
 const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
   const [lastDirection, setLastDirection] = useState('');
+
+  const openSMSMenu = async () => {
+    const shareOptions = {
+      dialogueTitle: 'Share restaurant',
+      message: 'Google Maps Link: ' + restaurant.googleMapsUri,
+    }
+    try {
+      const shareResponse = await Share.open(shareOptions);
+    }
+    catch (error) { console.log('error: ', error) };
+  };
 
   const swiped = (direction: any, restaurantName: string) => {
     setLastDirection(direction);
@@ -145,102 +154,97 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     else {
       console.log('swiped left on: ' + restaurantName);
     }
-
   }
 
   const outOfFrame = (name: string) => {
-    console.log(name + ' left the screen!');
+    console.log(('https::').concat(String(restaurant.photos[0].authorAttributions[0].photoUri)));
   }
-
-  const getDollarSigns = (price: number) => {
-    if (price === 1) return '$'
-    else if (price === 2) return '$$'
-    else return '$$$'
-  }
-
-
 
   return (
-    <TinderCard key={restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant.displayName.text)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
+    <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant.displayName && restaurant.displayName.text)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
       <View style={styles.card}>
-        <ImageBackground style={styles.cardImage} source={Cancel}>
-          <LinearGradient
-            colors={['black', 'transparent']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 0.4 }}
-            style={{ flex: 1 }}
-          >
+        {restaurant.photos !== undefined && restaurant.photos.length > 0 &&
+          <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri: 'https::' + String(restaurant.photos[0].authorAttributions[0].photoUri) }}>
 
-            <View style={styles.overlay}>
-              <View>
+            <LinearGradient
+              colors={['black', 'transparent']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 0.4 }}
+              style={{ flex: 1 }}
+            >
 
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.cardTitle}>{restaurant.displayName.text}</Text>
-                  <Pressable onTouchStart={openSMSMenu}
+              <View style={styles.overlay}>
+                <View>
 
-                    style={styles.shareIcon}>
-                    <Text style={styles.shareIcon}>
-                      <FontAwesomeIcon icon={faArrowUpFromBracket} size={24} color={'white'} />
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.cardTitle}>{restaurant.displayName && restaurant.displayName.text}</Text>
+                    <Pressable onTouchStart={openSMSMenu}
+
+                      style={styles.shareIcon}>
+                      <Text style={styles.shareIcon}>
+                        <FontAwesomeIcon icon={faArrowUpFromBracket} size={24} color={'white'} />
+                      </Text>
+                    </Pressable>
+
+                  </View>
+
+                  <View style={styles.row}>
+                    <Text style={styles.infoText}>
+                      {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                      {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
+                      {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
+                      {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
+                      {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
+
+                      <Text style={styles.infoText}> ꞏ </Text>
+                      {restaurant.primaryTypeDisplayName &&
+                        <Text style={styles.infoText}>{restaurant.primaryTypeDisplayName.text}</Text>
+                      }
                     </Text>
-                  </Pressable>
-
-                </View>
-
-                <View style={styles.row}>
-                  <Text style={styles.infoText}>
-                    {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
-                    {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
-                    {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
-                    {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
-
-                    <Text style={styles.infoText}> ꞏ </Text>
-                    {restaurant.primaryTypeDisplayName && 
-                      <Text style={styles.infoText}>{restaurant.primaryTypeDisplayName.text}</Text>
-                    }
-                  </Text>
-                </View>
-                {/* 
+                  </View>
+                  {/* 
                 <View style={styles.row}>
                   <FontAwesomeIcon icon={faCar} size={18} color={'white'} />
                   <Text style={styles.infoText}>{restaurant.distance} mi</Text>
                 </View> */}
 
-                <View style={styles.row}>
-                  <Text style={styles.infoText}>★ {restaurant.rating}</Text>
+                  <View style={styles.row}>
+                    <Text style={styles.infoText}>★ {restaurant.rating}</Text>
+                  </View>
+
                 </View>
+                <View style={styles.buttonRow}>
+                  <Pressable
+                    onTouchStart={() => console.log('hello!')}
+                    style={({ pressed }) => [
+                      styles.button,
+                      {
+                        backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)',
+                      }
+                    ]}
+                  >
+                    <Image style={styles.img} source={Heart} />
+                  </Pressable>
 
+                  <Pressable
+                    onTouchStart={() => console.log('hello!')}
+                    onPressIn={() => { }}
+                    onPressOut={() => { }}
+                    style={({ pressed }) => [
+                      styles.button,
+                      {
+                        backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)',
+                      }
+                    ]}
+                  >
+
+                    <Image style={styles.img} source={Cancel} />
+                  </Pressable>
+                </View>
               </View>
-              <View style={styles.buttonRow}>
-                <Pressable
-                  onTouchStart={() => console.log('hello!')}
-                  style={({ pressed }) => [
-                    styles.button,
-                    {
-                      backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)',
-                    }
-                  ]}
-                >
-                  <Image style={styles.img} source={Heart} />
-                </Pressable>
-
-                <Pressable
-                  onTouchStart={() => console.log('hello!')}
-                  onPressIn={() => { }}
-                  onPressOut={() => { }}
-                  style={({ pressed }) => [
-                    styles.button,
-                    {
-                      backgroundColor: pressed ? 'rgba(52, 52, 52, 0.95)' : 'rgba(52, 52, 52, 0.80)',
-                    }
-                  ]}
-                >
-
-                  <Image style={styles.img} source={Cancel} />
-                </Pressable>
-              </View>
-            </View>
-          </LinearGradient>
-        </ImageBackground>
+            </LinearGradient>
+          </ImageBackground>
+        }
       </View>
     </TinderCard>
   )

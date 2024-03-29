@@ -13,7 +13,7 @@ class PreferencesAndRestaurants {
         if (!instance) {
             instance = this;
         }
-        this.includedTypes = [];
+        this.includedTypes = ["restaurant"];
         // [this.includedTypes, this.setIncludedTypes] = React.useState(['restaurant']);
         return instance;
     }
