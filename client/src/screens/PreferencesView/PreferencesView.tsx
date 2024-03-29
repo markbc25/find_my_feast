@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useEffect } from "react";
-import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { useState, useEffect} from "react";
+import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions, setState } from 'react-native';
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
 import ToggleButton from '../../../src/components/ToggleButton/ToggleButton';
@@ -20,12 +20,13 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 
 
-interface PreferencesViewProps { 
+interface PreferencesViewProps {
   onActionButtonClick: Function,
 }
 
 const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) => {
   let [includedTypes, setIncludedTypes] = useState([]);
+  let [isPressed, setIsPressed] = useState(false);
   let [radius, setRadius] = useState(30);
 
 
@@ -38,15 +39,28 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
       ]);
     }
     else {
-      console.log()
-      setIncludedTypes(includedTypes.filter((type: string) => type !== newValue));
+      let filteredArray = includedTypes.filter(item => item !== newValue);
+      console.log("filtered a rray: " + filteredArray);
+       setIncludedTypes(filteredArray);
+      // console.log("new included types: " + includedTypes);
+      // setState({ includedTypes, filteredArray }, () => {
+      //   preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
+      // });
     }
 
   }
 
   useEffect(() => {
+   // console.log("array in use effect: " + includedTypes);
     preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
+    
   }, [includedTypes]);
+
+
+  useEffect(() => {
+    console.log("action button clicked");
+   props.onActionButtonClick();
+  }, [isPressed]);
 
   function updateRadius(newRadius: number) {
     setRadius(newRadius * 0.000621371);
@@ -124,7 +138,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
         </View>
 
         <View style={{ flex: 1, width: '90%', paddingVertical: 10, alignSelf: 'center' }}>
-          <ActionButton textValue='Confirm' onPress = {props.onActionButtonClick}/>
+          <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
         </View>
 
       </View>

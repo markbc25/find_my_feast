@@ -25,6 +25,7 @@ const Routes = (props: any) => {
   };
 
   const refetchCardsInHome = () => {
+    console.log("calling update restaurants in routes");
     homeViewRef.current.updateRestaurantCards();
   };
 

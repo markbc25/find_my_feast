@@ -5,8 +5,8 @@ import { View } from 'react-native';
 let instance;
 
 class PreferencesAndRestaurants {
-    includedTypes;
-    radius;
+    #includedTypes;
+    #radius;
 
 
     constructor() {
@@ -20,9 +20,14 @@ class PreferencesAndRestaurants {
 
     // Function to set value in session storage
     setIncludedTypes(newIncludedTypes) {
+
+        //console.log("Array as argument in static: " + newIncludedTypes);
+        this.includedTypes.length = 0;
+
         for (i = 0; i < newIncludedTypes.length; i++) {
             this.includedTypes[i] = newIncludedTypes[i];
         }
+
         console.log("Types in static instance: " + this.includedTypes);
     }
 

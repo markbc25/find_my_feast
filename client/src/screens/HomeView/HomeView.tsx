@@ -133,7 +133,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
         };
       });
 
-      setRestaurantsChanged(extractedPlaces);
+      setRestaurantsChanged(response.data.places);
       console.log("restaurants:", (restaurantResponse));
       return response;
 
@@ -157,10 +157,11 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
       <View style={styles.cardContainer}>
         
         {restaurantResponse.map((place) => (
-          // <PlaceCard key={place.id} restaurant={place} />
-          <View>
-            <Text> {place.displayName}</Text>
-         </View>
+         <PlaceCard key={place.id} restaurant={place} />
+           
+        //   <View key = {place.id}>
+        //     <Text> {place.displayName.text}</Text>
+        //  </View>
         ))}
       
       </View>

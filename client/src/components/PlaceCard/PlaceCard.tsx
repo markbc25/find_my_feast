@@ -12,18 +12,18 @@ import Share from 'react-native-share';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js';
 
 
-const openSMSMenu = async() => {
-    const shareOptions = {
-        dialogueTitle: 'Share restaurant',
-        message: 'hey hey hey',
-    }
+const openSMSMenu = async () => {
+  const shareOptions = {
+    dialogueTitle: 'Share restaurant',
+    message: 'hey hey hey',
+  }
 
 
-    try {
-        const shareResponse = await Share.open(shareOptions);
-    }
-    catch(error) {console.log('error: ', error)};
- };
+  try {
+    const shareResponse = await Share.open(shareOptions);
+  }
+  catch (error) { console.log('error: ', error) };
+};
 
 
 const window_width = Dimensions.get('window').width;
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: '#fff',
     marginBottom: 5,
+    width: '90%',
     alignSelf: 'flex-start',
   },
   shareIcon: {
@@ -120,15 +121,13 @@ const styles = StyleSheet.create({
 
 interface Restaurant {
   restaurant: {
-    displayName: string,
+    displayName: Object,
     priceLevel: string,
-    distance: number,
     rating: number,
-    type: string,
     types: [],
     location: Object,
     regularOpeningHours: Object,
-    primaryDisplayName: string,
+    primaryTypeDisplayName: Object,
     photos: [],
     key: string,
   }
@@ -136,7 +135,7 @@ interface Restaurant {
 
 const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
   const [lastDirection, setLastDirection] = useState('');
-  
+
   const swiped = (direction: any, restaurantName: string) => {
     setLastDirection(direction);
     if (direction === 'right') {
@@ -146,7 +145,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     else {
       console.log('swiped left on: ' + restaurantName);
     }
-    
+
   }
 
   const outOfFrame = (name: string) => {
@@ -160,10 +159,11 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
   }
 
 
+
   return (
-    <TinderCard key={restaurant.displayName} onSwipe={(dir) => swiped(dir, restaurant.displayName)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
+    <TinderCard key={restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant.displayName.text)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
       <View style={styles.card}>
-        {/* <ImageBackground style={styles.cardImage} source={restaurant.img}> */}
+        <ImageBackground style={styles.cardImage} source={Cancel}>
           <LinearGradient
             colors={['black', 'transparent']}
             start={{ x: 0, y: 0 }}
@@ -175,9 +175,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
               <View>
 
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.cardTitle}>{restaurant.displayName}</Text>
-
-
+                  <Text style={styles.cardTitle}>{restaurant.displayName.text}</Text>
                   <Pressable onTouchStart={openSMSMenu}
 
                     style={styles.shareIcon}>
@@ -190,20 +188,22 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
                 <View style={styles.row}>
                   <Text style={styles.infoText}>
-                    {restaurant.priceLevel === 1 && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
-                    {restaurant.priceLevel === 2 && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
-                    {restaurant.priceLevel === 3 && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
-                    {restaurant.priceLevel === 4 && <Text style={styles.infoText}>$$$$</Text>}
+                    {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
+                    {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
+                    {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
+                    {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
 
                     <Text style={styles.infoText}> ꞏ </Text>
-                    <Text style={styles.infoText}>{restaurant.type}</Text>
+                    {restaurant.primaryTypeDisplayName && 
+                      <Text style={styles.infoText}>{restaurant.primaryTypeDisplayName.text}</Text>
+                    }
                   </Text>
                 </View>
-
+                {/* 
                 <View style={styles.row}>
                   <FontAwesomeIcon icon={faCar} size={18} color={'white'} />
                   <Text style={styles.infoText}>{restaurant.distance} mi</Text>
-                </View>
+                </View> */}
 
                 <View style={styles.row}>
                   <Text style={styles.infoText}>★ {restaurant.rating}</Text>
@@ -240,7 +240,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
               </View>
             </View>
           </LinearGradient>
-        {/* </ImageBackground> */}
+        </ImageBackground>
       </View>
     </TinderCard>
   )
