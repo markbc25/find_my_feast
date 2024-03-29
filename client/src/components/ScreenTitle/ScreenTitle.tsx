@@ -6,11 +6,11 @@ const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({$rem: window_width / 380});
 
-interface ScreenTitleProps {}
-const fontScale = PixelRatio.getFontScale();
-const getFontSize = size => size / fontScale;
+interface ScreenTitleProps {
+  textValue: string,
+}
 
-const ScreenTitle: FC<ScreenTitleProps> = (props: textValue) => (
+const ScreenTitle: FC<ScreenTitleProps> = (props: ScreenTitleProps) => (
 
            <View style={{
                 flex: 1,

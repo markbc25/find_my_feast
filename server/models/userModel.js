@@ -4,7 +4,7 @@ const Joi = require("joi");
 
 // Define schema for user
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
+  // username: { type: String, unique: false },
   password: { type: String },
   email: { type: String, unique: true },
   restrictions: [{ type: String }],
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
 
 const validateUser = (user) => {
   const schema = Joi.object({
-    username: Joi.string().required(),
+    // username: Joi.string(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     restrictions: Joi.array().items(Joi.string()),

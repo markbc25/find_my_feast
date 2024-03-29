@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect} from "react";
 import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions, setState } from 'react-native';
+
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
 import ToggleButton from '../../../src/components/ToggleButton/ToggleButton';
@@ -20,6 +21,7 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 
 
+
 interface PreferencesViewProps {
   onActionButtonClick: Function,
 }
@@ -32,26 +34,23 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
 
   function updateIncludedTypes(newValue: string, buttonEnabled: boolean) {
+
     if (buttonEnabled) {
       setIncludedTypes([
         newValue,
         ...includedTypes // Put old items at the end
       ]);
     }
+
     else {
       let filteredArray = includedTypes.filter(item => item !== newValue);
       console.log("filtered a rray: " + filteredArray);
        setIncludedTypes(filteredArray);
-      // console.log("new included types: " + includedTypes);
-      // setState({ includedTypes, filteredArray }, () => {
-      //   preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
-      // });
     }
 
   }
 
   useEffect(() => {
-   // console.log("array in use effect: " + includedTypes);
     preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
     
   }, [includedTypes]);
@@ -65,6 +64,8 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
   function updateRadius(newRadius: number) {
     setRadius(newRadius * 0.000621371);
   }
+
+
 
   return (
 
@@ -105,6 +106,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
           <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'none', gap: 10, paddingTop: 0.03 * window_height, width: '100%' }}>
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
+
               <ToggleableButtonImage textValue='American' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='american_restaurant' style={{ flex: 1 }} />
               <ToggleableButtonImage textValue='Barbecue' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='barbecue_restaurant' style={{ flex: 1 }} />
               <ToggleableButtonImage textValue='Chinese' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='chinese_restaurant' style={{ flex: 1 }} />
@@ -126,19 +128,23 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
               <ToggleableButtonImage textValue='Steak' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='steak_house' style={{ padding: 100 }} />
               <ToggleableButtonImage textValue='Italian' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='italian_restaurant' style={{ padding: 100 }} />
               <ToggleableButtonImage textValue='Japanese' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='japanese_restaurant' style={{ padding: 100 }} />
+
             </View>
 
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
               <ToggleableButtonImage textValue='Sushi' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='sushi_restaurant' style={{ padding: 100 }} />
               <ToggleableButtonImage textValue='Thai' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='thai_restaurant' style={{ padding: 100 }} />
+
             </View>
 
           </View>
         </View>
 
+
         <View style={{ flex: 1, width: '90%', paddingVertical: 10, alignSelf: 'center' }}>
           <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
+
         </View>
 
       </View>

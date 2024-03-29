@@ -55,6 +55,7 @@ function App(): React.JSX.Element {
   return (
     //  <SignUpView></SignUpView>
     <Routes />
+
   );
 }
 

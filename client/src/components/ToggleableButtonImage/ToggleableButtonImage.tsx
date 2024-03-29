@@ -8,10 +8,11 @@ const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
 interface ToggleableButtonImageProps {
-    onClick: Function,
-    filterValue: string,
     textValue: string,
- }
+    filterValue: string,
+    onClick: Function,
+    image: string,
+}
 
 
 const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {

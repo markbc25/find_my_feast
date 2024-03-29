@@ -4,28 +4,27 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
+    console.log("before try");
     try {
+        console.log("in try");
         // Make sure all the nessccary data fields are filled in correctly
         const { error } = validateUser(req.body);
         if (error)
             return res.status(400).send(error.details[0].message);
 
-        const { username, email, password, restrictions } = req.body;
+        const { email, password, restrictions } = req.body;
 
         const emailExist = await User.findOne({ email });
-        const usernameExist = await User.findOne({ username });
 
         if (emailExist)
             return res.status(409).send("Email Already Exist. Please Login");
-        if (usernameExist)
-            return res.status(409).send("Username Already Exist. Please Login");
+
 
         // Hash password
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashedPassword = await bcrypt.hash(password, salt);
 
         let user = new User({
-            username,
             email: email.toLowerCase(),
             password: hashedPassword,
             restrictions: restrictions,
@@ -38,7 +37,6 @@ exports.signup = async (req, res) => {
         user.save()
             .then((user) => {
                 return res.status(201).send({
-                    username: user.username,
                     email: user.email,
                 });
             })
