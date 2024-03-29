@@ -23,9 +23,13 @@ class PreferencesAndRestaurants {
 
         //console.log("Array as argument in static: " + newIncludedTypes);
         this.includedTypes.length = 0;
-
-        for (i = 0; i < newIncludedTypes.length; i++) {
-            this.includedTypes[i] = newIncludedTypes[i];
+        if (newIncludedTypes.length === 0) {
+            this.includedTypes[0] = "restaurant";
+        }
+        else {
+            for (i = 0; i < newIncludedTypes.length; i++) {
+                this.includedTypes[i] = newIncludedTypes[i];
+            }
         }
 
         console.log("Types in static instance: " + this.includedTypes);
