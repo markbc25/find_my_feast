@@ -5,8 +5,8 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useEffect, useState } from 'react';
+import type { PropsWithChildren } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -36,6 +36,9 @@ import HomeView from './src/screens/HomeView/HomeView';
 import Favorites from './src/screens/ListView/Favorites';
 import Routes from './src/navigation/Routes';
 import SignUpView from './src/screens/SignUpView/SignUpView';
+import SignInOrUpView from './src/components/SignInOrUpView/SignInOrUpView';
+import LottieSplashScreen from "react-native-lottie-splash-screen";
+
 const homeIcon = require('./assets/home.png');
 const homeActiveIcon = require('./assets/home_active.png');
 const preferencesIcon = require('./assets/preferences.png');
@@ -47,16 +50,21 @@ const userActiveIcon = require('./assets/user_active.png');
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
+    backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
   };
 
+  useEffect(() => {
+    LottieSplashScreen.hide(); // here
+  }, []);
+
   return (
-
-
-    //  <SignInView/>
-     <Routes/>
+    <View style={{ flex: 1 }}>
+      {(!isSignedIn) && <SignInOrUpView />}
+      {(isSignedIn) && <Routes />}
+    </View>
   );
 }
 

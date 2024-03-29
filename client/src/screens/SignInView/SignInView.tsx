@@ -49,6 +49,7 @@ const SignInView: FC<SignInViewProps> = () => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor: '#f6f3f3',
             }}>
 
             <View style={{ flex: 0.5, alignSelf: 'stretch', paddingHorizontal: 30, }}>
