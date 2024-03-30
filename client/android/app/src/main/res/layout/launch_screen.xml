@@ -15,5 +15,7 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
         android:scaleType="centerCrop"
+
+        
         />
 </LinearLayout>
