@@ -12,11 +12,17 @@ import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 
 
-interface SignInViewProps { }
+interface SignInViewProps {
+    onCreateAccountPressed: Function,
+}
 
-const SignInView: FC<SignInViewProps> = () => {
+const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
     let [password, setPassword] = useState("Initial");
+
+    function onButtonPressed() {
+        props.onCreateAccountPressed(false);
+    }
 
     function emailChange(newValue: string) {
         setEmail(newValue);
@@ -69,7 +75,7 @@ const SignInView: FC<SignInViewProps> = () => {
                     flexDirection: 'column',
                     gap: 30,
                 }}>
-                    <InputText fieldName='EMAIL' defaultValue="John Smith" change={emailChange}></InputText>
+                    <InputText fieldName='EMAIL' defaultValue="email@example.com" change={emailChange}></InputText>
                     <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
                 </View>
 
@@ -91,7 +97,7 @@ const SignInView: FC<SignInViewProps> = () => {
                         }
                     ]}
 
-                        onPress={() => { console.log('google button pressed') }}>
+                        onPress={() => console.log("continuing with google")}>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Image
@@ -139,14 +145,18 @@ const SignInView: FC<SignInViewProps> = () => {
                     New here?
 
                 </Text>
-                <Text style={{
-                    textDecorationLine: 'underline',
-                    fontSize: 20,
-                    justifyContent: 'center',
-                    color: '#402b1f',
-                }}>
-                    Create Account
-                </Text>
+                <Pressable
+                    onPress={onButtonPressed}
+                >
+                    <Text style={{
+                        textDecorationLine: 'underline',
+                        fontSize: 20,
+                        justifyContent: 'center',
+                        color: '#402b1f',
+                    }}>
+                        Create Account
+                    </Text>
+                </Pressable>
 
             </View>
         </View>

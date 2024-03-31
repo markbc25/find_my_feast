@@ -10,8 +10,8 @@ const SignInOrUpView: FC<SignInOrUpViewProps> = () => {
    const [hasAccount, setHasAccount] = useState(true);
    return (
       <View style = {{flex: 1}}>
-         {(hasAccount) && <SignInView/>}
-         {(!hasAccount) && <SignUpView/>}
+         {(hasAccount) && <SignInView onCreateAccountPressed = {setHasAccount}/>}
+         {(!hasAccount) && <SignUpView onLogInButtonPressed = {setHasAccount}/>}
       </View>
    );
 }

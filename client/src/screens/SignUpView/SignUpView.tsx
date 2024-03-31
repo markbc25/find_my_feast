@@ -12,11 +12,17 @@ import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 
 
-interface SignUpViewProps { }
+interface SignUpViewProps {
+   onLogInButtonPressed: Function,
+}
 
-const SignUpView: FC<SignUpViewProps> = () => {
+const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
    let [email, setEmail] = useState("Initial");
    let [password, setPassword] = useState("Initial");
+
+   function onButtonPressed() {
+      props.onLogInButtonPressed(true);
+   }
 
    function emailChange(newValue: string) {
       setEmail(newValue);
@@ -141,14 +147,16 @@ const SignUpView: FC<SignUpViewProps> = () => {
                Already have an account?
 
             </Text>
-            <Text style={{
-               textDecorationLine: 'underline',
-               fontSize: 20,
-               justifyContent: 'center',
-               color: '#402b1f',
-            }}>
-               Sign In
-            </Text>
+            <Pressable onPress={onButtonPressed}>
+               <Text style={{
+                  textDecorationLine: 'underline',
+                  fontSize: 20,
+                  justifyContent: 'center',
+                  color: '#402b1f',
+               }}>
+                  Sign In
+               </Text>
+            </Pressable>
          </View>
       </View>
    );
