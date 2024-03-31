@@ -8,7 +8,7 @@ interface TwoSidedSliderProps {}
 
 const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
     const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
-    const [sliderOneValue, setSliderOneValue] = React.useState([0]);
+    const [sliderOneValue, setSliderOneValue] = React.useState(0);
     const [multiSliderValue, setMultiSliderValue] = React.useState([10, 30]);
     const [
             nonCollidingMultiSliderValue,
@@ -17,9 +17,9 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
 
     const sliderOneValuesChangeStart = () => setSliderOneChanging(true);
 
-    const sliderOneValuesChange = values => setSliderOneValue(values);
+    const sliderOneValueChange = (values) => setSliderOneValue(values);
 
-    sliderOneValuesChangeFinish = () => setSliderOneChanging(false);
+    sliderOneValuesChangeFinish = () => setSliderOneChanging(false); 
 
     multiSliderValuesChange = values => setMultiSliderValue(values);
 
@@ -29,9 +29,9 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
     return (
         <View>
             <MultiSlider
-                values={[multiSliderValue[0]]}
+                values={[sliderOneValue]}
                 sliderLength={300}
-                onValuesChange={multiSliderValuesChange}
+                onValuesChange={sliderOneValueChange}
                 min={1}
                 max={30}
                 step={1}

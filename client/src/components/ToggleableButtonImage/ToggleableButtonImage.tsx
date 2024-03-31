@@ -15,7 +15,6 @@ interface ToggleableButtonImageProps {
 }
 
 
-
 const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
@@ -24,13 +23,18 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
 
 
     const onButtonPress = () => {
-        setIsEnabled((isEnabled => !isEnabled));
+        setIsEnabled((!isEnabled));
     };
+
+    useEffect(() => {
+        props.onClick(props.filterValue, isEnabled);
+      }, [isEnabled]);
+      
 
     return (
         <View>
             <Pressable
-                onPress={onButtonPress}
+                onPress={() => onButtonPress()}
                 style={{
                     justifyContent: 'center',
                     alignItems: 'flex-start',

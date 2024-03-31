@@ -5,6 +5,7 @@
  * @format
  */
 
+
 import React, { useEffect, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -56,6 +57,7 @@ function App(): React.JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
   };
+
 
   function savePersistentLogin(emailValue: string, passwordValue: string) {
     storage.save({

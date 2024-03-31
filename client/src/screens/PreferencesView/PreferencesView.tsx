@@ -1,6 +1,7 @@
 import React from 'react';
-import { useState, useEffect } from "react";
-import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { useState, useEffect} from "react";
+import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions, setState } from 'react-native';
+
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
 import ToggleButton from '../../../src/components/ToggleButton/ToggleButton';
@@ -12,6 +13,7 @@ import ToggleableButton from '../../../src/components/ToggleableButton/Toggleabl
 import ToggleableButtonImage from '../../../src/components/ToggleableButtonImage/ToggleableButtonImage';
 import Slider from '../../../src/components/Slider/Slider';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
 
 const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
@@ -19,34 +21,48 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 
 
-interface PreferencesViewProps { }
 
+interface PreferencesViewProps {
+  onActionButtonClick: Function,
+}
 
-const PreferencesView: FC<PreferencesViewProps> = () => {
+const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) => {
   let [includedTypes, setIncludedTypes] = useState([]);
+  let [isPressed, setIsPressed] = useState(false);
+  let [radius, setRadius] = useState(30);
 
-  function adjustPreferences(newValue: string, buttonEnabled: boolean) {
+
+
+  function updateIncludedTypes(newValue: string, buttonEnabled: boolean) {
+
     if (buttonEnabled) {
       setIncludedTypes([
         newValue,
         ...includedTypes // Put old items at the end
       ]);
     }
+
+    else {
+      let filteredArray = includedTypes.filter(item => item !== newValue);
+      console.log("filtered a rray: " + filteredArray);
+       setIncludedTypes(filteredArray);
+    }
+
   }
 
-  let body = {
-    "includedTypes": [],
-    "maxResultCount": 15,
-    "locationRestriction": {
-      "circle": {
-        "center": {
-          "latitude": 30.601389,
-          "longitude": -96.314445
-        },
-        "radius": 5000
-      }
-    },
-    "rankPreference": "DISTANCE"
+  useEffect(() => {
+    preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
+    
+  }, [includedTypes]);
+
+
+  useEffect(() => {
+    console.log("action button clicked");
+   props.onActionButtonClick();
+  }, [isPressed]);
+
+  function updateRadius(newRadius: number) {
+    setRadius(newRadius * 0.000621371);
   }
 
 
@@ -90,40 +106,45 @@ const PreferencesView: FC<PreferencesViewProps> = () => {
 
           <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'none', gap: 10, paddingTop: 0.03 * window_height, width: '100%' }}>
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='American' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='american_restaurant' style={{ flex: 1 }} />
-              <ToggleableButtonImage textValue='Barbecue' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='barbecue_restaurant' style={{ flex: 1 }} />
-              <ToggleableButtonImage textValue='Chinese' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='chinese_restaurant' style={{ flex: 1 }} />
+
+              <ToggleableButtonImage textValue='American' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='american_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='Barbecue' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='barbecue_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='Chinese' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='chinese_restaurant' style={{ flex: 1 }} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='French' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='french_restaurant' style={{ flex: 1 }} />
-              <ToggleableButtonImage textValue='Hamburger' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='hamburger_restaurant' style={{ padding: 0 }} />
-              <ToggleableButtonImage textValue='Indian' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='indian_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='French' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='french_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='Hamburger' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='hamburger_restaurant' style={{ padding: 0 }} />
+              <ToggleableButtonImage textValue='Indian' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='indian_restaurant' style={{ padding: 100 }} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='Mexican' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='mexican_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Pizza' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='pizza_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Seafood' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='seafood_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Mexican' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='mexican_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Pizza' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='pizza_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Seafood' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='seafood_restaurant' style={{ padding: 100 }} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='Steak' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='steak_house' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Italian' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='italian_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Japanese' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='japanese_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Steak' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='steak_house' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Italian' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='italian_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Japanese' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='japanese_restaurant' style={{ padding: 100 }} />
+
             </View>
 
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='Sushi' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='sushi_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Thai' image='require(../../resources.burger.png)' onClick={adjustPreferences} filterValue='thai_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Sushi' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='sushi_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Thai' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='thai_restaurant' style={{ padding: 100 }} />
+
             </View>
 
           </View>
         </View>
 
-        <View style={{ flex: 1, width: '100%', paddingVertical: 10 }}>
-          <ActionButton textValue='Confirm' />
+
+        <View style={{ flex: 1, width: '90%', paddingVertical: 10, alignSelf: 'center' }}>
+          <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
+
         </View>
 
       </View>
@@ -144,3 +165,7 @@ const styles = StyleSheet.create({
   },
 });
 export default PreferencesView;
+
+
+
+

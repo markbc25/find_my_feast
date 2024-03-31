@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { View, Text, Dimensions } from "react-native";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -17,6 +17,19 @@ EStyleSheet.build({ $rem: window_width / 380 });
 const Tab = createBottomTabNavigator();
 
 const Routes = (props: any) => {
+
+  const homeViewRef = useRef();
+
+  const preferencesUpdated = () => {
+    refetchCardsInHome();
+  };
+
+  const refetchCardsInHome = () => {
+    console.log("calling update restaurants in routes");
+    homeViewRef.current.updateRestaurantCards();
+  };
+
+
   return (
     <NavigationContainer>
 
@@ -51,10 +64,14 @@ const Routes = (props: any) => {
         })}
       >
 
-
-        <Tab.Screen name="Home" options={{ headerShown: false }} component={HomeView} />
+        <Tab.Screen name="Home" options={{ headerShown: false }} >
+          {() => <HomeView ref={homeViewRef} />}
+        </Tab.Screen>
         <Tab.Screen name="Lists" options={{ headerShown: false }} component={ListTabs} />
-        <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} />
+        <Tab.Screen name="Preferences" options={{ headerShown: false }}>
+          {() => <PreferencesView onActionButtonClick={preferencesUpdated} />}
+        </Tab.Screen>
+        {/* <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} /> */}
         <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
