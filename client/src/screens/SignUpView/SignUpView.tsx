@@ -38,7 +38,6 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
       const body = {
          email: email,
          password: password,
-         username: 'test',
       }
 
       axios.post("http://10.0.2.2:3000/api/auth/signup", body)
