@@ -4,13 +4,15 @@ import { SignInOrUpViewWrapper } from './SignInOrUpView.styled';
 import SignInView from '../../screens/SignInView/SignInView';
 import SignUpView from '../../screens/SignUpView/SignUpView';
 
-interface SignInOrUpViewProps { }
+interface SignInOrUpViewProps {
+   updateIsSignedIn: Function,
+ }
 
-const SignInOrUpView: FC<SignInOrUpViewProps> = () => {
+const SignInOrUpView: FC<SignInOrUpViewProps> = (props: SignInOrUpViewProps) => {
    const [hasAccount, setHasAccount] = useState(true);
    return (
       <View style = {{flex: 1}}>
-         {(hasAccount) && <SignInView onCreateAccountPressed = {setHasAccount}/>}
+         {(hasAccount) && <SignInView onCreateAccountPressed = {setHasAccount} updateIsSignedIn = {props.updateIsSignedIn}/>}
          {(!hasAccount) && <SignUpView onLogInButtonPressed = {setHasAccount}/>}
       </View>
    );

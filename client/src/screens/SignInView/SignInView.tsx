@@ -14,6 +14,7 @@ import axios from 'axios';
 
 interface SignInViewProps {
     onCreateAccountPressed: Function,
+    updateIsSignedIn: Function,
 }
 
 const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
@@ -43,10 +44,13 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
         axios.post("http://10.0.2.2:3000/api/auth/login", body)
             .then(res => {
                 console.log(res.data);
+                props.updateIsSignedIn(true);
             })
             .catch(error => {
                 console.log("Error: " + error.response.data);
             });
+
+
     }
 
     return (
@@ -75,7 +79,7 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                     flexDirection: 'column',
                     gap: 30,
                 }}>
-                    <InputText fieldName='EMAIL' defaultValue="email@example.com" change={emailChange}></InputText>
+                    <InputText fieldName='EMAIL' defaultValue="example@email.com" change={emailChange}></InputText>
                     <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
                 </View>
 
