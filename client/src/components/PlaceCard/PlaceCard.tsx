@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 20,
     zIndex: -1,
+    backgroundColor: 'red',
   },
   overlay: {
     padding: 40,
@@ -78,8 +79,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 'auto',
     zIndex: 1000,
-
-
   },
   infoText: {
     fontSize: 18,
@@ -128,6 +127,7 @@ interface Restaurant {
     photos: Array<any>,
     key: string,
     googleMapsUri: string,
+    id: string,
   }
 }
 
@@ -145,14 +145,15 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     catch (error) { console.log('error: ', error) };
   };
 
-  const swiped = (direction: any, restaurantName: string) => {
+  const swiped = (direction: any, restaurant: Restaurant) => {
+    console.log("swiped");
     setLastDirection(direction);
-    if (direction === 'right') {
-      console.log('swiped right on: ' + restaurantName);
-      CurrentSessionStorage.insertCurrentLiked(restaurantName, "i am restaurant");
+    if (direction === 'right' || direction === 'up') {
+      console.log('swiped right on: ' + restaurant.displayName.text);
+      CurrentSessionStorage.insertCurrentLiked(restaurant.id, restaurant);
     }
     else {
-      console.log('swiped left on: ' + restaurantName);
+      // console.log('swiped left on: ' + restaurant.displayName.text);
     }
   }
 
@@ -161,7 +162,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
   }
 
   return (
-    <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant.displayName && restaurant.displayName.text)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
+    <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
       <View style={styles.card}>
         {restaurant.photos !== undefined && restaurant.photos.length > 0 &&
           <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri: 'https::' + String(restaurant.photos[0].authorAttributions[0].photoUri) }}>

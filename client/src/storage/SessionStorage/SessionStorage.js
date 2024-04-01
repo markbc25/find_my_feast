@@ -18,6 +18,7 @@ class SessionStorage {
   insertCurrentLiked(key, value) {
     this.currentLiked.set(key, value);
     console.debug("inserted to currentLiked, size: ", this.currentLiked.size);
+    console.debug("current likes: " + this.currentLiked)
   }
 
   removeCurrentLiked(key) {
@@ -25,8 +26,9 @@ class SessionStorage {
     console.debug("removed from currentLiked, size: ", this.currentLiked.size);
   }
 
-  getCurrentLiked(key) {
-    return this.currentLiked.get(key);
+  getCurrentLiked() {
+     return Array.from(this.currentLiked).map(([name, value]) => (value))
+    // return this.currentLiked;
   }
 }
 
