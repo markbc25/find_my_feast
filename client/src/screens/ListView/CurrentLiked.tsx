@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
-import {Modal, StyleSheet, Text, View, Pressable, Alert, Image, ScrollView, Button} from 'react-native';
-import ListEntry from '../../components/ListEntry/ListEntry';
-import PromptModal from '../../components/PromptModal/PromptModal';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import {Modal, StyleSheet, Text, View, Pressable, Alert, Image, ScrollView, Button, Dimensions} from 'react-native';
+import ConfettiCannon from 'react-native-confetti-cannon';
+
+const screen = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -89,7 +89,13 @@ const modalStyles = StyleSheet.create({
       },
       no: {
         backgroundColor: "darkgray"
-      }
+      },
+      fullscreenOverlay: {
+        position: 'absolute',
+        width: screen.width,
+        height: screen.height,
+        zIndex: 10, 
+      },
 })
 
 const db = [
@@ -130,21 +136,64 @@ const getDollarSigns = (price: number) => {
 }
 
 const CurrentLiked: FC = () => {
-    const restaurants = db;
+    const [restaurants, setRestaurants] = useState(db);
+    const [finalDecision, setFinalDecision] = useState<any>({});
     const [modalVisible, setModalVisible] = useState(false);
-    const [decision, setDecision] = useState(-1);
-
+    const [decision, setDecision] = useState<number | null>(null);
+    const [showConfetti, setShowConfetti] = useState(false);
+    
     const handlePress = (id: number) => {
       setModalVisible(true);
       setDecision(id);
     }
     
-    const handleConfirm = (id: number) => {
-        setModalVisible(false);
+    const handleConfirm = () => {
+      if(decision != null) { 
+          const selectedRestaurant = restaurants.find(r => r.id === decision);
+          if(selectedRestaurant) {
+              setFinalDecision(selectedRestaurant);
+              setRestaurants([selectedRestaurant]); 
+              setShowConfetti(true);
+          }
+      }
+      setModalVisible(false);
+      setDecision(null); 
     }
+
+    const handleCancel = () => {
+      setModalVisible(false);
+      setDecision(null);
+    }
+
+    useEffect(() => {
+    }, [showConfetti]);
 
     return (
     <ScrollView style={styles.centeredView}>
+      {
+        showConfetti === true ?
+        <View key={Date.now()} style={styles.centeredView}>
+        <ConfettiCannon count={200} origin={{x: -10, y: 0}} fadeOut={true}/>
+        {restaurants.map((restaurant) => 
+          <Pressable onPress={() => handlePress(restaurant.id)}
+              style={({ pressed }) => [
+                  styles.widget,
+                  {
+                  backgroundColor: pressed ? 'rgba(52, 52, 52, 0.15)' : 'rgba(52, 52, 52, 0.0)', 
+                  }
+              ]}
+              key={restaurant.id}
+          >
+              <Image source={restaurant.img} style={styles.image}/>
+              <View>
+                  <Text style={styles.cardTitle}>{restaurant.name}</Text>
+                  <Text style={styles.infoText}>{getDollarSigns(restaurant.price)}</Text>
+              </View>
+          </Pressable>
+        )}
+        </View>
+        :
+        <View>
         <Modal
             animationType="slide"
             transparent={true}
@@ -159,13 +208,13 @@ const CurrentLiked: FC = () => {
                   <View style={styles.row}>
                     <Pressable
                         style={[modalStyles.button, modalStyles.buttonClose]}
-                        onPress={() => handleConfirm(decision)}
+                        onPress={handleConfirm}
                     >
                         <Text style={modalStyles.textStyle}>Yes!</Text>
                     </Pressable>
                     <Pressable
                         style={[modalStyles.button, modalStyles.buttonClose, modalStyles.no ]}
-                        onPress={() => handleConfirm(decision)}
+                        onPress={handleCancel}
                     >
                         <Text style={modalStyles.textStyle}>No</Text>
                     </Pressable>
@@ -187,14 +236,16 @@ const CurrentLiked: FC = () => {
             <Image source={restaurant.img} style={styles.image}/>
             <View>
                 <Text style={styles.cardTitle}>{restaurant.name}</Text>
-                <View style={styles.row}>
-                    {/* <Image source={require('../../../assets/car.png')} /> */}
+                {/* <View style={styles.row}>
+                    <Image source={require('../../../assets/car.png')} /> 
                     <Text style={styles.infoText}>{restaurant.distance} mi</Text>
-                </View>
+                </View> */}
                 <Text style={styles.infoText}>{getDollarSigns(restaurant.price)}</Text>
             </View>
         </Pressable>
         )}
+        </View>
+      }
     </ScrollView>
     );
 };

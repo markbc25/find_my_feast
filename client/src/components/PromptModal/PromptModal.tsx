@@ -1,6 +1,10 @@
 import React, { FC, useState } from 'react';
 import {Modal, StyleSheet, Text, View, Pressable, Alert} from 'react-native';
 import ListEntry from '../../components/ListEntry/ListEntry';
+import { Image } from 'react-native';
+import ConfettiCannon from 'react-native-confetti-cannon';
+
+const confetti = require("../../../assets/confetti.png");
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -52,9 +56,12 @@ const styles = StyleSheet.create({
   });
 
 const PromptModal: FC = () => {
-    const [modalVisible, setModalVisible] = useState(false);
-    return (
+  const [modalVisible, setModalVisible] = useState(false);
+  const [confettiVisible, setConfettiVisible] = useState(false);
+
+  return (
     <View style={styles.centeredView}>
+      
       <Modal
         animationType="slide"
         transparent={true}
@@ -63,16 +70,16 @@ const PromptModal: FC = () => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Ready to make a decision?</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Review Options</Text>
-            </Pressable>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Ready to make a decision?</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Review Options</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
       </Modal>
       <Pressable
         style={[styles.button, styles.buttonOpen]}
@@ -80,7 +87,7 @@ const PromptModal: FC = () => {
         <Text style={styles.textStyle}>Show Modal</Text>
       </Pressable>
     </View>
-    );
+  );
 };
 
 export default PromptModal;
