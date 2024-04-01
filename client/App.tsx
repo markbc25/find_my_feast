@@ -10,6 +10,11 @@ import React, { useEffect, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { LogBox } from 'react-native';
+
+//comment or uncommment as needed
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import {
   Image,

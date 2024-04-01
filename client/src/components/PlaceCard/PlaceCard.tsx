@@ -128,6 +128,7 @@ interface Restaurant {
     key: string,
     googleMapsUri: string,
     id: string,
+    photoUri: string,
   }
 }
 
@@ -158,14 +159,14 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
   }
 
   const outOfFrame = (name: string) => {
-    console.log(('https::').concat(String(restaurant.photos[0].authorAttributions[0].photoUri)));
+    console.log(('https::').concat(restaurant.photoUri));
   }
 
   return (
     <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
       <View style={styles.card}>
         {restaurant.photos !== undefined && restaurant.photos.length > 0 &&
-          <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri: 'https::' + String(restaurant.photos[0].authorAttributions[0].photoUri) }}>
+          <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri: ('https::') + restaurant.photoUri}}>
 
             <LinearGradient
               colors={['black', 'transparent']}

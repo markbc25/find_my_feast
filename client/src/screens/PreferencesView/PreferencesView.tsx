@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions, setState } from 'react-native';
 
 import InputText from '../../../src/components/InputText/InputText';
@@ -20,14 +20,13 @@ const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
 
-
-
 interface PreferencesViewProps {
   onActionButtonClick: Function,
 }
 
 const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) => {
   let [includedTypes, setIncludedTypes] = useState([]);
+  let [includedPriceLevels, setIncludedPriceLevels] = useState([]);
   let [isPressed, setIsPressed] = useState(false);
   let [radius, setRadius] = useState(30);
 
@@ -45,20 +44,42 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
     else {
       let filteredArray = includedTypes.filter(item => item !== newValue);
       console.log("filtered a rray: " + filteredArray);
-       setIncludedTypes(filteredArray);
+      setIncludedTypes(filteredArray);
+    }
+
+  }
+
+  function updateIncludedPriceLevels(newValue: number, buttonEnabled: boolean) {
+
+    if (buttonEnabled) {
+      setIncludedPriceLevels([
+        newValue,
+        ...includedPriceLevels // Put old items at the end
+      ]);
+    }
+
+    else {
+      let filteredArray = includedPriceLevels.filter(item => item !== newValue);
+      console.log("filtered array included prices: " + filteredArray);
+      setIncludedPriceLevels(filteredArray);
     }
 
   }
 
   useEffect(() => {
     preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
-    
+
   }, [includedTypes]);
+
+  useEffect(() => {
+    preferencesAndRestaurantsInstance.setIncludedPriceLevels(includedPriceLevels);
+
+  }, [includedPriceLevels]);
 
 
   useEffect(() => {
     console.log("action button clicked");
-   props.onActionButtonClick();
+    props.onActionButtonClick();
   }, [isPressed]);
 
   function updateRadius(newRadius: number) {
@@ -86,10 +107,10 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
           <SectionTitle textValue='Price'></SectionTitle>
 
           <View style={{ justifyContent: 'flexStart', flexDirection: 'row', alignSelf: 'flexStart', width: '100%', alignItems: 'flexStart', gap: 0.08 * window_width, paddingVertical: 15 }}>
-            <ToggleableButton textValue='$'></ToggleableButton>
-            <ToggleableButton textValue='$$'></ToggleableButton>
-            <ToggleableButton textValue='$$$'></ToggleableButton>
-            <ToggleableButton textValue='$$$$'></ToggleableButton>
+            <ToggleableButton textValue='$' filterValue={1} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$' filterValue={2} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$$' filterValue={3} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$$$' filterValue={4} onClick={updateIncludedPriceLevels}></ToggleableButton>
           </View>
         </View>
 

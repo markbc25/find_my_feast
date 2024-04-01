@@ -15,7 +15,6 @@ exports.getRestaurants = async (req, res) => {
 
         const response = await axios.post(url, req.body, { headers: headers });
         const data = response.data;
-        console.log(JSON.stringify(response.data));
         // TODO: Filter out restaurant data that is in a users Do Not Show list
         res.json(data);
     } catch (error) {

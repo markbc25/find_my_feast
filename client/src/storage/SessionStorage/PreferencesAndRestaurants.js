@@ -5,16 +5,16 @@ import { View } from 'react-native';
 let instance;
 
 class PreferencesAndRestaurants {
-    #includedTypes;
-    #radius;
-
+    includedTypes;
+    radius;
+    includedPriceLevels;
 
     constructor() {
         if (!instance) {
             instance = this;
         }
         this.includedTypes = ["restaurant"];
-        // [this.includedTypes, this.setIncludedTypes] = React.useState(['restaurant']);
+        this.includedPriceLevels = [1, 2, 3, 4];
         return instance;
     }
 
@@ -46,6 +46,29 @@ class PreferencesAndRestaurants {
     getRadius() {
         return this.radius;
     }
+
+    setIncludedPriceLevels(newPriceLevels) {
+
+        //console.log("Array as argument in static: " + newIncludedTypes);
+        this.includedPriceLevels.length = 0;
+        if (newPriceLevels.length === 0) {
+            this.includedPriceLevels = [1, 2, 3, 4];
+            this.minPrice = 1;
+            this.maxPrice = 4;
+        }
+        else {
+            for (i = 0; i < newPriceLevels.length; i++) {
+                this.includedPriceLevels[i] = newPriceLevels[i];
+            }
+        }
+
+        console.log("Price levels in static instance: " + this.includedPriceLevels);
+    }
+
+    getIncludedPriceLevels() {
+        return this.includedPriceLevels;
+    }
+
 }
 
 // Create a singleton instance and export it

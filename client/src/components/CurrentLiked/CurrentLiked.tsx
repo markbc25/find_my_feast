@@ -115,7 +115,7 @@ interface Restaurant {
   }
 }
 
- function getDollarSigns(value: string) {
+function getDollarSigns(value: string) {
   if (value === "INEXPENSIVE") {
     return '$';
   }
@@ -248,16 +248,11 @@ const CurrentLiked: FC = ({ navigation }) => {
                 <Image source={restaurant.img} style={styles.image} />
                 <View>
                   <Text style={styles.cardTitle}>{restaurant.displayName.text}</Text>
-                  {/* <View style={styles.row}>
-                    <Image source={require('../../../assets/car.png')} /> 
-                    <Text style={styles.infoText}>{restaurant.distance} mi</Text>
-                </View> */}
-                  <Text style={styles.infoText}> {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
-                      {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
-                      {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
-                      {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
-                      {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
-                  </Text>
+                  {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
                   <Text style={styles.infoText}>{restaurant.rating}</Text>
                 </View>
               </Pressable>

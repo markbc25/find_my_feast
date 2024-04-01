@@ -27,8 +27,7 @@ class SessionStorage {
   }
 
   getCurrentLiked() {
-     return Array.from(this.currentLiked).map(([name, value]) => (value))
-    // return this.currentLiked;
+    return Array.from(this.currentLiked).map(([name, value]) => (value));
   }
 }
 

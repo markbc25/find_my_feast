@@ -80,7 +80,6 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   }));
 
   useEffect(() => {
-    console.log("morning");
     updateRestaurantCards();
   }, [])
 
@@ -98,7 +97,9 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
             radius: 5000
           }
         },
-        rankPreference: "DISTANCE"
+        rankPreference: "DISTANCE",
+        // minPrice: preferencesAndRestaurantsInstance.getMinPrice(),
+        // maxPrice: preferencesAndRestaurantsInstance.getMaxPrice(),
       };
       let url = "http://10.0.2.2:3000/api/restaurants";
 
@@ -115,7 +116,8 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
           priceLevel,
           displayName,
           primaryTypeDisplayName,
-          photos
+          photos,
+          photoUri
         } = place;
         return {
           id,
@@ -127,28 +129,24 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
           priceLevel,
           displayName,
           primaryTypeDisplayName,
-          photos
+          photos,
+          photoUri
         };
       });
 
       setRestaurantsChanged(response.data.places);
-      console.log("restaurants:", (restaurantResponse));
+      //console.log("restaurants:", (restaurantResponse));
       return response;
 
       if (response.status !== 200) {
         throw new Error("HTTP error " + response.status);
       }
-      console.log("I'm here"); // This line will not be reached due to the return statement above
+     
       const data = response.data;
-      console.log(data);
-
     } catch (error) {
       console.error(error);
     }
   }
-
-
-
 
   return (
     <SafeAreaView style={styles.container}>
