@@ -47,6 +47,8 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
          .catch(error => {
             console.log("Error: " + error.response.data);
          });
+
+         props.onLogInButtonPressed(true);
    }
 
    return (

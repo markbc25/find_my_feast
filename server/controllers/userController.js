@@ -56,6 +56,9 @@ exports.addFavorites = async (req, res) => {
     if (restaurant && user.favoriteRestaurant.includes(restaurant._id)) {
       return res.status(400).send('Restaurant already in favorites');
     }
+    else if (restaurant && Restaurant.findOne({_id: restaurant._id})) {
+      console.log("this restaurant already exists, dont create it");
+    }
     else {
       //console.log("Attempting to create restautnt...")
       restaurant = await Restaurant.create(req.body.restaurant);

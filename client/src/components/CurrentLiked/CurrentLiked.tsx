@@ -181,7 +181,7 @@ const CurrentLiked: FC = ({ navigation }) => {
       {
         showConfetti === true ?
           <View key={Date.now()} style={styles.centeredView}>
-            <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} fadeOut={true} />
+            <ConfettiCannon count={100} origin={{ x: -10, y: 0 }} fadeOut={true} />
 
             {restaurants && restaurants.length > 0 && restaurants.map((restaurant) =>
               <Pressable onPress={() => handlePress(restaurant.id)}
@@ -195,8 +195,13 @@ const CurrentLiked: FC = ({ navigation }) => {
               >
                 <Image source={{uri: restaurant.photoUrl}} style={styles.image} />
                 <View>
-                  <Text style={styles.cardTitle}>{restaurant.name}</Text>
-                  <Text style={styles.infoText}>{restaurant.priceLevel}</Text>
+                <Text style={styles.cardTitle}>{restaurant.displayName.text}</Text>
+                  {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
+                  {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
+                  <Text style={styles.infoText}>{restaurant.rating}</Text>
                 </View>
               </Pressable>
             )}
