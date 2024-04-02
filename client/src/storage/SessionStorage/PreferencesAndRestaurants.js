@@ -25,8 +25,6 @@ class PreferencesAndRestaurants {
         else {
             this.includedTypes = newIncludedTypes;
         }
-
-        console.log("Types in static instance: " + this.includedTypes);
     }
 
     getIncludedTypes() {

@@ -37,10 +37,7 @@ const InputText: FC<InputTextProps> = (props: InputTextProps) => {
 
                 }}
 
-                 onChangeText={newText => props.change(newText)}>
-                 {/* onChangeText={(newText) => { console.log("save me") }} */}
-
-            
+                onChangeText={newText => props.change(newText)}>
                 {value}
             </TextInput>
 

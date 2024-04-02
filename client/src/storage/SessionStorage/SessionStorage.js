@@ -18,13 +18,10 @@ class SessionStorage {
   // Function to set value in session storage
   insertCurrentLiked(key, value) {
     this.currentLiked.set(key, value);
-    console.debug("inserted to currentLiked, size: ", this.currentLiked.size);
-    console.debug("current likes: " + this.currentLiked)
   }
 
   removeCurrentLiked(key) {
     this.currentLiked.delete(key);
-    console.debug("removed from currentLiked, size: ", this.currentLiked.size);
   }
 
   getCurrentLiked() {
@@ -32,9 +29,7 @@ class SessionStorage {
   }
 
   setEmail(value) {
-    console.log("value in sessions torage: " + value);
     this.email = value;
-    console.log("updating email in session storage: " + this.email);
   }
 
   getEmail() {

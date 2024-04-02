@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   restrictions: [{ type: String }],
   token: { type: String },
   favoriteRestaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
+  doNotShow: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }]
 });
 
 const validateUser = (user) => {

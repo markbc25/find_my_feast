@@ -43,7 +43,6 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
     else {
       let filteredArray = includedTypes.filter(item => item !== newValue);
-      console.log("filtered a rray: " + filteredArray);
       setIncludedTypes(filteredArray);
     }
 
@@ -60,7 +59,6 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
     else {
       let filteredArray = includedPriceLevels.filter(item => item !== newValue);
-      console.log("filtered array included prices: " + filteredArray);
       setIncludedPriceLevels(filteredArray);
     }
 
@@ -78,7 +76,6 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
 
   useEffect(() => {
-    console.log("action button clicked");
     props.onActionButtonClick();
   }, [isPressed]);
 

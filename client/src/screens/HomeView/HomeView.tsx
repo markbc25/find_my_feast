@@ -85,7 +85,6 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   }, [])
 
   useEffect(() => {
-    console.log("RESTAURANT STATE UPDATED PLEASE");
   }, [restaurantResponse])
 
   async function getRestaurants() {
@@ -108,11 +107,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
 
       const response = await axios.post(url, body);
 
-      // console.log("restaurants:", JSON.stringify(response.data));
       setRestaurantsChanged(response.data);
-      console.log("restaurants IN STATE:", restaurantResponse);
-      // console.log("restaurants IN STATE SIZE:", restaurantResponse.length);
-
     }
     catch (error){
       console.log(error);

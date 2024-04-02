@@ -58,9 +58,6 @@ exports.getRestaurants = async (req, res) => {
             }
         });
 
-        for (let k = 0; k < filteredData.length; k++) {
-            console.log("Filtered: " + filteredData[k]);
-        }
         res.json(filteredData);
         
     } catch (error) {

@@ -145,10 +145,8 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
   };
 
   const swiped = (direction: any, restaurant: Restaurant) => {
-    console.log("swiped");
     setLastDirection(direction);
     if (direction === 'right' || direction === 'up') {
-      console.log('swiped right on: ' + restaurant.displayName.text);
       CurrentSessionStorage.insertCurrentLiked(restaurant.id, restaurant);
     }
     else {
@@ -158,7 +156,6 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
   const outOfFrame = (name: string) => {
     // console.log(('https::').concat(restaurant.photoUrl));
-    console.log("hi");
   }
   
   async function handleAddToFavorites() {
@@ -174,6 +171,23 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     }
     catch(error) {
       console.log("error adding to favorites in place card: " + error);
+    }
+  }
+
+
+  async function handleAddToDoNotShow() {
+    const body = {
+      user: {
+        email: CurrentSessionStorage.getEmail(),
+      },
+      restaurant: restaurant
+    }
+
+    try {
+      const response = await axios.post('http://10.0.2.2:3000/api/users/doNotShow', body);
+    }
+    catch(error) {
+      console.log("error adding to do not show in place card: " + error);
     }
   }
   return (
@@ -217,11 +231,6 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                       }
                     </Text>
                   </View>
-                  {/* 
-                <View style={styles.row}>
-                  <FontAwesomeIcon icon={faCar} size={18} color={'white'} />
-                  <Text style={styles.infoText}>{restaurant.distance} mi</Text>
-                </View> */}
 
                   <View style={styles.row}>
                     <Text style={styles.infoText}>★ {restaurant.rating}</Text>
@@ -242,7 +251,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                   </Pressable>
 
                   <Pressable
-                    onTouchStart={() => console.log('hello!')}
+                    onTouchStart={handleAddToDoNotShow}
                     onPressIn={() => { }}
                     onPressOut={() => { }}
                     style={({ pressed }) => [

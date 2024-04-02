@@ -35,7 +35,6 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
     function passwordChange(newValue: string) {
         setPassword(newValue);
-        // console.log("new password: " + password);
     }
 
     function handleSignIn() {
@@ -46,7 +45,6 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
         axios.post("http://10.0.2.2:3000/api/auth/login", body)
             .then(res => {
-                console.log(res.data);
                 props.updateIsSignedIn(true);
             })
             .catch(error => {

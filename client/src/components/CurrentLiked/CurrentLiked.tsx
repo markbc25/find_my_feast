@@ -137,7 +137,6 @@ const CurrentLiked: FC = ({ navigation }) => {
 
   const updateCurrentLiked = () => {
     setRestaurants(CurrentSessionStorage.getCurrentLiked());
-    console.log("called: " + restaurants);
   }
 
   React.useEffect(() => {
