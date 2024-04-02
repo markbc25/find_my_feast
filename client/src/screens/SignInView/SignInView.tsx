@@ -8,11 +8,12 @@ import ToggleableSetting from '../../components/ToggleableSetting/ToggleableSett
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import ActionButton from '../../components/ActionButton/ActionButton';
-import { GoogleSigninButton, GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton, GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 
 GoogleSignin.configure({
   webClientId: '728634266042-ql27siv0p7ke5sd1vcsjpseqt65e2i2p.apps.googleusercontent.com',
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
   offlineAccess: true, // If needed
 });
 
@@ -58,34 +59,60 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
     }
     
-    const googleSignIn = async () => {
+    // const googleSignIn = async () => {
+    //   try {
+    //     await GoogleSignin.hasPlayServices();
+    //     const userInfo = await GoogleSignin.signIn();
+    //     handleGoogleSignIn();
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+
+    // const handleGoogleSignIn = async () => {
+    //   try {
+    //     const userInfo = await GoogleSignin.signIn();
+    //     const token = userInfo.idToken;
+    
+    //     axios.post("http://10.0.2.2:3000/api/auth/login", {
+    //       token: token,
+    //       //FIX POST REQUEST
+    //     })
+    //     .then(res => {
+    //       console.log(res.data);
+    //       props.updateIsSignedIn(true);
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+
+    _signIn = async () => {
       try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
-        handleGoogleSignIn();
+        setState({ userInfo, error: undefined });
       } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const handleGoogleSignIn = async () => {
-      try {
-        const userInfo = await GoogleSignin.signIn();
-        const token = userInfo.idToken;
-    
-        axios.post("http://10.0.2.2:3000/api/auth/login", {
-          token: token,
-          //FIX POST REQUEST
-        })
-        .then(res => {
-          console.log(res.data);
-          props.updateIsSignedIn(true);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      } catch (error) {
-        console.error(error);
+        if (isErrorWithCode(error)) {
+          switch (error.code) {
+            case statusCodes.SIGN_IN_CANCELLED:
+              // user cancelled the login flow
+              break;
+            case statusCodes.IN_PROGRESS:
+              // operation (eg. sign in) already in progress
+              break;
+            case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+              // play services not available or outdated
+              break;
+            default:
+            // some other error happened
+          }
+        } else {
+          // an error that's not related to google sign in occurred
+        }
       }
     };
     
@@ -138,7 +165,7 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                         }
                     ]}
 
-                        onPress={googleSignIn}>
+                        onPress={GoogleSignin}>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Image
