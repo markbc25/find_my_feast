@@ -165,7 +165,7 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                         }
                     ]}
 
-                        onPress={GoogleSignin}>
+                        onPress={_signIn}>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Image
