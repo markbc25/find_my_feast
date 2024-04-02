@@ -106,11 +106,9 @@ interface Restaurant {
     rating: number,
     types: Array<any>,
     location: Object,
-    regularOpeningHours: Object,
     primaryTypeDisplayName: Object,
-    photos: Array<any>,
-    key: string,
     googleMapsUri: string,
+    photoUrl: string,
     id: string,
   }
 }
@@ -196,7 +194,7 @@ const CurrentLiked: FC = ({ navigation }) => {
                 ]}
                 key={restaurant.id}
               >
-                <Image source={restaurant.img} style={styles.image} />
+                <Image source={{uri: restaurant.photoUrl}} style={styles.image} />
                 <View>
                   <Text style={styles.cardTitle}>{restaurant.name}</Text>
                   <Text style={styles.infoText}>{restaurant.priceLevel}</Text>
@@ -245,7 +243,7 @@ const CurrentLiked: FC = ({ navigation }) => {
                 ]}
                 key={restaurant.id}
               >
-                <Image source={restaurant.img} style={styles.image} />
+                <Image source={{uri: restaurant.photoUrl}} style={styles.image} />
                 <View>
                   <Text style={styles.cardTitle}>{restaurant.displayName.text}</Text>
                   {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
