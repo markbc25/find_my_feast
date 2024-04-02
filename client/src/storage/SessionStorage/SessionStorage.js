@@ -6,6 +6,7 @@ let instance;
 
 class SessionStorage {
   currentLiked = new Map();
+  email;
 
   constructor() {
     if (!instance) {
@@ -29,8 +30,17 @@ class SessionStorage {
   getCurrentLiked() {
     return Array.from(this.currentLiked).map(([name, value]) => (value));
   }
+
+  setEmail(value) {
+    console.log("value in sessions torage: " + value);
+    this.email = value;
+    console.log("updating email in session storage: " + this.email);
+  }
+
+  getEmail() {
+    return this.email;
+  }
 }
 
-// Create a singleton instance and export it
-let sessionStorageInstance = Object.freeze(new SessionStorage());
+let sessionStorageInstance = new SessionStorage();
 export default sessionStorageInstance;

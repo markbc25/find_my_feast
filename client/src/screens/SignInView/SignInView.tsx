@@ -10,6 +10,8 @@ import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import ActionButton from '../../components/ActionButton/ActionButton';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
+import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
+import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
 
 
 interface SignInViewProps {
@@ -27,7 +29,8 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
     function emailChange(newValue: string) {
         setEmail(newValue);
-        // console.log("new email: " + email);
+        
+       
     }
 
     function passwordChange(newValue: string) {
@@ -52,6 +55,10 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
 
     }
+
+    useEffect(() => {
+        sessionStorageInstance.setEmail(email);
+    }, [email])
 
     return (
         <View

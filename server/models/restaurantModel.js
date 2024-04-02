@@ -24,21 +24,11 @@ const restaurantSchema = new Schema({
     },
     rating: {
         type: Number,
-        required: true
-    },
-    websiteUri: {
-        type: String,
-        required: true
-    },
-    regularOpeningHours: {
-        weekdayDescriptions: {
-            type: [String],
-            required: true
-        }
+        required: false,
     },
     priceLevel: {
         type: String,
-        required: true
+        required: false
     },
     displayName: {
         text: {
@@ -49,41 +39,17 @@ const restaurantSchema = new Schema({
     primaryTypeDisplayName: {
         text: {
             type: String,
-            required: true
+            required: false
         }
     },
-    photos: [
-        {
-            name: {
-                type: String,
-                required: true
-            },
-            widthPx: {
-                type: Number,
-                required: true
-            },
-            heightPx: {
-                type: Number,
-                required: true
-            },
-            authorAttributions: [
-                {
-                    displayName: {
-                        type: String,
-                        required: true
-                    },
-                    uri: {
-                        type: String,
-                        required: true
-                    },
-                    photoUri: {
-                        type: String,
-                        required: true
-                    }
-                }
-            ]
-        }
-    ]
+    photoUrl: {
+        type: String,
+        required: true
+    },
+    googleMapsUri: {
+        type: String,
+        required: true,
+    }
 });
 
 // Create the model

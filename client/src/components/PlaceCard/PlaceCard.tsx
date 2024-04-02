@@ -10,6 +10,7 @@ import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowU
 import { faCar } from '@fortawesome/free-solid-svg-icons/faCar';
 import Share from 'react-native-share';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js';
+import axios from 'axios';
 
 
 
@@ -159,7 +160,22 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     // console.log(('https::').concat(restaurant.photoUrl));
     console.log("hi");
   }
+  
+  async function handleAddToFavorites() {
+    const body = {
+      user: {
+        email: CurrentSessionStorage.getEmail(),
+      },
+      restaurant: restaurant
+    }
 
+    try {
+      const response = await axios.post('http://10.0.2.2:3000/api/users/favorites', body);
+    }
+    catch(error) {
+      console.log("error adding to favorites in place card: " + error);
+    }
+  }
   return (
     <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
       <View style={styles.card}>
@@ -214,7 +230,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                 </View>
                 <View style={styles.buttonRow}>
                   <Pressable
-                    onTouchStart={() => console.log('hello!')}
+                    onTouchStart={handleAddToFavorites}
                     style={({ pressed }) => [
                       styles.button,
                       {
