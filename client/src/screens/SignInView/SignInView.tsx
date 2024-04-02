@@ -8,14 +8,19 @@ import ToggleableSetting from '../../components/ToggleableSetting/ToggleableSett
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import ActionButton from '../../components/ActionButton/ActionButton';
-import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton, GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 
+GoogleSignin.configure({
+  webClientId: '728634266042-ql27siv0p7ke5sd1vcsjpseqt65e2i2p.apps.googleusercontent.com',
+  offlineAccess: true, // If needed
+});
 
 interface SignInViewProps {
     onCreateAccountPressed: Function,
     updateIsSignedIn: Function,
 }
+
 
 const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
@@ -52,6 +57,38 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
 
     }
+    
+    const googleSignIn = async () => {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        handleGoogleSignIn();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const handleGoogleSignIn = async () => {
+      try {
+        const userInfo = await GoogleSignin.signIn();
+        const token = userInfo.idToken;
+    
+        axios.post("http://10.0.2.2:3000/api/auth/login", {
+          token: token,
+          //FIX POST REQUEST
+        })
+        .then(res => {
+          console.log(res.data);
+          props.updateIsSignedIn(true);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
 
     return (
         <View
@@ -101,7 +138,7 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                         }
                     ]}
 
-                        onPress={() => console.log("continuing with google")}>
+                        onPress={googleSignIn}>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Image
