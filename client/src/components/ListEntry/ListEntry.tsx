@@ -3,10 +3,7 @@ import { Button, Image, ImageBackground, Pressable, StyleSheet, Text, View } fro
 import Icon from "react-native-vector-icons/FontAwesome";
 
 interface RestaurantProps {
-    restaurant: {
-      img: string;
-      name: string;
-    };
+  textValue: string,
 }
 
 const styles = StyleSheet.create({
@@ -34,7 +31,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ListEntry: React.FC<RestaurantProps> = ({ restaurant }) => {
+const ListEntry: React.FC<RestaurantProps> = (restaurant: RestaurantProps) => {
     const [iconName, setIconName] = useState("minus-square-o");
 
     const toggleIcon = () => {
@@ -43,7 +40,7 @@ const ListEntry: React.FC<RestaurantProps> = ({ restaurant }) => {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.name}>{restaurant.name}</Text>
+        <Text style={styles.name}>{restaurant.textValue}</Text>
         <Pressable onPress={toggleIcon}>
             <Icon name={iconName} size={24}/>
         </Pressable>

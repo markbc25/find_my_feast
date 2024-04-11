@@ -7,18 +7,25 @@ const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
-interface ToggleableButtonProps { }
+interface ToggleableButtonProps { 
+    textValue: string,
+    filterValue:  any,
+    onClick: Function,
+}
 
-const ToggleableButton = (props: textValue, image) => {
+const ToggleableButton = (props: ToggleableButtonProps) => {
     const [isEnabled, setIsEnabled] = useState(false);
 
     let buttonColor = '#000000';
 
-
-
     const onButtonPress = () => {
         setIsEnabled((isEnabled => !isEnabled));
     };
+
+    useEffect(() => {
+        props.onClick(props.filterValue, isEnabled);
+      }, [isEnabled]);
+      
 
     return (
         <View >

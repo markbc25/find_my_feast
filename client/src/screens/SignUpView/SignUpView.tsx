@@ -42,11 +42,13 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
 
       axios.post("http://10.0.2.2:3000/api/auth/signup", body)
          .then(res => {
-            console.log(res.data);
+           // console.log(res.data);
          })
          .catch(error => {
             console.log("Error: " + error.response.data);
          });
+
+         props.onLogInButtonPressed(true);
    }
 
    return (

@@ -66,7 +66,8 @@ interface HomeViewProps {
 }
 
 const HomeView = forwardRef((props: HomeViewProps, ref) => {
-  const [restaurantResponse, setRestaurantsChanged] = useState([{}]);
+  const [restaurantResponse, setRestaurantsChanged] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const numCardsOnDeck = createContext(0);
 
@@ -80,15 +81,17 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   }));
 
   useEffect(() => {
-    console.log("morning");
     updateRestaurantCards();
   }, [])
+
+  useEffect(() => {
+  }, [restaurantResponse])
 
   async function getRestaurants() {
     try {
       let body = {
         includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
-        maxResultCount: 15,
+        maxResultCount: 20,
         locationRestriction: {
           circle: {
             center: {
@@ -98,64 +101,27 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
             radius: 5000
           }
         },
-        rankPreference: "DISTANCE"
+        rankPreference: "DISTANCE",
       };
       let url = "http://10.0.2.2:3000/api/restaurants";
 
       const response = await axios.post(url, body);
 
-      const extractedPlaces = response.data.places.map(place => {
-        const {
-          id,
-          types,
-          location,
-          rating,
-          websiteUri,
-          regularOpeningHours,
-          priceLevel,
-          displayName,
-          primaryTypeDisplayName,
-          photos
-        } = place;
-        return {
-          id,
-          types,
-          location,
-          rating,
-          websiteUri,
-          regularOpeningHours,
-          priceLevel,
-          displayName,
-          primaryTypeDisplayName,
-          photos
-        };
-      });
-
-      setRestaurantsChanged(response.data.places);
-      console.log("restaurants:", (restaurantResponse));
-      return response;
-
-      if (response.status !== 200) {
-        throw new Error("HTTP error " + response.status);
-      }
-      console.log("I'm here"); // This line will not be reached due to the return statement above
-      const data = response.data;
-      console.log(data);
-
-    } catch (error) {
-      console.error(error);
+      setRestaurantsChanged(response.data);
+    }
+    catch (error){
+      console.log(error);
     }
   }
-
-
 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardContainer}>
-
+      
         {restaurantResponse.map((place) => (
-          place && <PlaceCard key={place.id} restaurant={place} /> // outOfFrame={ }
+          
+         <PlaceCard key={place.id} restaurant={place} /> // outOfFrame={ }
 
           //   <View key = {place.id}>
           //     <Text> {place.displayName.text}</Text>

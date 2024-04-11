@@ -4,7 +4,6 @@ const userController = require('../controllers/userController');
 router.get('/', userController.getUser);
 router.put('/', userController.updateUser);
 
-
 router.get('/favorites', userController.getFavorites);
 router.post('/favorites', userController.addFavorites);
 router.delete('/favorites', userController.deleteFavorites);

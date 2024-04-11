@@ -64,7 +64,7 @@ const ProfileScreen = () => {
         </View>
     </View>
 
-    <View style = {{flex: 0.5}}>
+    <View style = {{flex: 0.5, width: '90%', alignSelf: 'center', justifyContent: 'center'}}>
             <ActionButton textValue = 'Confirm'></ActionButton>
     </View>
   </View>

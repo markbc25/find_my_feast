@@ -10,6 +10,7 @@ import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowU
 import { faCar } from '@fortawesome/free-solid-svg-icons/faCar';
 import Share from 'react-native-share';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js';
+import axios from 'axios';
 
 
 
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 20,
     zIndex: -1,
+    backgroundColor: 'red',
   },
   overlay: {
     padding: 40,
@@ -78,8 +80,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 'auto',
     zIndex: 1000,
-
-
   },
   infoText: {
     fontSize: 18,
@@ -123,11 +123,10 @@ interface Restaurant {
     rating: number,
     types: Array<any>,
     location: Object,
-    regularOpeningHours: Object,
     primaryTypeDisplayName: Object,
-    photos: Array<any>,
-    key: string,
     googleMapsUri: string,
+    id: string,
+    photoUrl: string,
   }
 }
 
@@ -145,27 +144,57 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     catch (error) { console.log('error: ', error) };
   };
 
-  const swiped = (direction: any, restaurantName: string) => {
+  const swiped = (direction: any, restaurant: Restaurant) => {
     setLastDirection(direction);
-    if (direction === 'right') {
-      console.log('swiped right on: ' + restaurantName);
-      CurrentSessionStorage.insertCurrentLiked(restaurantName, "i am restaurant");
+    if (direction === 'right' || direction === 'up') {
+      CurrentSessionStorage.insertCurrentLiked(restaurant.id, restaurant);
     }
     else {
-      console.log('swiped left on: ' + restaurantName);
+      // console.log('swiped left on: ' + restaurant.displayName.text);
     }
   }
 
   const outOfFrame = (name: string) => {
-    console.log(('https::').concat(String(restaurant.photos[0].authorAttributions[0].photoUri)));
+    // console.log(('https::').concat(restaurant.photoUrl));
+  }
+  
+  async function handleAddToFavorites() {
+    const body = {
+      user: {
+        email: CurrentSessionStorage.getEmail(),
+      },
+      restaurant: restaurant
+    }
+
+    try {
+      const response = await axios.post('http://10.0.2.2:3000/api/users/favorites', body);
+    }
+    catch(error) {
+      console.log("error adding to favorites in place card: " + error);
+    }
   }
 
-  return (
-    <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant.displayName && restaurant.displayName.text)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
-      <View style={styles.card}>
-        {restaurant.photos !== undefined && restaurant.photos.length > 0 &&
-          <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri: 'https::' + String(restaurant.photos[0].authorAttributions[0].photoUri) }}>
 
+  async function handleAddToDoNotShow() {
+    const body = {
+      user: {
+        email: CurrentSessionStorage.getEmail(),
+      },
+      restaurant: restaurant
+    }
+
+    try {
+      const response = await axios.post('http://10.0.2.2:3000/api/users/doNotShow', body);
+    }
+    catch(error) {
+      console.log("error adding to do not show in place card: " + error);
+    }
+  }
+  return (
+    <TinderCard key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
+      <View style={styles.card}>
+        {
+          <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{uri: restaurant.photoUrl}}>
             <LinearGradient
               colors={['black', 'transparent']}
               start={{ x: 0, y: 0 }}
@@ -190,7 +219,8 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
                   <View style={styles.row}>
                     <Text style={styles.infoText}>
-                      {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                      {restaurant.priceLevel === null && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                      {restaurant.priceLevel === "PRICE_LEVEL_UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
                       {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
                       {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
                       {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
@@ -202,11 +232,6 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                       }
                     </Text>
                   </View>
-                  {/* 
-                <View style={styles.row}>
-                  <FontAwesomeIcon icon={faCar} size={18} color={'white'} />
-                  <Text style={styles.infoText}>{restaurant.distance} mi</Text>
-                </View> */}
 
                   <View style={styles.row}>
                     <Text style={styles.infoText}>★ {restaurant.rating}</Text>
@@ -215,7 +240,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                 </View>
                 <View style={styles.buttonRow}>
                   <Pressable
-                    onTouchStart={() => console.log('hello!')}
+                    onTouchStart={handleAddToFavorites}
                     style={({ pressed }) => [
                       styles.button,
                       {
@@ -227,7 +252,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                   </Pressable>
 
                   <Pressable
-                    onTouchStart={() => console.log('hello!')}
+                    onTouchStart={handleAddToDoNotShow}
                     onPressIn={() => { }}
                     onPressOut={() => { }}
                     style={({ pressed }) => [
