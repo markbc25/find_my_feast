@@ -73,9 +73,11 @@ const ProfileScreen = (props: ProfileViewProps) => {
                 flex: 1,
             }}>
 
+
             <View style={{ alignSelf: 'stretch', paddingHorizontal: 30 }}>
                 <ScreenTitle textValue='Profile'></ScreenTitle>
             </View>
+
 
 
             <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
@@ -91,6 +93,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
                     <ToggleableSetting initialValue={getVegetarian} onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
                     <ToggleableSetting initialValue={getVegan} onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
                 </View>
+
             </View>
 
 
@@ -110,8 +113,6 @@ const ProfileScreen = (props: ProfileViewProps) => {
             </View>
 
         </View>
-
-
     );
 };
 
