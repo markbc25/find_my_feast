@@ -19,6 +19,7 @@ interface SignUpViewProps {
 const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
    let [email, setEmail] = useState("Initial");
    let [password, setPassword] = useState("Initial");
+   let [errorMessage, setErrorMessage] = useState("");
 
    function onButtonPressed() {
       props.onLogInButtonPressed(true);
@@ -42,13 +43,15 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
 
       axios.post("http://10.0.2.2:3000/api/auth/signup", body)
          .then(res => {
-           // console.log(res.data);
+            // console.log(res.data);
+            props.onLogInButtonPressed(true);
          })
          .catch(error => {
             console.log("Error: " + error.response.data);
+            setErrorMessage(error.response.data);
+            return;
          });
 
-         props.onLogInButtonPressed(true);
    }
 
    return (
@@ -75,10 +78,14 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
                padding: 10,
                flex: 1,
                flexDirection: 'column',
-               gap: 30,
+               gap: 15,
             }}>
                <InputText fieldName='EMAIL' defaultValue="example@email.com" change={emailChange}></InputText>
                <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
+
+               <View style={{ justifyContent: 'center', }}>
+                  <Text style={{ fontSize: 17, color: 'red' }}>{errorMessage}</Text>
+               </View>
             </View>
 
             <View style={{ paddingTop: 30 }}>

@@ -19,7 +19,7 @@ const InputText: FC<InputTextProps> = (props: InputTextProps) => {
     }
 
 
-    return (<View>
+    return (<View style = {{paddingVertical: 5,}}>
         <View style={{
             alignItems: 'flex-start',
             borderColor: '#c1c1c1',
