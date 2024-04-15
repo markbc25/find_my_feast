@@ -73,12 +73,14 @@ const ProfileScreen = (props: ProfileViewProps) => {
                 flex: 1,
             }}>
 
-            <View style={{ flex: 0.2, paddingVertical: 30, paddingHorizontal: 30 }}>
+
+            <View style={{ alignSelf: 'stretch', paddingHorizontal: 30 }}>
                 <ScreenTitle textValue='Profile'></ScreenTitle>
             </View>
 
 
-            <View style={{ paddingHorizontal: 30 }}>
+
+            <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
                 <SectionTitle textValue="Dietary Preferences"></SectionTitle>
 
                 <View style={{
@@ -91,19 +93,26 @@ const ProfileScreen = (props: ProfileViewProps) => {
                     <ToggleableSetting initialValue={getVegetarian} onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
                     <ToggleableSetting initialValue={getVegan} onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
                 </View>
+
             </View>
 
 
+            <View style={{
+                padding: 15,
+                alignSelf: 'stretch',
+                justifyContent: 'center',
+            }}>
+                <LineBreakIcon></LineBreakIcon>
+            </View>
 
-            <View style={{ flex: 0.7, justifyContent: 'flex-end' }}>
-                <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center' }}>
+
+            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center', paddingBottom: 40 }}>
                     <ActionButton onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
                 </View>
             </View>
 
         </View>
-   
-    
     );
 };
 
