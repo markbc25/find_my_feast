@@ -4,8 +4,11 @@ const {User} = require("../models/userModel.js");
 // General User controllers
 exports.getUser = async (req, res) => {
   try {
-    const id = req.params.id;
-    const user = await User.findById(id);
+    const {email} = req.query;
+    const user = await User.findOne({email : email});
+    if (!user)
+      return res.status(404).send('User not found');
+
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json(error.message);
@@ -13,14 +16,31 @@ exports.getUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
+  console.log("in update user");
   try {
-    const id = req.params.userId;
-    const user = await User.findByIdAndUpdate(id, req.body);
-    res.status(200).json(user);
+    const {email, vegan, vegetarian} = req.body;
+    console.log(JSON.stringify(req.body));
+    const user = await User.findOne({email : email});
+    const updatedFields = {};
+    
+    if (!user)
+      return res.status(404).send('User not found');
+
+    if(vegan !== undefined)
+      updatedFields.vegan = vegan;
+    if(vegetarian !== undefined)
+      updatedFields.vegetarian = vegetarian;
+
+      
+
+    await User.findOneAndUpdate({email: email}, updatedFields);
+
+    res.status(200).send('User updated successfully!');
   } catch (error) {
     res.status(500).json(error.message);
   }
 }
+
 // Favorites controllers
 exports.getFavorites = async (req, res) => {
   try {
