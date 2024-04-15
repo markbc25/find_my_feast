@@ -23,16 +23,16 @@ const ToggleableSetting = (props: ToggleableSettingProps) => {
 
   return (
 
-    <View style={{
-      paddingTop: 20,
-      paddingBottom: 20,
-      paddingHorizontal: 10,
-      alignItems: 'stretch',
-      flexDirection: 'row',
-      justifyContent: 'spaceBetween',
-      flex: 0,
-      borderBottomWidth: 1,
-      borderBottomColor: '#c1c1c1',
+    <View style = {{
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingHorizontal: 10,
+        alignItems: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'spaceBetween',
+        flex: 0,
+        borderBottomWidth: 1,
+        borderBottomColor: '#c1c1c1',
     }}>
       <Text
         style={{

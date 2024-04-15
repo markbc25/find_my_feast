@@ -12,16 +12,18 @@ import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
 import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
-
+import storage from '../../storage/AsyncStorage';
 
 interface SignInViewProps {
     onCreateAccountPressed: Function,
     updateIsSignedIn: Function,
+
 }
 
 const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
     let [password, setPassword] = useState("Initial");
+    let [errorMessage, setErrorMessage] = useState("");
 
     function onButtonPressed() {
         props.onCreateAccountPressed(false);
@@ -29,8 +31,6 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
     function emailChange(newValue: string) {
         setEmail(newValue);
-        
-       
     }
 
     function passwordChange(newValue: string) {
@@ -49,9 +49,20 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
             })
             .catch(error => {
                 console.log("Error: " + error.response.data);
+                setErrorMessage(error.response.data);
             });
 
+        //save username in client storage
+        storage.save({
+            key: 'loginState', // Note: Do not use underscore("_") in key!
+            data: {
+                userid: email,
+            },
 
+            // if expires not specified, the defaultExpires will be applied instead.
+            // if set to null, then it will never expire.
+            expires: 1000 * 3600
+        });
     }
 
     useEffect(() => {
@@ -71,22 +82,27 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                 <ScreenTitle textValue='Welcome'></ScreenTitle>
             </View>
 
-            <View style={{ flex: 1.75, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10, }}>
-                <View style={{ paddingBottom: 40 }}>
+            <View style={{ flex: 3, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10, }}>
+                <View>
                     <SectionTitle textValue='Sign In'></SectionTitle>
                 </View>
 
                 <View style={{
                     justifyContent: 'center',
                     alignSelf: 'stretch',
-                    padding: 10,
+                    padding: 0,
                     flex: 1,
                     flexDirection: 'column',
-                    gap: 30,
+                    gap: 15,
                 }}>
                     <InputText fieldName='EMAIL' defaultValue="example@email.com" change={emailChange}></InputText>
                     <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
+
+                    <View style={{justifyContent: 'center', }}>
+                        <Text style={{ fontSize: 17, color: 'red' }}>{errorMessage}</Text>
+                    </View>
                 </View>
+
 
                 <View style={{ paddingTop: 30 }}>
                     <ActionButton textValue="Sign In" onPress={handleSignIn}></ActionButton>
