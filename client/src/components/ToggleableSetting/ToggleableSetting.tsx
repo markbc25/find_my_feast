@@ -5,7 +5,7 @@ import { initialWindowMetrics } from 'react-native-safe-area-context';
 interface ToggleableSettingProps {
   textValue: string,
   onToggle: Function,
-  // initialValue: boolean,
+  initialValue: Function,
 }
 
 const ToggleableSetting = (props: ToggleableSettingProps) => {
@@ -17,12 +17,21 @@ const ToggleableSetting = (props: ToggleableSettingProps) => {
 
   useEffect(() => {
     props.onToggle(isEnabled);
+    console.log("is enabled: " + JSON.stringify(isEnabled));
   }, [isEnabled]);
 
+  useEffect(() => {
+    const setInitialValue = async () => {
+      const initialValue = await props.initialValue();
+      setIsEnabled(initialValue);
+    };
+  
+    setInitialValue();
+  }, []);
+  
 
 
   return (
-
     <View style = {{
         paddingTop: 20,
         paddingBottom: 20,

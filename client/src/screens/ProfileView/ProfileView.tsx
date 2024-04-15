@@ -18,8 +18,6 @@ interface ProfileViewProps {
 const ProfileScreen = (props: ProfileViewProps) => {
 
     async function setVegan(veganBool: boolean) {
-        console.log("in set vegan: " + veganBool);
-        console.log("vegan email: " + sessionStorageInstance.getEmail());
         //call API w session storage instance
         const body = {
             email: sessionStorageInstance.getEmail(),
@@ -35,8 +33,6 @@ const ProfileScreen = (props: ProfileViewProps) => {
 
     async function setVegetarian(vegetarianBool: boolean) {
         //call API w session storage instance
-        console.log("vegetarian bool: " + vegetarianBool);
-        console.log("vegetarian email: " + sessionStorageInstance.getEmail());
         const body = {
             email: sessionStorageInstance.getEmail(),
             vegetarian: vegetarianBool,
@@ -77,6 +73,9 @@ const ProfileScreen = (props: ProfileViewProps) => {
                 flex: 1,
             }}>
 
+            <View style={{ flex: 0.2, paddingVertical: 30, paddingHorizontal: 30 }}>
+                <ScreenTitle textValue='Profile'></ScreenTitle>
+            </View>
 
 
             <View style={{ paddingHorizontal: 30 }}>
@@ -89,74 +88,22 @@ const ProfileScreen = (props: ProfileViewProps) => {
                     paddingBottom: 60,
 
                 }}>
-                    <ToggleableSetting onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
-                    <ToggleableSetting onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
+                    <ToggleableSetting initialValue={getVegetarian} onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
+                    <ToggleableSetting initialValue={getVegan} onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
                 </View>
             </View>
 
-            {/* <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center' }}>
-                {/* todo: send changes to database on press 
-                <ActionButton textValue='Confirm'></ActionButton>
-            </View> */}
 
 
-            <View style={{ flex: 0.35, }}>
-                <View style={{
-                    padding: 20,
-                    alignSelf: 'stretch',
-                    justifyContent: 'center',
-                    flex: 1,
-
-                    //         alignItems: 'center',
-                }}>
-
-                    <View style={{ paddingVertical: 30, paddingHorizontal: 30 }}>
-                        <ScreenTitle textValue='Profile'></ScreenTitle>
-                    </View>
-
-
-
-                    <View style={{ paddingHorizontal: 30 }}>
-                        <SectionTitle textValue="Dietary Preferences"></SectionTitle>
-
-                        <View style={{
-                            justifyContent: 'flex-start',
-                            alignSelf: 'stretch',
-                            padding: 15,
-                            paddingBottom: 60,
-
-                        }}>
-                            <ToggleableSetting textValue="Vegetarian"></ToggleableSetting>
-                            <ToggleableSetting textValue="Vegan"></ToggleableSetting>
-                        </View>
-                    </View>
-
-                    <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center' }}>
-                        {/* todo: send changes to database on press */}
-                        <ActionButton textValue='Confirm'></ActionButton>
-                    </View>
-
-                    <View style={{}}>
-                        <View style={{
-                            padding: 20,
-                            alignSelf: 'stretch',
-                            justifyContent: 'center',
-                        }}>
-                            <LineBreakIcon></LineBreakIcon>
-                        </View>
-                    </View>
-
-                    <View style={{ flex: 0.9, justifyContent: 'flex-end' }}>
-
-
-                        <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center' }}>
-                            <ActionButton onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
-                        </View>
-                    </View>
-
+            <View style={{ flex: 0.7, justifyContent: 'flex-end' }}>
+                <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center' }}>
+                    <ActionButton onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
                 </View>
             </View>
+
         </View>
+   
+    
     );
 };
 

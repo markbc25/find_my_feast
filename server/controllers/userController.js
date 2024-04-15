@@ -4,7 +4,7 @@ const {User} = require("../models/userModel.js");
 // General User controllers
 exports.getUser = async (req, res) => {
   try {
-    const {email} = req.query;
+    const email = req.query.email;
     const user = await User.findOne({email : email});
     if (!user)
       return res.status(404).send('User not found');
@@ -16,10 +16,8 @@ exports.getUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
-  console.log("in update user");
   try {
     const {email, vegan, vegetarian} = req.body;
-    console.log(JSON.stringify(req.body));
     const user = await User.findOne({email : email});
     const updatedFields = {};
     
