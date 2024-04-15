@@ -45,14 +45,14 @@ exports.getFavorites = async (req, res) => {
     if (!req.query.email)
       return res.status(400).send('Invalid request');
 
-    const user = await User.findOne({ email: req.query.email });
+    let user = await User.findOne({ email: req.query.email });
 
     if (!user)
       return res.status(404).send('User not found');
 
-    const favoriteRestaurants = await User.findOne({ email: req.query.email }).populate("favoriteRestaurant");
+    user = await User.findOne({ email: req.query.email }).populate("favoriteRestaurant")
 
-    res.status(200).json(favoriteRestaurants);
+    res.status(200).json(user.favoriteRestaurant);
   }
   catch (error) {
     res.status(500).json(error.message);
@@ -109,14 +109,15 @@ exports.getDoNotShow = async (req, res) => {
     if (!req.query.email)
       return res.status(400).send('Invalid request');
 
-    const user = await User.findOne({ email: req.query.email });
+    let user = await User.findOne({ email: req.query.email });
 
     if (!user)
       return res.status(404).send('User not found');
 
-    const doNotShow = await User.findOne({ email: req.query.email }).populate("doNotShow");
-
-    res.status(200).json(doNotShow);
+    user = await User.findOne({ email: req.query.email })
+                                .populate("doNotShow")
+                                
+    res.status(200).json(user.doNotShow);
   }
   catch (error) {
     res.status(500).json(error.message);

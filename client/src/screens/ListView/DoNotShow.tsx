@@ -25,7 +25,8 @@ const DoNotShow: FC = ({ navigation }) => {
             }
         });
 
-        setRestaurants(response.data.doNotShow);
+        setRestaurants(response.data);
+        console.log(JSON.stringify(response.data));
     }
 
     React.useEffect(() => {
