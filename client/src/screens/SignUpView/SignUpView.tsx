@@ -63,32 +63,31 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
             backgroundColor: '#f6f3f3',
          }}>
 
-         <View style={{ flex: 0.5, alignSelf: 'stretch', paddingHorizontal: 30, }}>
+         <View style={{ alignSelf: 'stretch', paddingHorizontal: 30 }}>
             <ScreenTitle textValue='Welcome'></ScreenTitle>
          </View>
 
-         <View style={{ flex: 1.75, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10, }}>
-            <View style={{ paddingBottom: 40 }}>
+         <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
+            <View>
                <SectionTitle textValue='Sign Up'></SectionTitle>
             </View>
 
             <View style={{
                justifyContent: 'center',
                alignSelf: 'stretch',
-               padding: 10,
-               flex: 1,
+               paddingVertical: 15,
                flexDirection: 'column',
-               gap: 15,
+               gap: 15
             }}>
                <InputText fieldName='EMAIL' defaultValue="example@email.com" change={emailChange}></InputText>
                <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
 
-               <View style={{ justifyContent: 'center', }}>
+               <View style={{ justifyContent: 'center' }}>
                   <Text style={{ fontSize: 17, color: 'red' }}>{errorMessage}</Text>
                </View>
             </View>
 
-            <View style={{ paddingTop: 30 }}>
+            <View>
                <ActionButton textValue="Sign Up"
                   onPress={handleSignUp}></ActionButton>
             </View>
@@ -138,7 +137,6 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
 
          <View style={{
             flexGrow: 1,
-            flex: 0.5,
             justifyContent: 'center',
             gap: 5,
             alignSelf: 'stretch',
