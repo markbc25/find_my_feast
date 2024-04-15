@@ -13,6 +13,9 @@ exports.getRestaurants = async (req, res) => {
     }
 
     try {
+        // Step 0: Check user filters
+
+   
         // Step 1: Make a POST request to fetch data
         const response = await axios.post(url, req.body, { headers: headers });
         const data = response.data.places;

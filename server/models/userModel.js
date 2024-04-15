@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
   // username: { type: String, unique: false },
   password: { type: String },
   email: { type: String, unique: true },
-  restrictions: [{ type: String }],
+  vegan: {type: Boolean, default: false},
+  vegetarian: {type: Boolean, default: false},
   token: { type: String },
   favoriteRestaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   doNotShow: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }]
