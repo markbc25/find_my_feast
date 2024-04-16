@@ -41,7 +41,7 @@ const DoNotShow: FC = ({ navigation }) => {
     return (
 
         <ScrollView style={styles.centeredView}>
-            {restaurants.length > 0 && restaurants.map((place) =>
+            {restaurants && restaurants.length > 0 && restaurants.map((place) =>
                 place && place.displayName ? <ListEntry list={"d"} restaurant={place} key={place.id}/> : <View/>
             )}
         </ScrollView>
