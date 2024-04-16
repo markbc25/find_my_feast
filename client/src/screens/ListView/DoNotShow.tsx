@@ -1,14 +1,15 @@
 import React, { FC, useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import ListEntry from '../../components/ListEntry/ListEntry';
 import axios from 'axios';
 import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
 
 const styles = StyleSheet.create({
-    container: {
+    centeredView: {
         flex: 1,
-        alignItems: 'center',
-        padding: 20
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 20
     },
 });
 
@@ -39,11 +40,11 @@ const DoNotShow: FC = ({ navigation }) => {
 
     return (
 
-        <View style={styles.container}>
-            {restaurants.length > 0 && restaurants.map((restaurant) =>
-                restaurant.displayName ? <ListEntry textValue={restaurant.displayName.text} key={restaurant.id} /> : <View />
+        <ScrollView style={styles.centeredView}>
+            {restaurants.length > 0 && restaurants.map((place) =>
+                place && place.displayName ? <ListEntry list={"d"} restaurant={place} key={place.id}/> : <View/>
             )}
-        </View>
+        </ScrollView>
     );
 }
 

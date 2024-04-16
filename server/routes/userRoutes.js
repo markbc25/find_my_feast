@@ -6,11 +6,11 @@ router.put('/', userController.updateUser);
 
 router.get('/favorites', userController.getFavorites);
 router.post('/favorites', userController.addFavorites);
-router.delete('/favorites', userController.deleteFavorites);
+router.delete('/favorites', userController.deleteFromFavorites);
 
 router.get('/doNotShow', userController.getDoNotShow);
 router.post('/doNotShow', userController.addDoNotShow);
-router.delete('/doNotShow', userController.deleteDoNotShow);
+router.delete('/doNotShow', userController.deleteDontShow);
 
 
 module.exports = router;

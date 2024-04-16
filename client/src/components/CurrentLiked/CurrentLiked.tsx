@@ -162,7 +162,11 @@ const CurrentLiked: FC = ({ navigation }) => {
         setFinalDecision(selectedRestaurant);
         setRestaurants([selectedRestaurant]);
         setShowConfetti(true);
-      }
+        setTimeout(() => {
+            setShowConfetti(false);             
+            CurrentSessionStorage.clearCurrentLiked(); 
+        }, 5000); 
+    }
     }
     setModalVisible(false);
     setDecision(null);
