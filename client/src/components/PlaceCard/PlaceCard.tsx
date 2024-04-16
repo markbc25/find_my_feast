@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   }
 });
 
-interface Restaurant {
+export interface Restaurant {
   restaurant: {
     displayName: Object,
     priceLevel: string,
@@ -168,6 +168,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
     try {
       const response = await axios.post('http://10.0.2.2:3000/api/users/favorites', body);
+      console.log("Response:", response.data);
     }
     catch(error) {
       console.log("error adding to favorites in place card: " + error);
@@ -185,6 +186,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
     try {
       const response = await axios.post('http://10.0.2.2:3000/api/users/doNotShow', body);
+      console.log("Response:", response.data);
     }
     catch(error) {
       console.log("error adding to do not show in place card: " + error);

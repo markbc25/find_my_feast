@@ -24,6 +24,10 @@ class SessionStorage {
     this.currentLiked.delete(key);
   }
 
+  clearCurrentLiked() {
+    this.currentLiked.clear();
+  }
+
   getCurrentLiked() {
     return Array.from(this.currentLiked).map(([name, value]) => (value));
   }
