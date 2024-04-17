@@ -26,7 +26,7 @@ exports.getRestaurants = async (req, res) => {
         if (vegan) {
             req.body.restaurantData.includedTypes = ["vegan_restaurant"]
         }
-
+      
         // Step 1: Make a POST request to fetch data
         const response = await axios.post(url, req.body.restaurantData, { headers: headers });
         let data = response.data.places;
