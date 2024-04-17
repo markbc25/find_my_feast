@@ -61,8 +61,8 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
           locationRestriction: {
             circle: {
               center: {
-                latitude: 40.758896,
-                longitude: -73.985130
+                latitude: 30.6280,
+                longitude: -96.3344
               },
               radius: 5000
             }

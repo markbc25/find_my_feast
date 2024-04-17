@@ -10,60 +10,49 @@ exports.getRestaurants = async (req, res) => {
     const headers = {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': process.env.GOOGLE_MAPS_API_KEY,
-        'X-Goog-FieldMask': 'places.displayName.text,places.priceLevel,places.types,places.primaryTypeDisplayName.text,places.rating,places.location,places.id,places.googleMapsUri,places.servesVegetarianFood,places.primaryType'
+        'X-Goog-FieldMask': 'places.displayName.text,places.priceLevel,places.types,places.primaryTypeDisplayName.text,places.rating,places.location,places.id,places.googleMapsUri,places.servesVegetarianFood'
     }
 
     try {
         //Step 0: get vegetarian and vegan bools 
-        const user = await User.findOne({ email: req.body.userData.email });
+        let user = await User.findOne({ email: req.body.userData.email });
+        if (!user)
+            return res.status(404).send('User not found');
         let vegan = user.vegan;
         let vegetarian = user.vegetarian;
 
+
+        //Step 0.1: if vegan, overwrite preferences to only show vegan restaurants
+        if (vegan) {
+            req.body.restaurantData.includedTypes = ["vegan_restaurant"]
+        }
+
         // Step 1: Make a POST request to fetch data
         const response = await axios.post(url, req.body.restaurantData, { headers: headers });
-        const data = response.data.places;
-        console.log("RESTAURANT DATA: " + JSON.stringify(data));
+        let data = response.data.places;
+        user = await User.findOne({ email: req.body.userData.email }).populate('doNotShow');
 
-        // TODO: FILTER OUT RESTAURANT DATA THAT IS IN A USERS DO NOT SHOW LIST
-        // const doNotShowResponse = await axios.get("http://10.0.2.2:3000/api/users/doNotShow/", {
-        //     params: {
-        //         email: req.body.userData.email,
-        //     }
-        // });
-        // const doNotShowList = doNotShowResponse.data;
-        
-        let filteredData = [];
+        const doNotShowListRestaurants = user.doNotShow;
+        const doNotShowIds = new Map();""
+        for (let k = 0; k < doNotShowListRestaurants.length; k++) {
+            doNotShowIds.set(doNotShowListRestaurants[k].id, '');
+        }
 
-        // TODO: Filter undefined restaurants
+        data = data.filter((restaurant) => {
+            if (restaurant && !doNotShowIds.has(restaurant.id))
+                return restaurant;
+        });
+
         // TODO: Filter out restaurants by PriceLevel
 
-        // TODO: FILTER BY DIETARY RESTRICTIONS
-        //if (vegan is true)
-        //iterate through response
-        //iterate through included types
-        //filter restaurants with "vegan_restaurant" type
-        //else if (vegetarian is true)
-        //iterate through response
-        //filter out by  restaurant.servesVegetarianFood is true
-        if (vegan) {
-            for (let k = 0; k < data.length; k++) {
-                for (let j = 0; j < data[k].types.length; j++) {
-                    if (data[k].types[j] == 'vegan_restaurant') {
-                        console.log("WE HAVE A VEGAN RESTAURANT");
-                        filteredData.push(data[k]);
-                        break;
-                    }
+        //VEGETARIAN
+        if (!vegan && vegetarian) {
+            data = data.filter((restaurant) => {
+                if (restaurant.servesVegetarianFood !== null && restaurant.servesVegetarianFood === true) {
+                    return restaurant;
                 }
-            }
+            });
         }
-        else if (vegetarian) {
-            for (let k = 0; k < data.length; k++) {
-                if (data[k].servesVegetarianFood !== null && data[k].servesVegetarianFood === true) {
-                    filteredData.push(data[k]);
-                }
-            }
-        }
-
 
         // Get a list of placeIds from restaurant data
         const placeIds = data.map(restaurant => {
@@ -95,30 +84,11 @@ exports.getRestaurants = async (req, res) => {
 
         }
 
+
         // Final Step: Send the data to the client
-        if (vegan || vegetarian) {
-           
-            let finalResults = filteredData.filter((item) => {
-                if (item) {
-                    return item;
-                }
-            });
-
-            console.log("filtered data: " + JSON.stringify(filteredData));
-
-            res.json(finalResults);
-        } else {
-            let finalResults = data.filter((item) => {
-                if (item) {
-                    return item;
-                }
-            });
-            
-            res.json(finalResults);
-        }
-
-
-    } catch (error) {
+        res.json(data);
+    }
+    catch (error) {
         console.error('Error fetching restaurant data:', error);
     }
 }
