@@ -76,7 +76,7 @@ const Routes = (props: RoutesProps) => {
         </Tab.Screen>
         {/* <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} /> */}
         <Tab.Screen name="Profile" options={{ headerShown: false }}>
-          {() => <ProfileScreen onLogoutButtonPressed={props.onLogoutButtonPressed} />}
+          {() => <ProfileScreen onActionButtonClicked = {preferencesUpdated} onLogoutButtonPressed={props.onLogoutButtonPressed} />}
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>

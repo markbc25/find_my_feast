@@ -13,6 +13,7 @@ import axios from 'axios';
 
 interface ProfileViewProps {
     onLogoutButtonPressed: Function,
+    onActionButtonClicked: Function,
 }
 
 const ProfileScreen = (props: ProfileViewProps) => {
@@ -92,6 +93,10 @@ const ProfileScreen = (props: ProfileViewProps) => {
                 }}>
                     <ToggleableSetting initialValue={getVegetarian} onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
                     <ToggleableSetting initialValue={getVegan} onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
+                </View>
+
+                <View>
+                <ActionButton onPress={props.onActionButtonClicked} textValue='Confirm'></ActionButton>
                 </View>
 
             </View>
