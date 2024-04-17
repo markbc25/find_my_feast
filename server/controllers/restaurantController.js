@@ -68,10 +68,10 @@ exports.getRestaurants = async (req, res) => {
 
             let photoReference = null;
             let photoUrl = "";
-            if (photoReferenceResponse.data.result.photos && photoReferenceResponse.data.result.photos[0]) {
-                photoReference = photoReferenceResponse.data.result.photos[0].photo_reference// Just grabs a single photo reference (for now)
+            if (photoReferenceResponse.data.result.photos && photoReferenceResponse.data.result.photos[1]) {
+                photoReference = photoReferenceResponse.data.result.photos[1].photo_reference// Just grabs a single photo reference (for now)
                 // Step 3. Call the Photos API and use photoRefence to get the photo URL
-                photosUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=450&photoreference=${photoReference}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+                photosUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1920&photoreference=${photoReference}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                 const photosResponse = await axios.get(photosUrl);
                 photoUrl = photosResponse.request.res.responseUrl;
             }
