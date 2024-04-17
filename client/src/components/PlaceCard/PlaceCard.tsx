@@ -326,7 +326,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
           </View> :
         <View style={styles.card}>
           {
-            <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{uri: restaurant.photoUrl}}>
+            <ImageBackground imageStyle={{ resizeMode: 'cover' }}  style={styles.cardImage} source={{uri: restaurant.photoUrl}}>
               <LinearGradient
                 colors={['black', 'transparent']}
                 start={{ x: 0, y: 0 }}
