@@ -47,7 +47,6 @@ import LottieSplashScreen from "react-native-lottie-splash-screen";
 import LottieView from "lottie-react-native";
 import storage from './src/storage/AsyncStorage'
 import sessionStorageInstance from './src/storage/SessionStorage/SessionStorage';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const homeIcon = require('./assets/home.png');
 const homeActiveIcon = require('./assets/home_active.png');
@@ -61,8 +60,6 @@ const userActiveIcon = require('./assets/user_active.png');
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [isSignedIn, setIsSignedIn] = useState(2);
-
-  const queryClient = new QueryClient();
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
