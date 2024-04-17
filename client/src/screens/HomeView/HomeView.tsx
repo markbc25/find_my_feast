@@ -7,6 +7,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Restaurant } from '../../components/PlaceCard/PlaceCard';
 import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants.js';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage.js';
 
 
 const window_width = Dimensions.get('window').width;
@@ -15,7 +16,7 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 const styles = StyleSheet.create({
   cardContainer: {
-   
+
   },
   container: {
     width: window_width,
@@ -54,18 +55,24 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   async function getRestaurants() {
     try {
       let body = {
-        includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
-        maxResultCount: 20,
-        locationRestriction: {
-          circle: {
-            center: {
-              latitude: 30.601389,
-              longitude: -96.314445
-            },
-            radius: 5000
-          }
-        },
-        rankPreference: "DISTANCE",
+        restaurantData: {
+          includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
+          maxResultCount: 20,
+          locationRestriction: {
+            circle: {
+              center: {
+                latitude: 30.6280,
+                longitude: -96.3344
+              },
+              radius: 5000
+            }
+          },
+          rankPreference: "DISTANCE",
+        }, 
+
+        userData: {
+          email: sessionStorageInstance.getEmail(),
+        }
       };
       let url = "http://10.0.2.2:3000/api/restaurants";
 
@@ -78,7 +85,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
     }
   }
 
-  
+
 
   return (
     <SafeAreaView style={styles.container}>

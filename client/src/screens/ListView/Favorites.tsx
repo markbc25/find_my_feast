@@ -26,7 +26,7 @@ const Favorites: FC = ({ navigation }) => {
       }
     });
 
-    setRestaurants(response.data.favoriteRestaurant);
+    setRestaurants(response.data);
   }
 
   React.useEffect(() => {
