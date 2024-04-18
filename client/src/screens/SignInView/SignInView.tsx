@@ -58,38 +58,8 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
 
     }
-    
-    // const googleSignIn = async () => {
-    //   try {
-    //     await GoogleSignin.hasPlayServices();
-    //     const userInfo = await GoogleSignin.signIn();
-    //     handleGoogleSignIn();
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
 
-    // const handleGoogleSignIn = async () => {
-    //   try {
-    //     const userInfo = await GoogleSignin.signIn();
-    //     const token = userInfo.idToken;
-    
-    //     axios.post("http://10.0.2.2:3000/api/auth/login", {
-    //       token: token,
-    //       //FIX POST REQUEST
-    //     })
-    //     .then(res => {
-    //       console.log(res.data);
-    //       props.updateIsSignedIn(true);
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
-
+    //https://react-native-google-signin.github.io/docs/api#user
     _signIn = async () => {
       try {
         await GoogleSignin.hasPlayServices();
