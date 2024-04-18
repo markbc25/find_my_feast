@@ -16,7 +16,11 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 const Tab = createBottomTabNavigator();
 
-const Routes = (props: any) => {
+interface RoutesProps {
+  onLogoutButtonPressed: Function,
+}
+
+const Routes = (props: RoutesProps) => {
 
   const homeViewRef = useRef();
 
@@ -25,7 +29,6 @@ const Routes = (props: any) => {
   };
 
   const refetchCardsInHome = () => {
-    console.log("calling update restaurants in routes");
     homeViewRef.current.updateRestaurantCards();
   };
 
@@ -72,7 +75,9 @@ const Routes = (props: any) => {
           {() => <PreferencesView onActionButtonClick={preferencesUpdated} />}
         </Tab.Screen>
         {/* <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} /> */}
-        <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen} />
+        <Tab.Screen name="Profile" options={{ headerShown: false }}>
+          {() => <ProfileScreen onActionButtonClicked = {preferencesUpdated} onLogoutButtonPressed={props.onLogoutButtonPressed} />}
+        </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );

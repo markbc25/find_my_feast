@@ -10,22 +10,21 @@ import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import ActionButton from '../../components/ActionButton/ActionButton';
 import { GoogleSigninButton, GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-
-GoogleSignin.configure({
-  webClientId: '728634266042-ql27siv0p7ke5sd1vcsjpseqt65e2i2p.apps.googleusercontent.com',
-  scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-  offlineAccess: true, // If needed
-});
+import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
+import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
+import storage from '../../storage/AsyncStorage';
 
 interface SignInViewProps {
     onCreateAccountPressed: Function,
     updateIsSignedIn: Function,
+
 }
 
 
 const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
     let [password, setPassword] = useState("Initial");
+    let [errorMessage, setErrorMessage] = useState("");
 
     function onButtonPressed() {
         props.onCreateAccountPressed(false);
@@ -33,12 +32,10 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
     function emailChange(newValue: string) {
         setEmail(newValue);
-        // console.log("new email: " + email);
     }
 
     function passwordChange(newValue: string) {
         setPassword(newValue);
-        // console.log("new password: " + password);
     }
 
     function handleSignIn() {
@@ -49,43 +46,29 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
         axios.post("http://10.0.2.2:3000/api/auth/login", body)
             .then(res => {
-                console.log(res.data);
                 props.updateIsSignedIn(true);
             })
             .catch(error => {
                 console.log("Error: " + error.response.data);
+                setErrorMessage(error.response.data);
             });
 
+        //save username in client storage
+        storage.save({
+            key: 'loginState', // Note: Do not use underscore("_") in key!
+            data: {
+                userid: email,
+            },
 
+            // if expires not specified, the defaultExpires will be applied instead.
+            // if set to null, then it will never expire.
+            expires: 1000 * 3600
+        });
     }
 
-    //https://react-native-google-signin.github.io/docs/api#user
-    _signIn = async () => {
-      try {
-        await GoogleSignin.hasPlayServices();
-        const userInfo = await GoogleSignin.signIn();
-        setState({ userInfo, error: undefined });
-      } catch (error) {
-        if (isErrorWithCode(error)) {
-          switch (error.code) {
-            case statusCodes.SIGN_IN_CANCELLED:
-              // user cancelled the login flow
-              break;
-            case statusCodes.IN_PROGRESS:
-              // operation (eg. sign in) already in progress
-              break;
-            case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-              // play services not available or outdated
-              break;
-            default:
-            // some other error happened
-          }
-        } else {
-          // an error that's not related to google sign in occurred
-        }
-      }
-    };
-    
+    useEffect(() => {
+        sessionStorageInstance.setEmail(email);
+    }, [email])
 
     return (
         <View
@@ -96,29 +79,34 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                 backgroundColor: '#f6f3f3',
             }}>
 
-            <View style={{ flex: 0.5, alignSelf: 'stretch', paddingHorizontal: 30, }}>
+            <View style={{ alignSelf: 'stretch', paddingHorizontal: 30 }}>
                 <ScreenTitle textValue='Welcome'></ScreenTitle>
             </View>
 
-            <View style={{ flex: 1.75, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10, }}>
-                <View style={{ paddingBottom: 40 }}>
+            <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
+                <View>
                     <SectionTitle textValue='Sign In'></SectionTitle>
                 </View>
 
                 <View style={{
                     justifyContent: 'center',
                     alignSelf: 'stretch',
-                    padding: 10,
-                    flex: 1,
+                    paddingVertical: 15,
                     flexDirection: 'column',
-                    gap: 30,
+                    gap: 15
                 }}>
                     <InputText fieldName='EMAIL' defaultValue="example@email.com" change={emailChange}></InputText>
                     <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
+
+                    <View style={{ justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: 'red' }}>{errorMessage}</Text>
+                    </View>
                 </View>
 
-                <View style={{ paddingTop: 30 }}>
-                    <ActionButton textValue="Sign In" onPress={handleSignIn}></ActionButton>
+
+                <View>
+                    <ActionButton textValue="Sign In"
+                        onPress={handleSignIn}></ActionButton>
                 </View>
 
 
@@ -166,7 +154,6 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
             <View style={{
                 flexGrow: 1,
-                flex: 0.5,
                 justifyContent: 'center',
                 gap: 5,
                 alignSelf: 'stretch',

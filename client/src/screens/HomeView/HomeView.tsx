@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, useImperativeHandle, useState, useEffect, useContext, createContext} from 'react';
+import React, { FC, forwardRef, useImperativeHandle, useState, useEffect, useContext, createContext } from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
@@ -7,45 +7,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Restaurant } from '../../components/PlaceCard/PlaceCard';
 import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants.js';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage.js';
 
-const db = [
-  {
-    id: 0,
-    name: 'McDonalds',
-    img: require('../../../assets/test.jpg'),
-    price: 1,
-    distance: 2,
-    rating: 3.5,
-    type: 'Burger'
-  },
-  {
-    id: 1,
-    name: 'Olive Garden',
-    img: require('../../../assets/test.jpg'),
-    price: 2,
-    distance: 4,
-    rating: 4.2,
-    type: 'Italian'
-  },
-  {
-    id: 2,
-    name: 'Nam Cafe',
-    img: require('../../../assets/test.jpg'),
-    price: 2,
-    distance: 1,
-    rating: 3.2,
-    type: 'Vietnamese'
-  },
-  {
-    id: 3,
-    name: '1860 Italia',
-    img: require('../../../assets/test.jpg'),
-    price: 3,
-    distance: 10,
-    rating: 3.6,
-    type: 'Italian'
-  },
-];
 
 const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
@@ -53,11 +16,13 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 const styles = StyleSheet.create({
   cardContainer: {
+
   },
   container: {
     width: window_width,
-    height: window_height
+    height: window_height,
   },
+
 })
 
 
@@ -66,7 +31,8 @@ interface HomeViewProps {
 }
 
 const HomeView = forwardRef((props: HomeViewProps, ref) => {
-  const [restaurantResponse, setRestaurantsChanged] = useState([{}]);
+  const [restaurantResponse, setRestaurantsChanged] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const numCardsOnDeck = createContext(0);
 
@@ -80,86 +46,52 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   }));
 
   useEffect(() => {
-    console.log("morning");
     updateRestaurantCards();
   }, [])
+
+  useEffect(() => {
+  }, [restaurantResponse])
 
   async function getRestaurants() {
     try {
       let body = {
-        includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
-        maxResultCount: 15,
-        locationRestriction: {
-          circle: {
-            center: {
-              latitude: 30.601389,
-              longitude: -96.314445
-            },
-            radius: 5000
-          }
-        },
-        rankPreference: "DISTANCE"
+        restaurantData: {
+          includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
+          maxResultCount: 20,
+          locationRestriction: {
+            circle: {
+              center: {
+                latitude: 30.6280,
+                longitude: -96.3344
+              },
+              radius: 5000
+            }
+          },
+          rankPreference: "DISTANCE",
+        }, 
+
+        userData: {
+          email: sessionStorageInstance.getEmail(),
+        }
       };
       let url = "http://10.0.2.2:3000/api/restaurants";
 
       const response = await axios.post(url, body);
 
-      const extractedPlaces = response.data.places.map(place => {
-        const {
-          id,
-          types,
-          location,
-          rating,
-          websiteUri,
-          regularOpeningHours,
-          priceLevel,
-          displayName,
-          primaryTypeDisplayName,
-          photos
-        } = place;
-        return {
-          id,
-          types,
-          location,
-          rating,
-          websiteUri,
-          regularOpeningHours,
-          priceLevel,
-          displayName,
-          primaryTypeDisplayName,
-          photos
-        };
-      });
-
-      setRestaurantsChanged(response.data.places);
-      console.log("restaurants:", (restaurantResponse));
-      return response;
-
-      if (response.status !== 200) {
-        throw new Error("HTTP error " + response.status);
-      }
-      console.log("I'm here"); // This line will not be reached due to the return statement above
-      const data = response.data;
-      console.log(data);
-
-    } catch (error) {
-      console.error(error);
+      setRestaurantsChanged(response.data);
+    }
+    catch (error) {
+      console.log(error);
     }
   }
-
 
 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardContainer}>
-
         {restaurantResponse.map((place) => (
-          place && <PlaceCard key={place.id} restaurant={place} /> // outOfFrame={ }
-
-          //   <View key = {place.id}>
-          //     <Text> {place.displayName.text}</Text>
-          //  </View>
+          <PlaceCard key={place.id} restaurant={place} /> // outOfFrame={ }
         ))}
 
       </View>

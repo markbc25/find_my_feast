@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Text, View, Button, Image, ScrollView, SafeAreaView, StyleSheet, Dimensions, setState } from 'react-native';
 
 import InputText from '../../../src/components/InputText/InputText';
@@ -20,14 +20,13 @@ const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
 
-
-
 interface PreferencesViewProps {
   onActionButtonClick: Function,
 }
 
 const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) => {
   let [includedTypes, setIncludedTypes] = useState([]);
+  let [includedPriceLevels, setIncludedPriceLevels] = useState([]);
   let [isPressed, setIsPressed] = useState(false);
   let [radius, setRadius] = useState(30);
 
@@ -44,21 +43,40 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
     else {
       let filteredArray = includedTypes.filter(item => item !== newValue);
-      console.log("filtered a rray: " + filteredArray);
-       setIncludedTypes(filteredArray);
+      setIncludedTypes(filteredArray);
+    }
+
+  }
+
+  function updateIncludedPriceLevels(newValue: number, buttonEnabled: boolean) {
+
+    if (buttonEnabled) {
+      setIncludedPriceLevels([
+        newValue,
+        ...includedPriceLevels // Put old items at the end
+      ]);
+    }
+
+    else {
+      let filteredArray = includedPriceLevels.filter(item => item !== newValue);
+      setIncludedPriceLevels(filteredArray);
     }
 
   }
 
   useEffect(() => {
     preferencesAndRestaurantsInstance.setIncludedTypes(includedTypes);
-    
+
   }, [includedTypes]);
+
+  useEffect(() => {
+    preferencesAndRestaurantsInstance.setIncludedPriceLevels(includedPriceLevels);
+
+  }, [includedPriceLevels]);
 
 
   useEffect(() => {
-    console.log("action button clicked");
-   props.onActionButtonClick();
+    props.onActionButtonClick();
   }, [isPressed]);
 
   function updateRadius(newRadius: number) {
@@ -74,26 +92,26 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
     }}>
 
 
-      <View style={{ flexGrow: 1 }}>
+      <View style={{flexGrow: 1}}>
 
 
-        <View style={{ flex: 1, alignSelf: 'stretch', paddingHorizontal: 0.03 * window_width, paddingVertical: 0.015 * window_height, paddingTop: 45 }}>
+        <View style={{alignSelf: 'stretch', paddingHorizontal: 30}}>
           <ScreenTitle textValue='Filters'></ScreenTitle>
         </View>
 
 
-        <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 0.05 * window_width, paddingVertical: 0.015 * window_height }}>
+        <View style={{justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30}}>
           <SectionTitle textValue='Price'></SectionTitle>
 
-          <View style={{ justifyContent: 'flexStart', flexDirection: 'row', alignSelf: 'flexStart', width: '100%', alignItems: 'flexStart', gap: 0.08 * window_width, paddingVertical: 15 }}>
-            <ToggleableButton textValue='$'></ToggleableButton>
-            <ToggleableButton textValue='$$'></ToggleableButton>
-            <ToggleableButton textValue='$$$'></ToggleableButton>
-            <ToggleableButton textValue='$$$$'></ToggleableButton>
+          <View style={{ justifyContent: 'flexStart', flexDirection: 'row', alignSelf: 'flexStart', width: '100%', alignItems: 'flexStart', gap: 30, paddingVertical: 20}}>
+            <ToggleableButton textValue='$' filterValue={1} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$' filterValue={2} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$$' filterValue={3} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$$$' filterValue={4} onClick={updateIncludedPriceLevels}></ToggleableButton>
           </View>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 0.05 * window_width, paddingVertical: 0.05 * window_height }}>
+        <View style={{justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, paddingVertical: 30}}>
           <SectionTitle textValue='Distance'></SectionTitle>
 
           <View style={{ justifyContent: 'center', flexDirection: 'row', }}>
@@ -101,7 +119,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
           </View>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center', paddingHorizontal: 0.05 * window_width, paddingVertical: 0.05 * window_height }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center', paddingHorizontal: 30, paddingVertical: 20}}>
           <SectionTitle textValue='Cuisine'></SectionTitle>
 
           <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'none', gap: 10, paddingTop: 0.03 * window_height, width: '100%' }}>
@@ -131,20 +149,17 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
             </View>
 
-
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
               <ToggleableButtonImage textValue='Sushi' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='sushi_restaurant' style={{ padding: 100 }} />
               <ToggleableButtonImage textValue='Thai' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='thai_restaurant' style={{ padding: 100 }} />
 
             </View>
-
           </View>
         </View>
 
 
-        <View style={{ flex: 1, width: '90%', paddingVertical: 10, alignSelf: 'center' }}>
+        <View style={{flex: 0, width: '90%', paddingVertical: 30, alignSelf: 'center', justifyContent: 'flex-end' }}>
           <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
-
         </View>
 
       </View>

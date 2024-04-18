@@ -11,11 +11,10 @@ interface ScreenTitleProps {
 }
 
 const ScreenTitle: FC<ScreenTitleProps> = (props: ScreenTitleProps) => (
-
            <View style={{
-                flex: 1,
                 justifyContent: 'center',
                 alignSelf: 'stretch',
+                paddingVertical: 30,
             }}>
               <Text
                 style = {{

@@ -5,34 +5,26 @@ import { View } from 'react-native';
 let instance;
 
 class PreferencesAndRestaurants {
-    #includedTypes;
-    #radius;
-
+    includedTypes;
+    radius;
+    includedPriceLevels;
 
     constructor() {
         if (!instance) {
             instance = this;
         }
         this.includedTypes = ["restaurant"];
-        // [this.includedTypes, this.setIncludedTypes] = React.useState(['restaurant']);
+        this.includedPriceLevels = [1, 2, 3, 4];
         return instance;
     }
 
-    // Function to set value in session storage
     setIncludedTypes(newIncludedTypes) {
-
-        //console.log("Array as argument in static: " + newIncludedTypes);
-        this.includedTypes.length = 0;
         if (newIncludedTypes.length === 0) {
             this.includedTypes[0] = "restaurant";
         }
         else {
-            for (i = 0; i < newIncludedTypes.length; i++) {
-                this.includedTypes[i] = newIncludedTypes[i];
-            }
+            this.includedTypes = newIncludedTypes;
         }
-
-        console.log("Types in static instance: " + this.includedTypes);
     }
 
     getIncludedTypes() {
@@ -46,8 +38,22 @@ class PreferencesAndRestaurants {
     getRadius() {
         return this.radius;
     }
+
+    setIncludedPriceLevels(newPriceLevels) {
+        this.includedPriceLevels.length = 0;
+        if (newPriceLevels.length === 0) {
+            this.includedPriceLevels = [1, 2, 3, 4];
+        }
+        else {
+            this.includedPriceLevels = newPriceLevels;
+        }
+    }
+
+    getIncludedPriceLevels() {
+        return this.includedPriceLevels;
+    }
 }
 
 // Create a singleton instance and export it
-let preferencesAndRestaurantsInstance = Object.freeze(new PreferencesAndRestaurants());
+let preferencesAndRestaurantsInstance = new PreferencesAndRestaurants();
 export default preferencesAndRestaurantsInstance;

@@ -19,6 +19,7 @@ interface SignUpViewProps {
 const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
    let [email, setEmail] = useState("Initial");
    let [password, setPassword] = useState("Initial");
+   let [errorMessage, setErrorMessage] = useState("");
 
    function onButtonPressed() {
       props.onLogInButtonPressed(true);
@@ -42,11 +43,15 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
 
       axios.post("http://10.0.2.2:3000/api/auth/signup", body)
          .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
+            props.onLogInButtonPressed(true);
          })
          .catch(error => {
             console.log("Error: " + error.response.data);
+            setErrorMessage(error.response.data);
+            return;
          });
+
    }
 
    return (
@@ -58,28 +63,31 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
             backgroundColor: '#f6f3f3',
          }}>
 
-         <View style={{ flex: 0.5, alignSelf: 'stretch', paddingHorizontal: 30, }}>
+         <View style={{ alignSelf: 'stretch', paddingHorizontal: 30 }}>
             <ScreenTitle textValue='Welcome'></ScreenTitle>
          </View>
 
-         <View style={{ flex: 1.75, justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10, }}>
-            <View style={{ paddingBottom: 40 }}>
+         <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
+            <View>
                <SectionTitle textValue='Sign Up'></SectionTitle>
             </View>
 
             <View style={{
                justifyContent: 'center',
                alignSelf: 'stretch',
-               padding: 10,
-               flex: 1,
+               paddingVertical: 15,
                flexDirection: 'column',
-               gap: 30,
+               gap: 15
             }}>
                <InputText fieldName='EMAIL' defaultValue="example@email.com" change={emailChange}></InputText>
                <InputText fieldName='PASSWORD' defaultValue='******' change={passwordChange}></InputText>
+
+               <View style={{ justifyContent: 'center' }}>
+                  <Text style={{ fontSize: 17, color: 'red' }}>{errorMessage}</Text>
+               </View>
             </View>
 
-            <View style={{ paddingTop: 30 }}>
+            <View>
                <ActionButton textValue="Sign Up"
                   onPress={handleSignUp}></ActionButton>
             </View>
@@ -129,7 +137,6 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
 
          <View style={{
             flexGrow: 1,
-            flex: 0.5,
             justifyContent: 'center',
             gap: 5,
             alignSelf: 'stretch',

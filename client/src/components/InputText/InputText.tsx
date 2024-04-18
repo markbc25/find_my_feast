@@ -19,7 +19,7 @@ const InputText: FC<InputTextProps> = (props: InputTextProps) => {
     }
 
 
-    return (<View>
+    return (<View style = {{paddingVertical: 5}}>
         <View style={{
             alignItems: 'flex-start',
             borderColor: '#c1c1c1',
@@ -37,10 +37,7 @@ const InputText: FC<InputTextProps> = (props: InputTextProps) => {
 
                 }}
 
-                 onChangeText={newText => props.change(newText)}>
-                 {/* onChangeText={(newText) => { console.log("save me") }} */}
-
-            
+                onChangeText={newText => props.change(newText)}>
                 {value}
             </TextInput>
 
