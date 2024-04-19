@@ -15,6 +15,7 @@ import Slider from '../../../src/components/Slider/Slider';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
 
+
 const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
@@ -92,26 +93,26 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
     }}>
 
 
-      <View style={{flexGrow: 1}}>
+      <View style={{ flexGrow: 1 }}>
 
 
-        <View style={{alignSelf: 'stretch', paddingHorizontal: 30}}>
+        <View style={{ alignSelf: 'stretch', paddingHorizontal: 30 }}>
           <ScreenTitle textValue='Filters'></ScreenTitle>
         </View>
 
 
-        <View style={{justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30}}>
+        <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30 }}>
           <SectionTitle textValue='Price'></SectionTitle>
 
-          <View style={{ justifyContent: 'flexStart', flexDirection: 'row', alignSelf: 'flexStart', width: '100%', alignItems: 'flexStart', gap: 30, paddingVertical: 20}}>
-            <ToggleableButton textValue='$' filterValue={1} onClick={updateIncludedPriceLevels}></ToggleableButton>
-            <ToggleableButton textValue='$$' filterValue={2} onClick={updateIncludedPriceLevels}></ToggleableButton>
-            <ToggleableButton textValue='$$$' filterValue={3} onClick={updateIncludedPriceLevels}></ToggleableButton>
-            <ToggleableButton textValue='$$$$' filterValue={4} onClick={updateIncludedPriceLevels}></ToggleableButton>
+          <View style={{ justifyContent: 'flexStart', flexDirection: 'row', alignSelf: 'flexStart', width: '100%', alignItems: 'flexStart', gap: 30, paddingVertical: 20 }}>
+            <ToggleableButton textValue='$' filterValue={'PRICE_LEVEL_INEXPENSIVE'} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$' filterValue={'PRICE_LEVEL_MODERATE'} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$$' filterValue={'PRICE_LEVEL_EXPENSIVE'} onClick={updateIncludedPriceLevels}></ToggleableButton>
+            <ToggleableButton textValue='$$$$' filterValue={'PRICE_LEVEL_VERY_EXPENSIVE'} onClick={updateIncludedPriceLevels}></ToggleableButton>
           </View>
         </View>
 
-        <View style={{justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, paddingVertical: 30}}>
+        <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, paddingVertical: 30 }}>
           <SectionTitle textValue='Distance'></SectionTitle>
 
           <View style={{ justifyContent: 'center', flexDirection: 'row', }}>
@@ -119,46 +120,46 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
           </View>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center', paddingHorizontal: 30, paddingVertical: 20}}>
+        <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'stretch', alignItems: 'center', paddingHorizontal: 30, paddingVertical: 20 }}>
           <SectionTitle textValue='Cuisine'></SectionTitle>
 
           <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column', flexWrap: 'none', gap: 10, paddingTop: 0.03 * window_height, width: '100%' }}>
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
 
-              <ToggleableButtonImage textValue='American' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='american_restaurant' style={{ flex: 1 }} />
-              <ToggleableButtonImage textValue='Barbecue' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='barbecue_restaurant' style={{ flex: 1 }} />
-              <ToggleableButtonImage textValue='Chinese' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='chinese_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='American' image='american' onClick={updateIncludedTypes} filterValue='american_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='Barbecue' image='barbecue' onClick={updateIncludedTypes} filterValue='barbecue_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='Chinese' image='chinese' onClick={updateIncludedTypes} filterValue='chinese_restaurant' style={{ flex: 1 }} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='French' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='french_restaurant' style={{ flex: 1 }} />
-              <ToggleableButtonImage textValue='Hamburger' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='hamburger_restaurant' style={{ padding: 0 }} />
-              <ToggleableButtonImage textValue='Indian' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='indian_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='French' image='french' onClick={updateIncludedTypes} filterValue='french_restaurant' style={{ flex: 1 }} />
+              <ToggleableButtonImage textValue='Hamburger' image='burger' onClick={updateIncludedTypes} filterValue='hamburger_restaurant' style={{ padding: 0 }} />
+              <ToggleableButtonImage textValue='Indian' image='indian' onClick={updateIncludedTypes} filterValue='indian_restaurant' style={{ padding: 100 }} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='Mexican' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='mexican_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Pizza' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='pizza_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Seafood' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='seafood_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Mexican' image='mexican' onClick={updateIncludedTypes} filterValue='mexican_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Pizza' image='pizza' onClick={updateIncludedTypes} filterValue='pizza_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Seafood' image='seafood' onClick={updateIncludedTypes} filterValue='seafood_restaurant' style={{ padding: 100 }} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='Steak' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='steak_house' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Italian' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='italian_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Japanese' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='japanese_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Steak' image='steak' onClick={updateIncludedTypes} filterValue='steak_house' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Italian' image='italian' onClick={updateIncludedTypes} filterValue='italian_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Japanese' image='japanese' onClick={updateIncludedTypes} filterValue='japanese_restaurant' style={{ padding: 100 }} />
 
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', gap: 0.02 * window_width, width: '100%', justifyContent: 'flexStart' }}>
-              <ToggleableButtonImage textValue='Sushi' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='sushi_restaurant' style={{ padding: 100 }} />
-              <ToggleableButtonImage textValue='Thai' image='require(../../resources.burger.png)' onClick={updateIncludedTypes} filterValue='thai_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Sushi' image='sushi' onClick={updateIncludedTypes} filterValue='sushi_restaurant' style={{ padding: 100 }} />
+              <ToggleableButtonImage textValue='Thai' image='thai' onClick={updateIncludedTypes} filterValue='thai_restaurant' style={{ padding: 100 }} />
 
             </View>
           </View>
         </View>
 
 
-        <View style={{flex: 0, width: '90%', paddingVertical: 30, alignSelf: 'center', justifyContent: 'flex-end' }}>
+        <View style={{ flex: 0, width: '90%', paddingVertical: 30, alignSelf: 'center', justifyContent: 'flex-end' }}>
           <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
         </View>
 

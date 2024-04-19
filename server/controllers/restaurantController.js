@@ -44,7 +44,16 @@ exports.getRestaurants = async (req, res) => {
         });
 
         // TODO: Filter out restaurants by PriceLevel
-
+        data = data.filter((restaurant) => {
+            if(restaurant.priceLevel === null || restaurant.priceLevel === undefined || (restaurant.priceLevel && req.body.filterData.priceLevels.includes(restaurant.priceLevel))) {
+                return restaurant;
+            }
+            else {
+                console.log("absolutely not");
+                console.log("price levels: " + req.body.filterData.priceLevels);
+                console.log("price level of restauraunt: " + restaurant.priceLevel);
+            }
+        })
         //VEGETARIAN
         if (!vegan && vegetarian) {
             data = data.filter((restaurant) => {
@@ -81,7 +90,6 @@ exports.getRestaurants = async (req, res) => {
                 if (restaurant.id === id)
                     restaurant.photoUrl = photoUrl;
             }
-
         }
 
 

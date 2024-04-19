@@ -21,6 +21,24 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
 
     let buttonColor = '#000000';
 
+    const Images = {
+        'american': require('../../resources/american.png'),
+        'burger': require('../../resources/burger.png'),
+        'barbecue': require('../../resources/bbq.png'),
+        'chinese': require('../../resources/chinese.png'),
+        'french': require('../../resources/french.png'),
+        'indian': require('../../resources/indian.png'),
+        'mexican': require('../../resources/mexican.png'),
+        'pizza': require('../../resources/pizza.png'),
+        'seafood': require('../../resources/seafood.png'),
+        'steak': require('../../resources/steak.png'),
+        'italian': require('../../resources/italian.png'),
+        'japanese': require('../../resources/japanese.png'),
+        'sushi': require('../../resources/sushi.png'),
+        'thai': require('../../resources/thai.png'),
+    }
+    
+
 
     const onButtonPress = () => {
         setIsEnabled((!isEnabled));
@@ -28,8 +46,8 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
 
     useEffect(() => {
         props.onClick(props.filterValue, isEnabled);
-      }, [isEnabled]);
-      
+    }, [isEnabled]);
+
 
     return (
         <View>
@@ -61,7 +79,8 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
                     maxWidth: 50,
                     maxHeight: 50,
                 }}
-                    source={require('../../resources/burger.png')} />
+                    // source={require(${props.image})}/>
+                    source={Images[props.image]} />
 
             </Pressable>
         </View>
