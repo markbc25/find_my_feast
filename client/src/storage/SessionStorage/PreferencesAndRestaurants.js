@@ -14,7 +14,10 @@ class PreferencesAndRestaurants {
             instance = this;
         }
         this.includedTypes = ["restaurant"];
+
         this.includedPriceLevels = ['PRICE_LEVEL_INEXPENSIVE', 'PRICE_LEVEL_MODERATE', 'PRICE_LEVEL_EXPENSIVE', 'PRICE_LEVEL_VERY_EXPENSIVE'];
+        this.radius = 50000;
+
         return instance;
     }
 
@@ -32,7 +35,9 @@ class PreferencesAndRestaurants {
     }
 
     setRadius(newRadius) {
+        
         this.radius = newRadius;
+        console.log("radius: " + newRadius);
     }
 
     getRadius() {

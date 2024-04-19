@@ -8,7 +8,7 @@ import ToggleableSetting from '../../components/ToggleableSetting/ToggleableSett
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import ActionButton from '../../components/ActionButton/ActionButton';
-import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton, GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
 import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
@@ -19,6 +19,7 @@ interface SignInViewProps {
     updateIsSignedIn: Function,
 
 }
+
 
 const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
@@ -122,7 +123,8 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                         }
                     ]}
 
-                        onPress={() => console.log("continuing with google")}>
+                        // onPress={_signIn}
+                >
 
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Image
