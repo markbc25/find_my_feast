@@ -55,6 +55,10 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   async function getRestaurants() {
     try {
       let body = {
+        filterData: {
+          priceLevels: preferencesAndRestaurantsInstance.getIncludedPriceLevels(),
+        },
+
         restaurantData: {
           includedTypes: preferencesAndRestaurantsInstance.getIncludedTypes(),
           maxResultCount: 20,
@@ -68,7 +72,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
             }
           },
           rankPreference: "DISTANCE",
-        }, 
+        },
 
         userData: {
           email: sessionStorageInstance.getEmail(),
@@ -78,7 +82,9 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
 
       const response = await axios.post(url, body);
 
+      console.log(JSON.stringify(response.data));
       setRestaurantsChanged(response.data);
+
     }
     catch (error) {
       console.log(error);

@@ -14,8 +14,10 @@ class PreferencesAndRestaurants {
             instance = this;
         }
         this.includedTypes = ["restaurant"];
-        this.includedPriceLevels = [1, 2, 3, 4];
+
+        this.includedPriceLevels = ['PRICE_LEVEL_INEXPENSIVE', 'PRICE_LEVEL_MODERATE', 'PRICE_LEVEL_EXPENSIVE', 'PRICE_LEVEL_VERY_EXPENSIVE'];
         this.radius = 50000;
+
         return instance;
     }
 
@@ -45,7 +47,7 @@ class PreferencesAndRestaurants {
     setIncludedPriceLevels(newPriceLevels) {
         this.includedPriceLevels.length = 0;
         if (newPriceLevels.length === 0) {
-            this.includedPriceLevels = [1, 2, 3, 4];
+            this.includedPriceLevels = ['PRICE_LEVEL_INEXPENSIVE', 'PRICE_LEVEL_MODERATE', 'PRICE_LEVEL_EXPENSIVE', 'PRICE_LEVEL_VERY_EXPENSIVE'];
         }
         else {
             this.includedPriceLevels = newPriceLevels;

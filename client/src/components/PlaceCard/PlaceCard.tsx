@@ -351,7 +351,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
                     <View style={styles.row}>
                       <Text style={styles.infoText}>
-                        {restaurant.priceLevel === null && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                        {restaurant.priceLevel === null || restaurant.priceLevel === undefined && <Text style={{ color: '#b8b8b8' }}>????</Text>}
                         {restaurant.priceLevel === "PRICE_LEVEL_UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
                         {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
                         {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
@@ -361,6 +361,9 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                         <Text style={styles.infoText}> ꞏ </Text>
                         {restaurant.primaryTypeDisplayName &&
                           <Text style={styles.infoText}>{restaurant.primaryTypeDisplayName.text}</Text>
+                        }
+                        {restaurant.primaryTypeDisplayName === undefined &&
+                          <Text style={styles.infoText}>{'Unknown type'}</Text>
                         }
                       </Text>
                     </View>
