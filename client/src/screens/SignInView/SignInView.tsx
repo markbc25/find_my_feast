@@ -123,7 +123,8 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                         }
                     ]}
 
-                        onPress={_signIn}>
+                        // onPress={_signIn}
+                >
 
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Image

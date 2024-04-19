@@ -64,7 +64,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
                 latitude: 30.6280,
                 longitude: -96.3344
               },
-              radius: 5000
+              radius: preferencesAndRestaurantsInstance.getRadius(),
             }
           },
           rankPreference: "DISTANCE",
