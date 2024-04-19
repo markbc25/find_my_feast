@@ -20,11 +20,24 @@ interface SignInViewProps {
 
 }
 
+GoogleSignin.configure({
+    webClientId: '728634266042-9sl914qhfnuoa248b5pics7anj1tl8k1.apps.googleusercontent.com',
+});
 
 const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
     let [password, setPassword] = useState("Initial");
     let [errorMessage, setErrorMessage] = useState("");
+
+    const handleGoogleLogin = async () => {
+        try {
+          await GoogleSignin.hasPlayServices();
+          const userInfo = await GoogleSignin.signIn();
+          console.log(statusCodes);
+        } catch (error) {
+          console.log('statusCodes: ', statusCodes, 'Error during sign-in ', error);
+        }
+    };
 
     function onButtonPressed() {
         props.onCreateAccountPressed(false);
@@ -110,37 +123,12 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
                 </View>
 
 
-                <View style={{ paddingTop: 20 }}>
-                    <Pressable style={({ pressed }) => [
-                        {
-                            alignItems: 'center',
-                            justifyContent: 'flex-start',
-                            paddingVertical: 12,
-                            paddingHorizontal: 32,
-                            borderRadius: 4,
-                            elevation: 3,
-                            backgroundColor: pressed ? '#fff' : '#fff',
-                        }
-                    ]}
-
-                        // onPress={_signIn}
-                >
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            <Image
-                                style={{ width: 20, height: 20, alignSelf: 'center' }}
-                                source={require('../../resources/googleLogo.png')}
-                            />
-
-                            <Text style={{
-                                color: 'black',
-                                fontSize: 20,
-                                paddingHorizontal: 20,
-                                justifyContent: 'flex-start',
-                            }}>Continue with Google</Text>
-                        </View>
-                    </Pressable>
-                </View>
+                <GoogleSigninButton
+                    style={{ width: 192, height: 48 }}
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={handleGoogleLogin}
+                />
             </View>
 
 

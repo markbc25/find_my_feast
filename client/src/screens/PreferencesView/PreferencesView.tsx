@@ -28,7 +28,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
   let [includedTypes, setIncludedTypes] = useState([]);
   let [includedPriceLevels, setIncludedPriceLevels] = useState([]);
   let [isPressed, setIsPressed] = useState(false);
-  let [radius, setRadius] = useState(30);
+  let [radius, setRadius] = useState(30 * 1609.34); // Convert miles to meters
 
 
 
