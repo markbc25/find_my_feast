@@ -32,7 +32,9 @@ class PreferencesAndRestaurants {
     }
 
     setRadius(newRadius) {
+        
         this.radius = newRadius;
+        console.log("radius: " + newRadius);
     }
 
     getRadius() {

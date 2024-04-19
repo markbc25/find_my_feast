@@ -4,9 +4,11 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import CustomSliderLabel from '../CustomSliderLabel/CustomSliderLabel';
 
 
-interface TwoSidedSliderProps {}
+interface TwoSidedSliderProps {
+    onValueChange: Function,
+}
 
-const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
+const TwoSidedSlider: FC<TwoSidedSliderProps> = (props: TwoSidedSliderProps) => {
     const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
     const [sliderOneValue, setSliderOneValue] = React.useState(0);
     const [multiSliderValue, setMultiSliderValue] = React.useState([10, 30]);
@@ -31,7 +33,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = () => {
             <MultiSlider
                 values={[sliderOneValue]}
                 sliderLength={300}
-                onValuesChange={sliderOneValueChange}
+                onValuesChange={props.onValueChange}
                 min={1}
                 max={30}
                 step={1}
