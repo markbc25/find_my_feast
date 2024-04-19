@@ -80,7 +80,8 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
   }, [isPressed]);
 
   function updateRadius(newRadius: number) {
-    setRadius(newRadius * 0.000621371);
+    // setRadius(newRadius * 0.000621371);
+    preferencesAndRestaurantsInstance.setRadius(newRadius * 1609.34); // Convert miles to meters
   }
 
 
@@ -115,7 +116,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
           <SectionTitle textValue='Distance'></SectionTitle>
 
           <View style={{ justifyContent: 'center', flexDirection: 'row', }}>
-            <Slider></Slider>
+            <Slider onValueChange={updateRadius}></Slider>
           </View>
         </View>
 
