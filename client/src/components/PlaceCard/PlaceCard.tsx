@@ -38,8 +38,9 @@ const styles = StyleSheet.create({
   cardContainer: {
     height: 0.85 * window_height,
     width: 0.95 * window_width,
-    backgroundColor: 'red',
-
+    shadowColor: 'black',
+    shadowOpacity: 0.4,
+    shadowRadius: 20,
   },
   card: {
     alignSelf: 'center',
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     height: window_height * 0.9,
     width: window_width * 0.93,
     shadowColor: 'black',
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.4,
     shadowRadius: 20,
     marginTop: window_height * 0.02,
     borderRadius: 20,
@@ -65,9 +66,9 @@ const styles = StyleSheet.create({
   overlay: {
     padding: 40,
     height: '100%',
-    backgroundColor: 'rgba(52, 52, 52, 0.60)',
     display: 'flex',
     flexDirection: 'column',
+    // backgroundColor: 'rgba(52, 52, 52, 0.30)',
     justifyContent: 'space-between',
     borderRadius: 20,
   },
@@ -278,13 +279,12 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
       {
         dontShow ? 
           <View style={styles.card}>
-            
-            <LinearGradient
-              colors={['red', 'transparent']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 0.5 }}
-              style={{ flex: 1, borderRadius: 20 }}
-            >
+              <LinearGradient
+                colors={['red', 'transparent']}
+                start={{ x: 0.5, y: 0 }}
+                end={{ x: 0.5, y: 0.4 }}
+                style={{ flex: 1 }}
+              >
               <View style={styles.redOverlay}>
                 <View>
                   <View style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: 20}}>
@@ -329,8 +329,8 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
             <ImageBackground imageStyle={{ resizeMode: 'cover' }}  style={styles.cardImage} source={{uri: restaurant.photoUrl}}>
               <LinearGradient
                 colors={['black', 'transparent']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 0.4 }}
+                start={{ x: 0.5, y: -0.05 }}
+                end={{ x: 0.5, y: 0.4 }}
                 style={{ flex: 1 }}
               >
 
