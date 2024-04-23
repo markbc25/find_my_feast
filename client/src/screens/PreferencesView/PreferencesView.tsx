@@ -62,7 +62,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
       let filteredArray = includedPriceLevels.filter(item => item !== newValue);
       setIncludedPriceLevels(filteredArray);
     }
-
+    setIsActive(true);
   }
 
   function pressButton() {
@@ -88,6 +88,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
   function updateRadius(newRadius: number) {
     // setRadius(newRadius * 0.000621371);
     preferencesAndRestaurantsInstance.setRadius(newRadius * 1609.34); // Convert miles to meters
+    setIsActive(true);
   }
 
 

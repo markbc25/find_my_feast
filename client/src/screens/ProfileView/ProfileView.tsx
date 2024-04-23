@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, Button } from 'react-native';
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
@@ -18,6 +18,8 @@ interface ProfileViewProps {
 
 const ProfileScreen = (props: ProfileViewProps) => {
 
+    let [isActive, setIsActive] = useState(false);
+
     async function setVegan(veganBool: boolean) {
         //call API w session storage instance
         const body = {
@@ -30,6 +32,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
         catch (e) {
             console.log("vegan error: " + e);
         }
+        setIsActive(true);
     }
 
     async function setVegetarian(vegetarianBool: boolean) {
@@ -44,6 +47,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
         catch (e) {
             console.log("vegetarian error: " + e);
         }
+        setIsActive(true);
     }
 
     async function getVegan() {
@@ -66,6 +70,11 @@ const ProfileScreen = (props: ProfileViewProps) => {
         });
 
         return response.data.vegetarian;
+    }
+
+    function pressButton() {
+        props.onActionButtonClicked();
+        setIsActive(false);
     }
 
     return (
@@ -97,7 +106,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
                 </View>
 
                 <View>
-                <ActionButton onPress={props.onActionButtonClicked} textValue='Confirm' active={true}></ActionButton>
+                <ActionButton onPress={() => pressButton()} textValue='Confirm' active={isActive}></ActionButton>
                 </View>
 
             </View>
@@ -114,7 +123,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
 
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center', paddingBottom: 40 }}>
-                    <ActionButton onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
+                    <ActionButton active={true} onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
                 </View>
             </View>
 
