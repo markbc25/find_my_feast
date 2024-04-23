@@ -48,7 +48,7 @@ const TwoSidedSlider: FC<TwoSidedSliderProps> = (props: TwoSidedSliderProps) => 
                   backgroundColor: '#402b1f',
                 }}
                 unselectedStyle={{
-                  backgroundColor: '#917b6e',
+                  backgroundColor: '#CBBCB3',
                 }}
                 customMarker={() => {
                     return(

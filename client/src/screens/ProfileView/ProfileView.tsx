@@ -72,6 +72,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
         <View
             style={{
                 flex: 1,
+                backgroundColor: 'white',
             }}>
 
 

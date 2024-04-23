@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: 20
+    gap: 20,
+    backgroundColor: 'white'
   },
   image: {
     width: 150,

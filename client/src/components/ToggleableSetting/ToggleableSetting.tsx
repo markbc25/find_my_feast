@@ -56,7 +56,7 @@ const ToggleableSetting = (props: ToggleableSettingProps) => {
 
       <Switch style={{ justifyContent: 'flex-end' }}
         trackColor={{ false: '#767577', true: '#aad784' }}
-        thumbColor={isEnabled ? '#5bc009' : '#f4f3f4'}
+        thumbColor={isEnabled ? '#1faf2e': '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
         value={isEnabled}

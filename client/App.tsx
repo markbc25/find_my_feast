@@ -62,7 +62,7 @@ function App(): React.JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState(2);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : '#f6f3f3',
+    backgroundColor: isDarkMode ? Colors.darker : 'white',
   };
 
 

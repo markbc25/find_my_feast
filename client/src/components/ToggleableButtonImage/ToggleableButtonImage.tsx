@@ -36,8 +36,25 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
         'japanese': require('../../resources/japanese.png'),
         'sushi': require('../../resources/sushi.png'),
         'thai': require('../../resources/thai.png'),
+
+        //////
+
+        'americanActive': require('../../resources/americanActive.png'),
+        'burgerActive': require('../../resources/burgerActive.png'),
+        'barbecueActive': require('../../resources/bbqActive.png'),
+        'chineseActive': require('../../resources/chineseActive.png'),
+        'frenchActive': require('../../resources/frenchActive.png'),
+        'indianActive': require('../../resources/indianActive.png'),
+        'mexicanActive': require('../../resources/mexicanActive.png'),
+        'pizzaActive': require('../../resources/pizzaActive.png'),
+        'seafoodActive': require('../../resources/seafoodActive.png'),
+        'steakActive': require('../../resources/steakActive.png'),
+        'italianActive': require('../../resources/italianActive.png'),
+        'japaneseActive': require('../../resources/japaneseActive.png'),
+        'sushiActive': require('../../resources/sushiActive.png'),
+        'thaiActive': require('../../resources/thaiActive.png'),
     }
-    
+
 
 
     const onButtonPress = () => {
@@ -58,18 +75,29 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
                     alignItems: 'flex-start',
                     height: 0.15 * window_height,
                     width: 0.28 * window_width,
-                    borderWidth: isEnabled ? 2.5 : 0.75,
+
+                    borderColor: 'transparent',
+                    backgroundColor: isEnabled ? '#1faf2e' : 'white',
+                    borderRadius: 8,
+                    borderWidth: 1,
                     borderStyle: 'solid',
-                    backgroundColor: '#f6f3f3',
-                    borderRadius: 5,
+
+                    shadowColor: isEnabled ? 'black' : 'black',
+                    shadowRadius: 5,
+                    shadowOpacity: 0.1,
+                    elevation: 5,
+                    shadowOffset: {
+                        width: 10,
+                        height: -10,
+                    },
                 }}
             >
                 <Text style={{
                     paddingVertical: 3,
-                    fontSize: 17,
                     alignSelf: 'center',
-                    fontWeight: isEnabled ? '700' : '400',
-                    color: '#402b1f',
+                    color: isEnabled ? 'white' : '#402b1f',
+                    fontSize: 16.5,
+                    fontWeight: isEnabled ? '600' : '400',
                 }}>
                     {props.textValue}
                 </Text>
@@ -80,7 +108,9 @@ const ToggleableButtonImage = (props: ToggleableButtonImageProps) => {
                     maxHeight: 50,
                 }}
                     // source={require(${props.image})}/>
-                    source={Images[props.image]} />
+                     source={isEnabled ? Images[props.image + 'Active'] : Images[props.image]} />
+                {/* /source={Images[props.image]} /> */}
+
 
             </Pressable>
         </View>
