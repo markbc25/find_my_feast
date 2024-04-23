@@ -106,7 +106,7 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
                 <View>
                     <ActionButton textValue="Sign In"
-                        onPress={handleSignIn}></ActionButton>
+                        active={true} onPress={handleSignIn}></ActionButton>
                 </View>
 
 

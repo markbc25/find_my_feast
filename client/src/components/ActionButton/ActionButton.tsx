@@ -4,6 +4,7 @@ import { Text, View, Pressable, TextInput } from 'react-native';
 interface ActionButtonProps {
     onPress: Function,
     textValue: string,
+    active: Boolean
 }
 
 const ActionButton: FC<ActionButtonProps> = (props: ActionButtonProps) => (
@@ -16,7 +17,7 @@ const ActionButton: FC<ActionButtonProps> = (props: ActionButtonProps) => (
                 paddingHorizontal: 32,
                 borderRadius: 4,
                 elevation: 3,
-                backgroundColor: pressed ? '#0f9100' : '#1faf2e',
+                backgroundColor: !props.active ? 'gray' : pressed ? '#0f9100' : '#1faf2e',
             }
         ]}
 

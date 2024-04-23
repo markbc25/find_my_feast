@@ -30,7 +30,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
   let [includedPriceLevels, setIncludedPriceLevels] = useState([]);
   let [isPressed, setIsPressed] = useState(false);
   let [radius, setRadius] = useState(30);
-
+  let [isActive, setIsActive] = useState(false);
 
 
   function updateIncludedTypes(newValue: string, buttonEnabled: boolean) {
@@ -46,7 +46,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
       let filteredArray = includedTypes.filter(item => item !== newValue);
       setIncludedTypes(filteredArray);
     }
-
+    setIsActive(true);
   }
 
   function updateIncludedPriceLevels(newValue: number, buttonEnabled: boolean) {
@@ -63,6 +63,11 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
       setIncludedPriceLevels(filteredArray);
     }
 
+  }
+
+  function pressButton() {
+    setIsPressed(!isPressed);
+    setIsActive(false);
   }
 
   useEffect(() => {
@@ -165,7 +170,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
 
             <View style={{ flex: 0, width: '90%', paddingVertical: 30, alignSelf: 'center', justifyContent: 'flex-end' }}>
-              <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
+              <ActionButton active={isActive} textValue='Confirm' onPress={() => pressButton()} />
             </View>
 
           </View>

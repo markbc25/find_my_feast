@@ -97,7 +97,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
                 </View>
 
                 <View>
-                <ActionButton onPress={props.onActionButtonClicked} textValue='Confirm'></ActionButton>
+                <ActionButton onPress={props.onActionButtonClicked} textValue='Confirm' active={true}></ActionButton>
                 </View>
 
             </View>

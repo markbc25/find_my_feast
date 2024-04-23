@@ -88,7 +88,7 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
             </View>
 
             <View>
-               <ActionButton textValue="Sign Up"
+               <ActionButton textValue="Sign Up" active={true}
                   onPress={handleSignUp}></ActionButton>
             </View>
 
