@@ -48,7 +48,7 @@ const InputText: FC<InputTextProps> = (props: InputTextProps) => {
                     left: 10,
                     fontSize: 16,
                     backgroundColor: '#f6f3f3',
-                    color: '#0f9100',
+                    color: '#35ad41',
                     paddingLeft: 10,
                     paddingRight: 10,
                     justifyContent: 'flex-start',

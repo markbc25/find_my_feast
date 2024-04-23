@@ -9,14 +9,14 @@ const Tab = createMaterialTopTabNavigator();
 const ListTabs: FC = () => {
   return (
     <Tab.Navigator   screenOptions={{
-                           tabBarActiveTintColor: '#402b1f',
+                           tabBarActiveTintColor: '#1faf2e',
                            tabBarInactiveTintColor: 'gray',
-                           tabBarStyle: {backgroundColor: '#f6f3f3'},
+                           tabBarStyle: {backgroundColor: 'white'},
                            tabBarIndicatorStyle: {backgroundColor: '#509e11'},
                            tabBarLabelStyle: {textTransform: 'none', fontSize: 17},
                       }}>
       <Tab.Screen name="Favorites" component={Favorites} />
-      <Tab.Screen name="Currently Liked" component={CurrentLiked} />
+      <Tab.Screen name="Current Likes" component={CurrentLiked} />
       <Tab.Screen name="Do Not Show" component={DoNotShow} />
     </Tab.Navigator>
   );
