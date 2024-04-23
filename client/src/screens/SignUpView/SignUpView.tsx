@@ -93,7 +93,7 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
             </View>
 
 
-            <View style={{ paddingTop: 20 }}>
+            {/* <View style={{ paddingTop: 20 }}>
                <Pressable style={({ pressed }) => [
                   {
                      alignItems: 'center',
@@ -122,7 +122,7 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
                      }}>Continue with Google</Text>
                   </View>
                </Pressable>
-            </View>
+            </View> */}
          </View>
 
 

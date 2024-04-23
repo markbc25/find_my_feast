@@ -45,26 +45,11 @@ exports.getRestaurants = async (req, res) => {
 
         // TODO: Filter out restaurants by PriceLevel
 
-        // // TODO: Filter out restaurants by Distance
-        // if (req.body.restaurantData.locationRestriction && req.body.restaurantData.locationRestriction.circle) {
-        //     const userLatitude = req.body.restaurantData.locationRestriction.circle.center.latitude;
-        //     const userLongitude = req.body.restaurantData.locationRestriction.circle.center.longitude;
-        //     const userRadius = req.body.restaurantData.locationRestriction.circle.radius;
-
-        //     data = data.filter((restaurant) => {
-        //     if (restaurant && restaurant.location) {
-        //         const restaurantLatitude = restaurant.location.latitude;
-        //         const restaurantLongitude = restaurant.location.longitude;
-
-        //         // Calculate the distance between user and restaurant using Haversine formula
-        //         const distance = calculateDistance(userLatitude, userLongitude, restaurantLatitude, restaurantLongitude);
-
-        //         if (distance <= userRadius) {
-        //         return restaurant;
-        //         }
-        //     }
-        //     });
-        // }
+        data = data.filter((restaurant) => {
+            if(restaurant.priceLevel === null || restaurant.priceLevel === undefined || (restaurant.priceLevel && req.body.filterData.priceLevels.includes(restaurant.priceLevel))) {
+                return restaurant;
+            }
+        });
 
         //VEGETARIAN
         if (!vegan && vegetarian) {
@@ -102,7 +87,6 @@ exports.getRestaurants = async (req, res) => {
                 if (restaurant.id === id)
                     restaurant.photoUrl = photoUrl;
             }
-
         }
 
 

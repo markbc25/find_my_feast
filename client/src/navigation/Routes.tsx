@@ -57,7 +57,7 @@ const Routes = (props: RoutesProps) => {
           tabBarStyle: [
             {
 
-              'backgroundColor': '#f6f3f3',
+              'backgroundColor': 'white',
               'display': 'flex',
               'borderColor': '#f6f3f3',
               height: 0.06 * window_height,

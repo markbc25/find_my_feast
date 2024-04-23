@@ -7,9 +7,9 @@ const window_width = Dimensions.get('window').width;
 const window_height = Dimensions.get('window').height;
 EStyleSheet.build({ $rem: window_width / 380 });
 
-interface ToggleableButtonProps { 
+interface ToggleableButtonProps {
     textValue: string,
-    filterValue:  any,
+    filterValue: any,
     onClick: Function,
 }
 
@@ -24,8 +24,8 @@ const ToggleableButton = (props: ToggleableButtonProps) => {
 
     useEffect(() => {
         props.onClick(props.filterValue, isEnabled);
-      }, [isEnabled]);
-      
+    }, [isEnabled]);
+
 
     return (
         <View >
@@ -33,21 +33,29 @@ const ToggleableButton = (props: ToggleableButtonProps) => {
                 onPress={onButtonPress}
                 style={{
                     justifyContent: 'center',
-                    alignItems: 'spaceBetween',
-                    borderColor: isEnabled ? '0a6200' : '#402b1f',
+                    borderColor: 'transparent',
+                    backgroundColor: isEnabled ? '#1faf2e' : 'white',
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    borderStyle: 'solid',
+                    alignItems: 'center',
+
+                    shadowColor: isEnabled ? '#5bbb09' : 'black',
+                    shadowRadius: 5,
+                    shadowOpacity: 100,
+                    elevation: 5,
+                    shadowOffset: {
+                        width: 10,
+                        height: -10,
+                    }
                 }}
             >
                 <Text style={{
-                    backgroundColor: '#f6f3f3',
-                    color: '#402b1f',
+                    color: isEnabled ? 'white' : '#402b1f',
                     paddingHorizontal: 0.03 * window_width,
                     paddingVertical: 0.01 * window_height,
-                    borderWidth: isEnabled ? 0.004 * window_width : 0.75,
-                    borderStyle: 'solid',
-                    fontSize: 0.035 * window_width,
+                    fontSize: 16.5,
                     fontWeight: isEnabled ? '600' : '400',
-                    borderRadius: 7,
-                    justifyContent: 'center'
                 }}
                 >
                     {props.textValue}

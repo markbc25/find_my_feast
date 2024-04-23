@@ -1,11 +1,11 @@
 const { Restaurant } = require("../models/restaurantModel.js");
-const {User} = require("../models/userModel.js");
+const { User } = require("../models/userModel.js");
 
 // General User controllers
 exports.getUser = async (req, res) => {
   try {
     const email = req.query.email;
-    const user = await User.findOne({email : email});
+    const user = await User.findOne({ email: email });
     if (!user)
       return res.status(404).send('User not found');
 
@@ -17,21 +17,21 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const {email, vegan, vegetarian} = req.body;
-    const user = await User.findOne({email : email});
+    const { email, vegan, vegetarian } = req.body;
+    const user = await User.findOne({ email: email });
     const updatedFields = {};
-    
+
     if (!user)
       return res.status(404).send('User not found');
 
-    if(vegan !== undefined)
+    if (vegan !== undefined)
       updatedFields.vegan = vegan;
-    if(vegetarian !== undefined)
+    if (vegetarian !== undefined)
       updatedFields.vegetarian = vegetarian;
 
-      
 
-    await User.findOneAndUpdate({email: email}, updatedFields);
+
+    await User.findOneAndUpdate({ email: email }, updatedFields);
 
     res.status(200).send('User updated successfully!');
   } catch (error) {
@@ -71,7 +71,7 @@ exports.addFavorites = async (req, res) => {
     if (restaurant && user.favoriteRestaurant.includes(restaurant._id)) {
       return res.status(400).send('Restaurant already in don`t show');
     }
-    if(!restaurant){
+    if (!restaurant) {
       restaurant = await Restaurant.create(req.body.restaurant);
     }
 
@@ -129,8 +129,8 @@ exports.getDoNotShow = async (req, res) => {
       return res.status(404).send('User not found');
 
     user = await User.findOne({ email: req.query.email })
-                                .populate("doNotShow")
-                                
+      .populate("doNotShow")
+
     res.status(200).json(user.doNotShow);
   }
   catch (error) {
@@ -150,7 +150,7 @@ exports.addDoNotShow = async (req, res) => {
     if (restaurant && user.doNotShow.includes(restaurant._id)) {
       return res.status(400).send('Restaurant already in don`t show');
     }
-    if(!restaurant){
+    if (!restaurant) {
       restaurant = await Restaurant.create(req.body.restaurant);
     }
 
@@ -159,6 +159,7 @@ exports.addDoNotShow = async (req, res) => {
       { $push: { doNotShow: restaurant._id } }, // Update
       { new: true } // Return the modified document
     );
+
 
     res.status(200).json(`Added ${restaurant.id} to don't show`);
   } catch (error) {
