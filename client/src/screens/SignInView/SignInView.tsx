@@ -25,20 +25,25 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
     let [email, setEmail] = useState("Initial");
     let [password, setPassword] = useState("Initial");
     let [errorMessage, setErrorMessage] = useState("");
+    let [isActive, setIsActive] = useState(false);
 
     function onButtonPressed() {
         props.onCreateAccountPressed(false);
+        setIsActive(false);
     }
 
     function emailChange(newValue: string) {
         setEmail(newValue);
+        setIsActive(true);
     }
 
     function passwordChange(newValue: string) {
         setPassword(newValue);
+        setIsActive(true);
     }
 
     function handleSignIn() {
+        setIsActive(false);
         const body = {
             email: email,
             password: password,
@@ -106,7 +111,7 @@ const SignInView: FC<SignInViewProps> = (props: SignInViewProps) => {
 
                 <View>
                     <ActionButton textValue="Sign In"
-                        active={true} onPress={handleSignIn}></ActionButton>
+                        active={isActive} onPress={handleSignIn}></ActionButton>
                 </View>
 
 
