@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Button } from 'react-native';
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
@@ -21,6 +21,11 @@ const ProfileScreen = (props: ProfileViewProps) => {
     let [isActive, setIsActive] = useState(false);
 
     async function setVegan(veganBool: boolean) {
+        if (veganBool === await getVegan()) {
+            console.log('blocking color in vegan');
+            setIsActive(false);
+            return;
+        }
         //call API w session storage instance
         const body = {
             email: sessionStorageInstance.getEmail(),
@@ -36,6 +41,11 @@ const ProfileScreen = (props: ProfileViewProps) => {
     }
 
     async function setVegetarian(vegetarianBool: boolean) {
+        if (vegetarianBool === await getVegetarian()) {
+            console.log('blocking color in vegan');
+            setIsActive(false);
+            return;
+        }
         //call API w session storage instance
         const body = {
             email: sessionStorageInstance.getEmail(),
@@ -58,6 +68,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
             }
         });
 
+        pressButton();
         return response.data.vegan;
     }
 
@@ -69,6 +80,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
             }
         });
 
+        pressButton();
         return response.data.vegetarian;
     }
 

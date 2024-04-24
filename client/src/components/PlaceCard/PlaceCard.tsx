@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useContext } from 'react'
 import { Button, Image, ImageBackground, Pressable, StyleSheet, Text, View, SafeAreaView, Dimensions } from 'react-native'
 import TinderCard from 'react-tinder-card';
 import Heart from '../../../assets/heart.png';
@@ -14,6 +14,7 @@ import { faCar } from '@fortawesome/free-solid-svg-icons/faCar';
 import Share from 'react-native-share';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js';
 import axios from 'axios';
+import { numCardsOnDeck } from '../../screens/HomeView/HomeView.tsx';
 
 
 
@@ -189,6 +190,8 @@ const styles = StyleSheet.create({
   }
 });
 
+
+
 export interface Restaurant {
   restaurant: {
     displayName: Object,
@@ -203,16 +206,22 @@ export interface Restaurant {
   }
 }
 
-const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
+export interface PlaceCardProps {
+  restaurant: Restaurant,
+  decrementCards: Function,
+}
+
+const PlaceCard = ( props: PlaceCardProps) => {
   const [lastDirection, setLastDirection] = useState('');
   const [dontShow, setDontShow] = useState(false);
   const [favorite, setFavorite] = useState(false);
   const [err, setErr] = useState(false);
 
+
   const openSMSMenu = async () => {
     const shareOptions = {
       dialogueTitle: 'Share restaurant',
-      message: 'Google Maps Link: ' + restaurant.googleMapsUri,
+      message: 'Google Maps Link: ' + props.restaurant.googleMapsUri,
     }
     try {
       const shareResponse = await Share.open(shareOptions);
@@ -226,13 +235,14 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
     if (direction === 'right' || direction === 'up') {
       CurrentSessionStorage.insertCurrentLiked(restaurant.id, restaurant);
     }
-    else {
-      // console.log('swiped left on: ' + restaurant.displayName.text);
-    }
   }
 
   const outOfFrame = (name: string) => {
     // console.log(('https::').concat(restaurant.photoUrl));
+    // console.log("out of frame");
+    // console.log("after function call");
+    props.decrementCards();
+    
   }
 
   async function handleAddToFavorites() {
@@ -240,13 +250,13 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
       user: {
         email: CurrentSessionStorage.getEmail(),
       },
-      restaurant: restaurant
+      restaurant: props.restaurant
     }
 
     try {
       const response = await axios.post('http://10.0.2.2:3000/api/users/favorites', body);
       console.log("Response:", response.data);
-      CurrentSessionStorage.insertCurrentLiked(restaurant.id, restaurant);
+      CurrentSessionStorage.insertCurrentLiked(props.restaurant.id, props.restaurant);
       setFavorite(true);
     }
     catch (error) {
@@ -262,7 +272,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
       user: {
         email: CurrentSessionStorage.getEmail(),
       },
-      restaurant: restaurant
+      restaurant: props.restaurant
     }
 
     try {
@@ -288,7 +298,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
       elevation: 100,
     }}
 
-      key={restaurant.displayName && restaurant.displayName.text} onSwipe={(dir) => swiped(dir, restaurant)} onCardLeftScreen={() => outOfFrame(restaurant.name)}>
+      key={props.restaurant.displayName && props.restaurant.displayName.text} onSwipe={(dir) => swiped(dir, props.restaurant)} onCardLeftScreen={() => outOfFrame(props.restaurant.name)}>
       {
         dontShow ?
           <View style={styles.card}>
@@ -339,7 +349,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
             </View> :
             <View style={styles.card}>
               {
-                <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri: restaurant.photoUrl }}>
+                <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.cardImage} source={{ uri:props.restaurant.photoUrl }}>
                   <LinearGradient
                     colors={['black', 'transparent']}
                     start={{ x: 0.5, y: -0.05 }}
@@ -351,7 +361,7 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
                       <View>
 
                         <View style={{ flexDirection: 'row' }}>
-                          <Text style={styles.cardTitle}>{restaurant.displayName && restaurant.displayName.text}</Text>
+                          <Text style={styles.cardTitle}>{props.restaurant.displayName && props.restaurant.displayName.text}</Text>
                           <Pressable onTouchStart={openSMSMenu}
 
                             style={styles.shareIcon}>
@@ -364,25 +374,25 @@ const PlaceCard: React.FC<Props> = ({ restaurant }: Restaurant) => {
 
                         <View style={styles.row}>
                           <Text style={styles.infoText}>
-                            {restaurant.priceLevel === null || restaurant.priceLevel === undefined && <Text style={{ color: '#b8b8b8' }}>????</Text>}
-                            {restaurant.priceLevel === "PRICE_LEVEL_UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
-                            {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
-                            {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
-                            {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
-                            {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
+                            {props.restaurant.priceLevel === null || props.restaurant.priceLevel === undefined && <Text style={{ color: '#b8b8b8' }}>????</Text>}
+                            {props.restaurant.priceLevel === "PRICE_LEVEL_UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                            {props.restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
+                            {props.restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
+                            {props.restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
+                            {props.restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
 
                             <Text style={styles.infoText}> ꞏ </Text>
-                            {restaurant.primaryTypeDisplayName &&
-                              <Text style={styles.infoText}>{restaurant.primaryTypeDisplayName.text}</Text>
+                            {props.restaurant.primaryTypeDisplayName &&
+                              <Text style={styles.infoText}>{props.restaurant.primaryTypeDisplayName.text}</Text>
                             }
-                            {restaurant.primaryTypeDisplayName === undefined &&
+                            {props.restaurant.primaryTypeDisplayName === undefined &&
                               <Text style={styles.infoText}>{'Unknown type'}</Text>
                             }
                           </Text>
                         </View>
 
                         <View style={styles.row}>
-                          <Text style={styles.infoText}>★ {restaurant.rating}</Text>
+                          <Text style={styles.infoText}>★ {props.restaurant.rating}</Text>
                         </View>
 
                       </View>

@@ -85,6 +85,10 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
     props.onActionButtonClick();
   }, [isPressed]);
 
+  useEffect(() => {
+    setIsActive(false);
+  }, []);
+
   function updateRadius(newRadius: number) {
     // setRadius(newRadius * 0.000621371);
     preferencesAndRestaurantsInstance.setRadius(newRadius * 1609.34); // Convert miles to meters
