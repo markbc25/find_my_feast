@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, useImperativeHandle, useState, useEffect, useContext, createContext } from 'react';
+import React, { FC, forwardRef, useImperativeHandle, useRef, useState, useEffect, useContext, createContext } from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import CurrentSessionStorage from '../../storage/SessionStorage/SessionStorage.js'
@@ -16,26 +16,30 @@ EStyleSheet.build({ $rem: window_width / 380 });
 
 const styles = StyleSheet.create({
   cardContainer: {
+    elevation: 10,
+    zIndex: 10,
+    alignItems: 'center',
 
   },
   container: {
     width: window_width,
     height: window_height,
-    backgroundColor: 'white',
   },
 
 })
-
 
 interface HomeViewProps {
   parent: any,
 }
 
+var numCardsOnDeck = 0;
+
 const HomeView = forwardRef((props: HomeViewProps, ref) => {
   const [restaurantResponse, setRestaurantsChanged] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [outOfRestaurants, setOutOfRestaurants] = useState(false);
 
-  const numCardsOnDeck = createContext(0);
+
 
   const updateRestaurantCards = () => {
     // Logic to be executed in response to the parent component's action
@@ -49,6 +53,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
   useEffect(() => {
     updateRestaurantCards();
   }, [])
+
 
   useEffect(() => {
   }, [restaurantResponse])
@@ -86,23 +91,60 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
       console.log(JSON.stringify(response.data));
       setRestaurantsChanged(response.data);
 
+      //set card count to number of restaurants given on fetch
+      numCardsOnDeck = response.data.length;
+      setOutOfRestaurants(false);
     }
     catch (error) {
       console.log(error);
     }
   }
 
+  function handleOutOfRestaurants() {
+    //setRestaurantsChanged([]);
+    setOutOfRestaurants(true);
+    updateRestaurantCards();
+  }
 
+
+  function decrementNumRestaurants() {
+    numCardsOnDeck = numCardsOnDeck - 1;
+    if (numCardsOnDeck === 0 ) { //&& we got a refetch token back from the API
+      handleOutOfRestaurants();
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
+      {outOfRestaurants && < View style={{
+        alignSelf: 'center',
+        justifyContent: 'center',
+        width: window_width,
+        height: window_height,
+        elevation: 0,
+        zIndex: 0,
+        position: 'absolute',
+      }}>
+
+        <Text
+          style={{
+            textAlign: 'center'
+          }}
+        >
+          Out of cards!
+        </Text>
+      </View>
+      }
+
+
       <View style={styles.cardContainer}>
         {restaurantResponse.map((place) => (
-          <PlaceCard key={place.id} restaurant={place} /> // outOfFrame={ }
+          <PlaceCard key={place.id} restaurant={place} decrementCards = {decrementNumRestaurants}/>
         ))}
-
       </View>
-    </SafeAreaView>
+
+
+    </SafeAreaView >
   );
 });
 

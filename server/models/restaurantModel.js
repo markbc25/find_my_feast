@@ -44,7 +44,7 @@ const restaurantSchema = new Schema({
     },
     photoUrl: {
         type: String,
-        required: true
+        required: false
     },
     googleMapsUri: {
         type: String,
