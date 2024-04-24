@@ -30,13 +30,11 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
    function emailChange(newValue: string) {
       setEmail(newValue);
       setIsActive(true);
-      // console.log("new email: " + email);
    }
 
    function passwordChange(newValue: string) {
       setPassword(newValue);
       setIsActive(true);
-      // console.log("new password: " + password);
    }
 
    function handleSignUp() {

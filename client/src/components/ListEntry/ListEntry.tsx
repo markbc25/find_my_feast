@@ -100,109 +100,117 @@ const modalStyles = StyleSheet.create({
 });
 
 const ListEntry: React.FC<ListEntryProps> = ({ restaurant, list }) => {
-    const [iconName, setIconName] = useState("minus-square-o");
-    const [modalVisible, setModalVisible] = useState(false);
-    const [deleted, setDeleted] = useState(false);
+  const [iconName, setIconName] = useState("minus-square-o");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deleted, setDeleted] = useState(false);
 
-    const removeFromFavorites = async () => {
-      setModalVisible(false);
+  const removeFromFavorites = async () => {
+    setModalVisible(false);
+    const body = {
+      user: {
+        email: CurrentSessionStorage.getEmail(),
+      },
+      restaurant: restaurant
+    }
+    try {
+      const response = await axios.delete('http://10.0.2.2:3000/api/users/favorites', { data: body });
+    }
+    catch (error) {
+      console.log("error deleting from favorites in list entry: " + error);
+    }
+    setModalVisible(false);
+  }
+
+  const removeFromDontShow = async () => {
+    setModalVisible(false);
+    try {
       const body = {
         user: {
           email: CurrentSessionStorage.getEmail(),
         },
         restaurant: restaurant
-      }
-      try {
-        const response = await axios.delete('http://10.0.2.2:3000/api/users/favorites', { data: body });
-        console.log("Response:", response.data);
-      }
-      catch(error) {
-        console.log("error deleting from favorites in list entry: " + error);
-      }
-      setModalVisible(false);
+      };
+      const response = await axios.delete('http://10.0.2.2:3000/api/users/doNotShow', { data: body });
+    } catch (error) {
+      console.error("Error deleting from favorites in list entry:", error);
     }
+  }
 
-    const removeFromDontShow = async () => {
-      setModalVisible(false);
-      try {
-        const body = {
-          user: {
-            email: CurrentSessionStorage.getEmail(),
-          },
-          restaurant: restaurant 
-        };
-        const response = await axios.delete('http://10.0.2.2:3000/api/users/doNotShow', { data: body });
-        console.log("Response:", response.data);
-      } catch (error) {
-        console.error("Error deleting from favorites in list entry:", error);
-      }
-    }
+  const pressYes = () => {
+    setModalVisible(false);
+    if (list === 'f') removeFromFavorites();
+    else removeFromDontShow();
+    setDeleted(true);
+  }
 
-    const pressYes = () => {
-      setModalVisible(false);
-      if (list === 'f') removeFromFavorites();
-      else removeFromDontShow();
-      setDeleted(true);
-    }
-
-    return (
-      <>
-        {deleted === false && 
-          <>
-            <Pressable onPress={() => setModalVisible(true)}
-              style={({ pressed }) => [
-                styles.widget,
-                {
-                  backgroundColor: pressed ? 'rgba(52, 52, 52, 0.15)' : 'rgba(52, 52, 52, 0.0)',
-                }
-              ]}
-              key={restaurant.id}
-            >
-            {restaurant && <Image source={{uri: restaurant.photoUrl}} style={styles.image} />}
+  return (
+    <>
+      {deleted === false &&
+        <>
+          <Pressable onPress={() => setModalVisible(true)}
+            style={({ pressed }) => [
+              styles.widget,
+              {
+                backgroundColor: pressed ? 'rgba(52, 52, 52, 0.15)' : 'rgba(52, 52, 52, 0.0)',
+              }
+            ]}
+            key={restaurant.id}
+          >
+            {restaurant && <Image source={{ uri: restaurant.photoUrl }} style={styles.image} />}
             <View>
+              <Text>
                 <Text style={styles.cardTitle}>{restaurant.displayName && restaurant.displayName.text}</Text>
-                {restaurant.priceLevel === "UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+              </Text>
+              <Text>
+                {restaurant.priceLevel === null && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
+                {restaurant.priceLevel === "PRICE_LEVEL_UNKNOWN" && <Text style={{ color: '#b8b8b8' }}>? Price</Text>}
                 {restaurant.priceLevel === "PRICE_LEVEL_INEXPENSIVE" && <Text style={styles.infoText}>$<Text style={{ color: '#b8b8b8' }}>$$$</Text></Text>}
                 {restaurant.priceLevel === "PRICE_LEVEL_MODERATE" && <Text style={styles.infoText}>$$<Text style={{ color: '#b8b8b8' }}>$$</Text></Text>}
                 {restaurant.priceLevel === "PRICE_LEVEL_EXPENSIVE" && <Text style={styles.infoText}>$$$<Text style={{ color: '#b8b8b8' }}>$</Text></Text>}
                 {restaurant.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE" && <Text style={styles.infoText}>$$$$</Text>}
-              <Text style={styles.infoText}>{restaurant.rating}</Text>
+
+                <Text style={styles.infoText}> ꞏ </Text>
+                {restaurant.primaryTypeDisplayName &&
+                  <Text style={styles.infoText}>{restaurant.primaryTypeDisplayName.text}</Text>
+                }
+              </Text>
+              <Text style={styles.infoText}>★{restaurant.rating}</Text>
             </View>
-            </Pressable>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-                setModalVisible(!modalVisible);
-              }}>
-                <View style={modalStyles.centeredView}>
-                  <View style={modalStyles.modalView}>
-                    {list === "f" ? <Text style={modalStyles.modalText}>Remove from Favorites list?</Text>
-                    :               <Text style={modalStyles.modalText}>Remove from "Do Not Show" list?</Text>}
-                    
-                    <View style={styles.row}>
-                      <Pressable
-                        style={[modalStyles.button, modalStyles.buttonClose, modalStyles.no]}
-                        onPress={() => setModalVisible(false)}
-                      >
-                        <Text style={modalStyles.textStyle}>No</Text>
-                      </Pressable>
-                      <Pressable
-                        style={[modalStyles.button, modalStyles.buttonClose]}
-                        onPress={pressYes}
-                      >
-                        <Text style={modalStyles.textStyle}>Yes</Text>
-                      </Pressable>
-                    </View>
-                  </View>
+          </Pressable>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={modalStyles.centeredView}>
+              <View style={modalStyles.modalView}>
+                {list === "f" ? <Text style={modalStyles.modalText}>Remove from Favorites list?</Text>
+                  : <Text style={modalStyles.modalText}>Remove from "Do Not Show" list?</Text>}
+
+                <View style={styles.row}>
+                  <Pressable
+                    style={[modalStyles.button, modalStyles.buttonClose, modalStyles.no]}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={modalStyles.textStyle}>No</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[modalStyles.button, modalStyles.buttonClose]}
+                    onPress={pressYes}
+                  >
+                    <Text style={modalStyles.textStyle}>Yes</Text>
+                  </Pressable>
                 </View>
-            </Modal>
-          </>
-        }
-      </>
-    );
+              </View>
+            </View>
+          </Modal>
+        </>
+      }
+    </>
+  );
 };
 
 export default ListEntry;

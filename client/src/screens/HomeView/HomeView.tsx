@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   container: {
     width: window_width,
     height: window_height,
+    backgroundColor: 'white',
   },
 
 })
@@ -88,7 +89,6 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
 
       const response = await axios.post(url, body);
 
-      console.log(JSON.stringify(response.data));
       setRestaurantsChanged(response.data);
 
       //set card count to number of restaurants given on fetch
