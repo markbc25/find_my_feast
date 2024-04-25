@@ -78,7 +78,7 @@ const HomeView = forwardRef((props: HomeViewProps, ref) => {
               radius: Math.min(50000.0, preferencesAndRestaurantsInstance.getRadius()),
             }
           },
-          rankPreference: "DISTANCE",
+          rankPreference: preferencesAndRestaurantsInstance.getSearchType(),
         },
 
         userData: {

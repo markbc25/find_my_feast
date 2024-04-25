@@ -7,6 +7,7 @@ let instance;
 class SessionStorage {
   currentLiked = new Map();
   email;
+  
 
   constructor() {
     if (!instance) {
