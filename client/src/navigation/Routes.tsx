@@ -23,6 +23,7 @@ interface RoutesProps {
 const Routes = (props: RoutesProps) => {
 
   const homeViewRef = useRef();
+  const profileViewRef = useRef();
 
   const preferencesUpdated = () => {
     refetchCardsInHome();
@@ -76,7 +77,7 @@ const Routes = (props: RoutesProps) => {
         </Tab.Screen>
         {/* <Tab.Screen name="Preferences" options={{ headerShown: false }} component={PreferencesView} /> */}
         <Tab.Screen name="Profile" options={{ headerShown: false }}>
-          {() => <ProfileScreen onActionButtonClicked = {preferencesUpdated} onLogoutButtonPressed={props.onLogoutButtonPressed} />}
+          {() => <ProfileScreen ref = {profileViewRef} onActionButtonClicked = {preferencesUpdated} onLogoutButtonPressed={props.onLogoutButtonPressed} />}
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>

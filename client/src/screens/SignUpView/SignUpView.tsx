@@ -20,19 +20,21 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
    let [email, setEmail] = useState("Initial");
    let [password, setPassword] = useState("Initial");
    let [errorMessage, setErrorMessage] = useState("");
+   let [isActive, setIsActive] = useState(false);
 
    function onButtonPressed() {
       props.onLogInButtonPressed(true);
+      setIsActive(false);
    }
 
    function emailChange(newValue: string) {
       setEmail(newValue);
-      // console.log("new email: " + email);
+      setIsActive(true);
    }
 
    function passwordChange(newValue: string) {
       setPassword(newValue);
-      // console.log("new password: " + password);
+      setIsActive(true);
    }
 
    function handleSignUp() {
@@ -88,7 +90,7 @@ const SignUpView: FC<SignUpViewProps> = (props: SignUpViewProps) => {
             </View>
 
             <View>
-               <ActionButton textValue="Sign Up"
+               <ActionButton textValue="Sign Up" active={isActive}
                   onPress={handleSignUp}></ActionButton>
             </View>
 

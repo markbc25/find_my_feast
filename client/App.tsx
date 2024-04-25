@@ -61,6 +61,7 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [isSignedIn, setIsSignedIn] = useState(2);
 
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : 'white',
   };
@@ -86,7 +87,6 @@ function App(): React.JSX.Element {
       })
       .then(ret => {
         // found data go to then()
-        console.log(ret.userid);
         setIsSignedIn(1);
         sessionStorageInstance.setEmail(ret.userid);
       })
@@ -127,7 +127,6 @@ function App(): React.JSX.Element {
       })
       .then(ret => {
         // found data go to then()
-        console.log(ret.userid);
         setIsSignedIn(1);
         sessionStorageInstance.setEmail(ret.userid);
       })
