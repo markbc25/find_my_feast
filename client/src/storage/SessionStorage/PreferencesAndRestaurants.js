@@ -8,6 +8,7 @@ class PreferencesAndRestaurants {
     includedTypes;
     radius;
     includedPriceLevels;
+    searchType;
 
     constructor() {
         if (!instance) {
@@ -17,6 +18,7 @@ class PreferencesAndRestaurants {
 
         this.includedPriceLevels = ['PRICE_LEVEL_INEXPENSIVE', 'PRICE_LEVEL_MODERATE', 'PRICE_LEVEL_EXPENSIVE', 'PRICE_LEVEL_VERY_EXPENSIVE'];
         this.radius = 50000;
+        this.searchType = 'DISTANCE';
 
         return instance;
     }
@@ -35,9 +37,7 @@ class PreferencesAndRestaurants {
     }
 
     setRadius(newRadius) {
-        
         this.radius = newRadius;
-        console.log("radius: " + newRadius);
     }
 
     getRadius() {
@@ -56,6 +56,15 @@ class PreferencesAndRestaurants {
 
     getIncludedPriceLevels() {
         return this.includedPriceLevels;
+    }
+
+    setSearchType(newSearchType) {
+        this.searchType = newSearchType;
+        console.log(this.searchType);
+    }
+
+    getSearchType() {
+        return this.searchType;
     }
 }
 

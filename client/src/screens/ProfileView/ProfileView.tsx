@@ -9,6 +9,8 @@ import SectionTitle from '../../../src/components/SectionTitle/SectionTitle';
 import ActionButton from '../../../src/components/ActionButton/ActionButton';
 import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
 import axios from 'axios';
+import PickOneToggle from '../../components/PickOneToggle/PickOneToggle';
+import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
 
 
 interface ProfileViewProps {
@@ -21,11 +23,6 @@ const ProfileScreen = (props: ProfileViewProps) => {
     let [isActive, setIsActive] = useState(false);
 
     async function setVegan(veganBool: boolean) {
-        if (veganBool === await getVegan()) {
-            console.log('blocking color in vegan');
-            setIsActive(false);
-            return;
-        }
         //call API w session storage instance
         const body = {
             email: sessionStorageInstance.getEmail(),
@@ -41,11 +38,6 @@ const ProfileScreen = (props: ProfileViewProps) => {
     }
 
     async function setVegetarian(vegetarianBool: boolean) {
-        if (vegetarianBool === await getVegetarian()) {
-            console.log('blocking color in vegan');
-            setIsActive(false);
-            return;
-        }
         //call API w session storage instance
         const body = {
             email: sessionStorageInstance.getEmail(),
@@ -68,7 +60,6 @@ const ProfileScreen = (props: ProfileViewProps) => {
             }
         });
 
-        pressButton();
         return response.data.vegan;
     }
 
@@ -80,13 +71,16 @@ const ProfileScreen = (props: ProfileViewProps) => {
             }
         });
 
-        pressButton();
         return response.data.vegetarian;
     }
 
     function pressButton() {
         props.onActionButtonClicked();
         setIsActive(false);
+    }
+
+    function updateSearchType(newSearchType: string) {
+        preferencesAndRestaurantsInstance.setSearchType(newSearchType);
     }
 
     return (
@@ -116,9 +110,23 @@ const ProfileScreen = (props: ProfileViewProps) => {
                     <ToggleableSetting initialValue={getVegetarian} onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
                     <ToggleableSetting initialValue={getVegan} onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
                 </View>
+            </View>
+
+            <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
+                <SectionTitle textValue="Search Preferences"></SectionTitle>
+
+                <View style={{
+                    justifyContent: 'flex-start',
+                    alignSelf: 'stretch',
+                    padding: 15,
+                    paddingBottom: 30,
+
+                }}>
+                    <PickOneToggle onSwitch={updateSearchType} optionOne='DISTANCE' optionTwo='POPULARITY' displayOptionOne='Distance' displayOptionTwo='Popularity' />
+                </View>
 
                 <View>
-                <ActionButton onPress={() => pressButton()} textValue='Confirm' active={isActive}></ActionButton>
+                    <ActionButton onPress={() => pressButton()} textValue='Confirm' active={isActive}></ActionButton>
                 </View>
 
             </View>
