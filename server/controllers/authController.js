@@ -4,9 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
-    console.log("before try");
     try {
-        console.log("in try");
         // Make sure all the nessccary data fields are filled in correctly
         const { error } = validateUser(req.body);
         if (error)

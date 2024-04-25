@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Button } from 'react-native';
 import InputText from '../../../src/components/InputText/InputText';
 import LineBreakIcon from '../../../src/components/LineBreakIcon/LineBreakIcon';
@@ -9,6 +9,8 @@ import SectionTitle from '../../../src/components/SectionTitle/SectionTitle';
 import ActionButton from '../../../src/components/ActionButton/ActionButton';
 import sessionStorageInstance from '../../storage/SessionStorage/SessionStorage';
 import axios from 'axios';
+import PickOneToggle from '../../components/PickOneToggle/PickOneToggle';
+import preferencesAndRestaurantsInstance from '../../storage/SessionStorage/PreferencesAndRestaurants';
 
 
 interface ProfileViewProps {
@@ -17,6 +19,8 @@ interface ProfileViewProps {
 }
 
 const ProfileScreen = (props: ProfileViewProps) => {
+
+    let [isActive, setIsActive] = useState(false);
 
     async function setVegan(veganBool: boolean) {
         //call API w session storage instance
@@ -30,6 +34,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
         catch (e) {
             console.log("vegan error: " + e);
         }
+        setIsActive(true);
     }
 
     async function setVegetarian(vegetarianBool: boolean) {
@@ -44,6 +49,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
         catch (e) {
             console.log("vegetarian error: " + e);
         }
+        setIsActive(true);
     }
 
     async function getVegan() {
@@ -66,6 +72,15 @@ const ProfileScreen = (props: ProfileViewProps) => {
         });
 
         return response.data.vegetarian;
+    }
+
+    function pressButton() {
+        props.onActionButtonClicked();
+        setIsActive(false);
+    }
+
+    function updateSearchType(newSearchType: string) {
+        preferencesAndRestaurantsInstance.setSearchType(newSearchType);
     }
 
     return (
@@ -95,9 +110,23 @@ const ProfileScreen = (props: ProfileViewProps) => {
                     <ToggleableSetting initialValue={getVegetarian} onToggle={setVegetarian} textValue="Vegetarian"></ToggleableSetting>
                     <ToggleableSetting initialValue={getVegan} onToggle={setVegan} textValue="Vegan"></ToggleableSetting>
                 </View>
+            </View>
+
+            <View style={{ justifyContent: 'center', alignSelf: 'stretch', paddingHorizontal: 30, gap: 10 }}>
+                <SectionTitle textValue="Search Preferences"></SectionTitle>
+
+                <View style={{
+                    justifyContent: 'flex-start',
+                    alignSelf: 'stretch',
+                    padding: 15,
+                    paddingBottom: 30,
+
+                }}>
+                    <PickOneToggle onSwitch={updateSearchType} optionOne='DISTANCE' optionTwo='POPULARITY' displayOptionOne='Distance' displayOptionTwo='Popularity' />
+                </View>
 
                 <View>
-                <ActionButton onPress={props.onActionButtonClicked} textValue='Confirm'></ActionButton>
+                    <ActionButton onPress={() => pressButton()} textValue='Confirm' active={isActive}></ActionButton>
                 </View>
 
             </View>
@@ -114,7 +143,7 @@ const ProfileScreen = (props: ProfileViewProps) => {
 
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ flex: 0, width: '90%', alignSelf: 'center', justifyContent: 'center', paddingBottom: 40 }}>
-                    <ActionButton onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
+                    <ActionButton active={true} onPress={props.onLogoutButtonPressed} textValue='Logout'></ActionButton>
                 </View>
             </View>
 

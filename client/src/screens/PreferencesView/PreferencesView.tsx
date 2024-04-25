@@ -29,8 +29,8 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
   let [includedTypes, setIncludedTypes] = useState([]);
   let [includedPriceLevels, setIncludedPriceLevels] = useState([]);
   let [isPressed, setIsPressed] = useState(false);
-  let [radius, setRadius] = useState(30 * 1609.34); // Convert miles to meters
-
+  let [radius, setRadius] = useState(30);
+  let [isActive, setIsActive] = useState(false);
 
 
   function updateIncludedTypes(newValue: string, buttonEnabled: boolean) {
@@ -46,7 +46,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
       let filteredArray = includedTypes.filter(item => item !== newValue);
       setIncludedTypes(filteredArray);
     }
-
+    setIsActive(true);
   }
 
   function updateIncludedPriceLevels(newValue: number, buttonEnabled: boolean) {
@@ -62,7 +62,12 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
       let filteredArray = includedPriceLevels.filter(item => item !== newValue);
       setIncludedPriceLevels(filteredArray);
     }
+    setIsActive(true);
+  }
 
+  function pressButton() {
+    setIsPressed(!isPressed);
+    setIsActive(false);
   }
 
   useEffect(() => {
@@ -80,9 +85,14 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
     props.onActionButtonClick();
   }, [isPressed]);
 
+  useEffect(() => {
+    setIsActive(false);
+  }, []);
+
   function updateRadius(newRadius: number) {
     // setRadius(newRadius * 0.000621371);
     preferencesAndRestaurantsInstance.setRadius(newRadius * 1609.34); // Convert miles to meters
+    setIsActive(true);
   }
 
 
@@ -165,7 +175,7 @@ const PreferencesView: FC<PreferencesViewProps> = (props: PreferencesViewProps) 
 
 
             <View style={{ flex: 0, width: '90%', paddingVertical: 30, alignSelf: 'center', justifyContent: 'flex-end' }}>
-              <ActionButton textValue='Confirm' onPress={() => setIsPressed(!isPressed)} />
+              <ActionButton active={isActive} textValue='Confirm' onPress={() => pressButton()} />
             </View>
 
           </View>
